@@ -45,6 +45,8 @@ export default function App() {
         <br />
         <a href="https://docs.amplify.aws/nextjs/start/quickstart/nextjs-app-router-client-components/">
           Review next steps of this tutorial.
+            <br/>
+            WE GO HIGH~
         </a>
       </div>
     </main>

@@ -17,9 +17,6 @@ module.exports = {
     fontFamily: {
       sans: ["Pretendard", "-apple-system", "sans-serif"],
     },
-    screens: {
-      desktop: "768px",
-    },
     extend: {
       colors: {
         ...colors,

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import Header from "components/Header";
 
 export const metadata: Metadata = {
   title: "Responsive Next.js App",
@@ -12,7 +13,10 @@ export const viewport: Viewport = {
     userScalable: true,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children, params }: { children: React.ReactNode, params: { pathname: string } }) {
+  const excludedRoutes = ["/login", "/signup"]; // Header를 제외할 경로
+  const showHeader = !excludedRoutes.includes(params.pathname); // Header 렌더링 여부 판별
+
   return (
     <html lang="ko">
     <head>
@@ -23,7 +27,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             rel="stylesheet"
         />
     </head>
-    <body className="bg-gray-100 text-gray-900 font-pretendard">{children}</body>
+    <body className="bg-gray-100 text-gray-900 font-pretendard">
+      {showHeader && <Header />}
+      {children}
+    </body>
     </html>
   );
 }

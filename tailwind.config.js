@@ -18,6 +18,9 @@ module.exports = {
       sans: ["Pretendard", "-apple-system", "sans-serif"],
     },
     extend: {
+      zIndex: {
+        60: "60",
+      },
       colors: {
         ...colors,
         transparent: "transparent",

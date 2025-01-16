@@ -1,9 +1,7 @@
 export default function Page() {
-
   return (
-
     <>
-      <div>test</div>
+      <div>청소년 보호정책</div>
     </>
-  )
+  );
 }

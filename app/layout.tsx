@@ -54,9 +54,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-gray-100 text-gray-900 font-pretendard">
+      <body className="text-gray-900 font-pretendard">
         {showHeader && <Header />}
-        {children}
+        <div className="md:hidden flex flex-col bg-white py-10 px-5">{children}</div>
+        <div className="hidden md:flex flex-col bg-white py-10 px-20">
+          <div className="w-full max-w-[1200px] mx-auto flex flex-col">{children}</div>
+        </div>
         {showFooter && <Footer />}
       </body>
     </html>

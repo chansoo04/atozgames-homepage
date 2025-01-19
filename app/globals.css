@@ -29,7 +29,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f3f4f6; /* Tailwind's bg-gray-100 */
+  background-color: #FFFFFF;
   color: #1f2937; /* Tailwind's text-gray-900 */
 }
 

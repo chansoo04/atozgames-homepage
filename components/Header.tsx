@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function Header() {
@@ -15,7 +16,15 @@ export default function Header() {
     <>
       {/* 모바일 */}
       <nav className="md:hidden sticky top-0 border-b border-gray-100 z-40 bg-white h-[50px] px-5 flex justify-between items-center">
-        <Link href="/">로고 영역</Link>
+        <Link href="/">
+          <Image
+            src="/images/logo.png" // public 폴더 기준 경로
+            alt="Logo"
+            width={50} // 원하는 너비
+            height={50} // 원하는 높이
+            priority // 초기 로드 최적화
+          />
+        </Link>
         <button type="button" onClick={() => setIsOpen(true)}>
           메뉴 버튼
         </button>
@@ -51,7 +60,13 @@ export default function Header() {
       <nav className="hidden md:flex sticky top-0 border-b border-gray-100 z-40 bg-white h-[70px] px-5 justify-between items-center">
         <div className="max-w-[1200px] mx-auto grid grid-cols-[100px_2fr_auto] gap-x-52">
           <Link href="/" className="p-2.5">
-            로고 영역
+            <Image
+              src="/images/logo.png" // public 폴더 기준 경로
+              alt="아토즈포커 로고"
+              width={80} // 원하는 너비
+              height={80} // 원하는 높이
+              priority // 초기 로드 최적화
+            />
           </Link>
           <div className="grid gap-x-14 grid-cols-[120px_120px_120px]">
             <button type="button" className="p-2.5 font-bold" onMouseEnter={() => setIsOpen(true)}>

@@ -4,8 +4,25 @@ import Header from "components/Header";
 import Footer from "components/Footer";
 
 export const metadata: Metadata = {
-  title: "Responsive Next.js App",
-  description: "A responsive Next.js app with mobile, tablet, and desktop layouts.",
+  title: "아토즈포커 - 공정한 포커 플랫폼",
+  description: "아토즈포커는 보안과 신뢰, 공정성을 최우선으로 하는 온라인 포커 플랫폼입니다.",
+  keywords: "games, announcements, contact, game overview, support",
+  openGraph: {
+    title: "아토즈포커 - 공정한 포커 플랫폼",
+    description: "아토즈포커는 보안과 신뢰, 공정성을 최우선으로 하는 온라인 포커 플랫폼입니다.",
+    siteName: "아토즈포커",
+    url: "https://example.com",
+    images: [
+      {
+        url: "https://example.com/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "My Website",
+      },
+    ],
+    locale: "ko_KR",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {

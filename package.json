@@ -9,12 +9,13 @@
   "workspaces": ["apps/*"],
   "devDependencies": {
     "@types/node": "^22.15.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "turbo": "^1.12.4"
   },
   "scripts": {
     "dev:web": "yarn workspace web dev",
     "dev:back": "yarn workspace backend start:dev",
     "lint": "eslint \"packages/**/*.{ts,tsx}\" --fix",
-    "build": "turbo run build"
+    "build": "turbo run build --parallel"
   }
 }

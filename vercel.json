@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "web": {
+      "rootDirectory": "apps/web",
+      "buildCommand": "yarn build",
+      "outputDirectory": ".next"
+    }
+  }
+}

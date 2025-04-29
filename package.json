@@ -1,0 +1,20 @@
+{
+  "name": "atozgames-homepage",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "author": "chansoo04 <56948241+chansoo04@users.noreply.github.com>",
+  "workspaces": ["apps/*"],
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "typescript": "^5.8.3"
+  },
+  "scripts": {
+    "dev:web": "yarn workspace web dev",
+    "dev:back": "yarn workspace backend start:dev",
+    "lint": "eslint \"packages/**/*.{ts,tsx}\" --fix",
+    "build": "turbo run build"
+  }
+}

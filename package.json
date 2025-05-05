@@ -6,15 +6,19 @@
     "node": ">=16.0.0"
   },
   "author": "chansoo04 <56948241+chansoo04@users.noreply.github.com>",
-  "workspaces": ["apps/*"],
+  "workspaces": [
+    "apps/*"
+  ],
   "devDependencies": {
     "@types/node": "^22.15.3",
-    "typescript": "^5.8.3",
-    "turbo": "^1.12.4"
+    "concurrently": "^9.1.2",
+    "turbo": "^1.12.4",
+    "typescript": "^5.8.3"
   },
   "scripts": {
     "dev:web": "yarn workspace web dev",
     "dev:back": "yarn workspace backend start:dev",
+    "dev": "concurrently -k -n WEB,BACK -c green,cyan \"yarn dev:web\" \"yarn dev:back\"",
     "lint": "eslint \"packages/**/*.{ts,tsx}\" --fix",
     "build": "turbo run build --parallel"
   }

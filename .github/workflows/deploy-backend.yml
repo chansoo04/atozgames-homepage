@@ -3,14 +3,14 @@ name: Deploy Backend to Cloud Run
 
 on:
   push:
-    branches: [main]              # main 브랜치에 푸시되면 자동 배포
+    branches: [main]                 # main 브랜치 푸시 시 배포
     paths:
-      - "apps/backend/**"         # 백엔드 코드 변경
+      - "apps/backend/**"            # 백엔드 코드 변경
       - ".github/workflows/deploy-backend.yml"
 
 permissions:
   contents: read
-  id-token: write                 # OIDC 토큰 발급(필수)
+  id-token: write                    # OIDC 토큰 발급
 
 jobs:
   deploy:
@@ -20,15 +20,15 @@ jobs:
       # 1) 소스 체크아웃
       - uses: actions/checkout@v4
 
-      # 2) Google Cloud 로그인 (OIDC)
+      # 2) Google Cloud OIDC 로그인
       - id: auth
         uses: google-github-actions/auth@v1
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_ID_PROVIDER }}
           service_account:           ${{ secrets.SERVICE_ACCOUNT }}
-          token_format: "access_token"          # ← access_token 출력
+          token_format: "access_token"          # access_token 출력
 
-      # 3) Artifact Registry 로그인 (Docker)
+      # 3) Artifact Registry 로그인(Docker)
       - name: Docker login to Artifact Registry
         uses: docker/login-action@v2
         with:
@@ -45,7 +45,7 @@ jobs:
         with:
           context: ${{ github.workspace }}/apps/backend
           push: true
-          provenance: false              # Cloud Run과 충돌 방지
+          provenance: false
           tags: >
             ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/wyc-atoz-backend/backend:${{ github.sha }}
 

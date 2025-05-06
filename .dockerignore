@@ -1,0 +1,14 @@
+Dockerfile*
+docker-compose*
+README.md
+*.log
+# 공통
+.git
+node_modules
+.idea
+.vscode
+dist
+coverage
+# 프론트엔드 산출물
+apps/web/.next
+apps/web/build

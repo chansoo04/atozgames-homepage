@@ -12,6 +12,7 @@ export class AppController {
 
   @Get('/hi')
   pros() {
+    console.log('hi');
     return 'hi';
   }
 }

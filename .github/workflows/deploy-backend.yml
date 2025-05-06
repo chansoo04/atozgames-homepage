@@ -25,6 +25,7 @@ jobs:
           SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
           WORKLOAD_ID_PROVIDER: ${{ secrets.WORKLOAD_ID_PROVIDER }}
 
+      # 테스트
       - id: auth                                  # OIDC → access_token
         uses: google-github-actions/auth@v1
         with:

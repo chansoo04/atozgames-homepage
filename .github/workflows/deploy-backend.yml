@@ -17,12 +17,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: DEBUG — dump secret lengths
+        run: |
+          echo "SA len   : ${#SERVICE_ACCOUNT}"
+          echo "WIP len  : ${#WORKLOAD_ID_PROVIDER}"
+        env:
+          SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
+          WORKLOAD_ID_PROVIDER: ${{ secrets.WORKLOAD_ID_PROVIDER }}
+
       - id: auth                                  # OIDC → access_token
         uses: google-github-actions/auth@v1
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_ID_PROVIDER }}
           service_account:           ${{ secrets.SERVICE_ACCOUNT }}
           token_format: "access_token"
+          debug: true
 
       - name: Docker login to Artifact Registry   # 인증 완료
         uses: docker/login-action@v2

@@ -7,23 +7,10 @@ import {
   ValidationPipe,
   OnApplicationBootstrap,
 } from "@nestjs/common";
-
-// import { dataSourceOptions } from "./dataSource";
-// import { BullModule } from "@nestjs/bullmq";
-
 import { SlonikModule } from "nestjs-slonik";
-// import { connection } from "./redis-connection";
 
 import { DatabaseModule } from "./database/database.module";
-import { UtilityModule } from "./utility/utility.module";
-import { HangameModule } from "./http/hangame/hangame.module";
-import { AuthModule } from "./http/auth/auth.module";
-import { WplModule } from "./http/wpl/wpl.module";
-import { CommonModule } from "./http/common/common.module";
-import { StatisticsModule } from "./http/statistics/statistics.module";
-import { ExternalModule } from "./http/external/external.module";
-import { TrackerModule } from "./http/tracker/tracker.module";
-import { AutoComputerModule } from "./http/auto-computer/auto-computer.module";
+import { TestModule } from "./http/test/test.module";
 
 @Module({
   imports: [
@@ -37,15 +24,7 @@ import { AutoComputerModule } from "./http/auto-computer/auto-computer.module";
       },
     }),
     DatabaseModule,
-    UtilityModule,
-    HangameModule,
-    AuthModule,
-    WplModule,
-    CommonModule,
-    StatisticsModule,
-    ExternalModule,
-    TrackerModule,
-    AutoComputerModule,
+    TestModule,
   ],
   providers: [{ provide: APP_PIPE, useClass: ValidationPipe }],
 })

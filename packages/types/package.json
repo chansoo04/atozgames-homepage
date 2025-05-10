@@ -1,0 +1,9 @@
+{
+  "name": "@carepet/types",
+  "description": "케어펫 Types",
+  "version": "0.2.0",
+  "types": "types/index.d.ts",
+  "files": [
+    "*.d.ts"
+  ]
+}

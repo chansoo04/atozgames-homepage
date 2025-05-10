@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'TossFace';
+  src: url('https://static.carepet.io/fonts/TossFaceFontMac.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'BMJUA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'yg-jalnan';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GothicA1-Light';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/GothicA1-Light.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+}
+
+@layer components {
+  a.button-green,
+  button.button-green {
+    @apply block text-center w-full py-3 text-lg font-bold text-[#2EB62C] transition rounded-lg bg-white border border-[#2EB62C];
+  }
+  form:invalid button.button-green,
+  button.button-green:disabled,
+  button.button-green:invalid {
+    @apply bg-gray-100 border-0 cursor-default text-[#666666];
+  }
+
+  a.button-secondary,
+  button.button-secondary {
+    @apply block text-center w-full py-3 font-medium text-gray-500 align-middle bg-white border border-gray-200 transition rounded-lg;
+  }
+  button.button-secondary:disabled,
+  button.button-secondary:invalid {
+    @apply bg-gray-200 text-gray-400 cursor-default;
+  }
+
+  a.button-secondary-alt,
+  button.button-secondary-alt {
+    @apply block text-center w-full py-3 font-medium text-white align-middle bg-gray-600 transition rounded-lg;
+  }
+  /*button.button-secondary-alt:disabled,*/
+  /*button.button-secondary-alt:invalid {*/
+  /*  @apply bg-gray-100 text-gray-400 cursor-default;*/
+  /*}*/
+
+  section.cta-section,
+  footer.cta-section {
+    @apply sticky bottom-0 flex flex-col items-center w-full gap-2 p-4 mt-auto bg-white;
+  }
+
+  hr.divider {
+    @apply w-full h-2 border-none bg-gray-100;
+  }
+
+  details.details summary.summary svg.bracket {
+    transition: transform 0.3s ease;
+    transform: rotate(-90deg);
+  }
+  details.details[open] summary.summary svg.bracket {
+    transition: transform 0.3s ease;
+    transform: rotate(90deg);
+  }
+  details.details summary.summary {
+    display: flex;
+    user-select: none;
+  }
+  details.details summary.summary::marker {
+    content: none;
+  }
+  details.details summary.summary::-webkit-details-marker {
+    font-size: 0;
+    content: none;
+    -webkit-appearance:none;
+  }
+
+  .daum-postcode {
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 999;
+  }
+}
+
+@layer utilities {
+  @media only screen and (max-width:768px) {
+    .scrollbar-hide {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+    .scrollbar-hide::-webkit-scrollbar { /* Safari and Chrome */
+      display: none
+    }
+  }
+}
+
+@layer base {
+  html,
+  body {
+    text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: transparent;
+    color: #1A1A1A; /* gray-900 */
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+  }
+
+  a[role=button], a[role=button]:hover {
+    text-decoration: inherit;
+    color: inherit;
+  }
+
+  button,
+  label {
+    user-select: none;
+  }
+
+  button[disabled],
+  form:invalid button,
+  button:invalid,
+  button:disabled {
+    cursor: default;
+  }
+
+  input,
+  select,
+  textarea {
+    outline-color: #6485F4;
+  }
+
+  /*input[type="number"]::-webkit-inner-spin-button,*/
+  /*input[type="number"]::-webkit-outer-spin-button {*/
+  /*  -webkit-appearance: none;*/
+  /*  margin: 0;*/
+  /*}*/
+  input[type="number"] {
+    appearance: textfield;
+  }
+
+  details > summary {
+    list-style: none;
+  }
+
+  details > summary::marker, /* Latest Chrome, Edge, Firefox */
+  details > summary::-webkit-details-marker /* Safari */ {
+    display: none;
+  }
+
+
+  @media only screen and (min-width:769px) {
+    *::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    *::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background: rgba(0,0,0,0.1);
+    }
+    *::-webkit-scrollbar-thumb{
+      border-radius: 10px;
+      background: rgba(0,0,0,0.2);
+    }
+    *::-webkit-scrollbar-thumb:hover{
+      background: rgba(0,0,0,0.4);
+    }
+    *::-webkit-scrollbar-thumb:active{
+      background: rgba(0,0,0,.9);
+    }
+  }
+}
+
+/* Accordion CSS */
+button.szh-accordion__item-btn {
+  width: 100%;
+}

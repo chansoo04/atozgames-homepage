@@ -1,7 +1,33 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [".env-cmdrc.js", ".env.development.local", ".env.production.local"],
   "pipeline": {
-    "build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".next/**"] },
-    "dev": { "cache": false }
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    },
+    "test": {},
+    "start": {
+      "dependsOn": []
+    },
+    "schema:sync": {},
+    "dev": {
+      "cache": false,
+      "dependsOn": []
+    },
+    "customer#build": {
+      "env": [
+        "NODE_ENV",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN"
+      ],
+      "dependsOn": [
+        "@carepet/entities#build",
+        "@carepet/models#build"
+      ]
+    },
+    "backend#build": {
+      "dependsOn": []
+    }
   }
 }

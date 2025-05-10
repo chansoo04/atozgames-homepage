@@ -1,25 +1,48 @@
 {
-  "name": "atozgames-homepage",
-  "version": "1.0.0",
+  "name": "carepet",
+  "version": "0.0.0",
   "private": true,
   "engines": {
     "node": ">=16.0.0"
   },
-  "author": "chansoo04 <56948241+chansoo04@users.noreply.github.com>",
-  "workspaces": [
-    "apps/*"
-  ],
-  "devDependencies": {
-    "@types/node": "^22.15.3",
-    "concurrently": "^9.1.2",
-    "turbo": "^1.12.4",
-    "typescript": "^5.8.3"
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*",
+      "utils/*"
+    ]
   },
   "scripts": {
-    "dev:web": "yarn workspace web dev",
-    "dev:back": "yarn workspace backend start:dev",
-    "dev": "concurrently -k -n WEB,BACK -c green,cyan \"yarn dev:web\" \"yarn dev:back\"",
-    "lint": "eslint \"packages/**/*.{ts,tsx}\" --fix",
-    "build": "turbo run build --parallel"
+    "env:prod": "env-cmd -e production",
+    "env:dev": "env-cmd -e development",
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build --parallel",
+    "start": "turbo run start --parallel",
+    "build:packages": "yarn build --filter=@carepet/models --force && yarn build --filter=@carepet/api-types",
+    "prepare": "ts-patch install && typia patch"
+  },
+  "devDependencies": {
+    "@nestia/sdk": "^2.5.15",
+    "dotenv": "^16.4.5",
+    "env-cmd": "^10.1.0",
+    "nestia": "^5.3.0",
+    "ts-node": "^10.9.2",
+    "ts-patch": "^3.2.1",
+    "turbo": "^1.12.4",
+    "typescript": "5.4.2"
+  },
+  "$schema": "https://json.schemastore.org/package",
+  "dependencies": {
+    "@headlessui/react": "0.0.0-insiders.f5ac361",
+    "@mdx-js/loader": "^3.0.1",
+    "@mdx-js/react": "^3.0.1",
+    "@nestia/core": "^2.5.15",
+    "@nestia/e2e": "^0.4.1",
+    "@nestia/fetcher": "^2.5.15",
+    "@next/mdx": "^14.2.0",
+    "cheerio": "^1.0.0-rc.12",
+    "react-hotjar": "^6.3.1",
+    "ts-patch": "^3.2.1",
+    "typia": "^5.5.3"
   }
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/atozgames-homepage.iml" filepath="$PROJECT_DIR$/.idea/atozgames-homepage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/wyc-admin.iml" filepath="$PROJECT_DIR$/.idea/wyc-admin.iml" />
     </modules>
   </component>
 </project>

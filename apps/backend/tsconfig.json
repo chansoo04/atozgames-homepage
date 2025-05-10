@@ -1,21 +1,61 @@
 {
+  "strict": true,
+  "strictNullChecks": true,
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "CommonJS",
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true,
-    "strictBindCallApply": true,
-    "noFallthroughCasesInSwitch": true
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "baseUrl": "./src",
+    "paths": {
+      "#common/*": ["./common/*"],
+      "#domain/*": ["./domain/*"],
+      "#external/*": ["./external/*"],
+      "#cron/*": ["./cron/*"],
+      "#repositories/*": ["./repositories/*"],
+      "#ui/*": ["./ui/*"],
+    },
+    "plugins": [
+      {
+        "transform": "@nestia/core/lib/transform",
+        /**
+         * Validate request body.
+         *
+         *   - "assert": Use typia.assert() function
+         *   - "is": Use typia.is() function
+         *   - "validate": Use typia.validate() function
+         */
+        "validate": "assert",
+        /**
+         * Validate JSON typed response body.
+         *
+         *   - "assert": Use typia.assertStringify() function
+         *   - "is": Use typia.isStringify() function
+         *   - "validate": Use typia.validateStringify() function
+         *   - "stringify": Use typia.stringify() function, but dangerous
+         *   - null: Just use JSON.stringify() function, without boosting
+         */
+        "stringify": "assert"
+      },
+      {
+        "transform": "typia/lib/transform"
+      }
+    ]
   }
 }

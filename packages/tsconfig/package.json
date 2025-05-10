@@ -1,0 +1,11 @@
+{
+  "name": "@carepet/tsconfig",
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "base.json",
+    "nextjs.json",
+    "react-library.json"
+  ],
+  "$schema": "https://json.schemastore.org/package"
+}

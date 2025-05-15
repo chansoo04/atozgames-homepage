@@ -8,7 +8,6 @@ export class FaqController {
 
   @Get("")
   async getFaqs(@Query("category") category?: string) {
-    console.log(category, "category");
     if (category) {
       const result = await this.pool.any(sql`
 SELECT * FROM faq

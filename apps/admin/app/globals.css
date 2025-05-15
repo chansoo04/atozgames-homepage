@@ -76,34 +76,8 @@
   /*  @apply bg-gray-100 text-gray-400 cursor-default;*/
   /*}*/
 
-  section.cta-section,
-  footer.cta-section {
-    @apply sticky bottom-0 flex flex-col items-center w-full gap-2 p-4 mt-auto bg-white;
-  }
-
   hr.divider {
     @apply w-full h-2 border-none bg-gray-100;
-  }
-
-  details.details summary.summary svg.bracket {
-    transition: transform 0.3s ease;
-    transform: rotate(-90deg);
-  }
-  details.details[open] summary.summary svg.bracket {
-    transition: transform 0.3s ease;
-    transform: rotate(90deg);
-  }
-  details.details summary.summary {
-    display: flex;
-    user-select: none;
-  }
-  details.details summary.summary::marker {
-    content: none;
-  }
-  details.details summary.summary::-webkit-details-marker {
-    font-size: 0;
-    content: none;
-    -webkit-appearance:none;
   }
 
   .daum-postcode {
@@ -131,10 +105,11 @@
 @layer base {
   html,
   body {
+    m: 0;
+    p: 0;
     text-size-adjust: none;
     -webkit-text-size-adjust: none;
     -webkit-tap-highlight-color: transparent;
-    color: #1A1A1A; /* gray-900 */
   }
 
   a,
@@ -173,15 +148,6 @@
   /*}*/
   input[type="number"] {
     appearance: textfield;
-  }
-
-  details > summary {
-    list-style: none;
-  }
-
-  details > summary::marker, /* Latest Chrome, Edge, Firefox */
-  details > summary::-webkit-details-marker /* Safari */ {
-    display: none;
   }
 
 

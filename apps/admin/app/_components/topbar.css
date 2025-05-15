@@ -1,0 +1,16 @@
+/* summary 기본 마커 숨기기 */
+details > summary {
+    list-style: none;
+    cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+/* 아이콘 회전 애니메이션 */
+.icon {
+    transition: transform 0.2s ease;
+}
+details[open] > summary .icon {
+    transform: rotate(180deg);
+}

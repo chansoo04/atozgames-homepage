@@ -59,6 +59,7 @@
     "typescript": "5.3.3"
   },
   "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/react-slick": "^0",
     "@types/slick-carousel": "^1"
   },

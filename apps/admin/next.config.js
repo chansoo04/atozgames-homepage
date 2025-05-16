@@ -52,14 +52,6 @@ const nextConfig = {
         protocol: "https",
         hostname: "storage.googleapis.com",
       },
-      {
-        protocol: "https",
-        hostname: "hospital.carepet.io",
-      },
-      {
-        protocol: "https",
-        hostname: "onepet-web.s3.ap-northeast-2.amazonaws.com",
-      },
     ],
   },
 };

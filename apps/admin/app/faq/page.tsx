@@ -1,4 +1,5 @@
 import ssr from "lib/fetcher/ssr";
+import Tabs from "./Tabs";
 
 async function getPageData() {
   return await ssr.get("faq").json();
@@ -6,11 +7,6 @@ async function getPageData() {
 
 export default async function Page() {
   const faqs = await getPageData();
-  console.log(faqs);
 
-  return (
-    <>
-      <div>FAQ 목록</div>
-    </>
-  );
+  return <Tabs faqs={faqs} />;
 }

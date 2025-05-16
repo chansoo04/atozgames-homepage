@@ -7,7 +7,6 @@ export default function Page() {
     try {
       const hi = await signInWithPopup(auth, googleProvider);
       console.log(hi, "google"); // -> 이거를 문회님 서버로 보내면 됨
-
       // 로그인 성공 후 로직
     } catch (err) {
       console.error("Google 로그인 실패:", err);

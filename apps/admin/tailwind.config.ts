@@ -19,7 +19,7 @@ module.exports = {
     },
     screens: {
       // 모바일은 접두사 없이 ⇒ ‘0px’ 로 선언 안 해도 됨
-      tablet: "640px", // ≥ 640 px
+      // tablet: "640px", // ≥ 640 px
       desktop: "1024px", // ≥ 1024 px
     },
     extend: {

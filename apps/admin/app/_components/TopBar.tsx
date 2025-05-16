@@ -18,9 +18,9 @@ export default function TopBar() {
         leave="transition-opacity duration-150"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-        className="w-full tablet:hidden desktop:hidden"
+        className="w-full desktop:hidden"
       >
-        <footer className="absolute top-0 flex h-[60px] w-full items-center gap-x-2.5 bg-white px-5 py-3 tablet:hidden desktop:hidden">
+        <footer className="absolute top-0 flex h-[60px] w-full items-center gap-x-2.5 bg-white px-5 py-3 desktop:hidden">
           <button type="button" onClick={() => setIsOpen(true)}>
             <Image src="/menu.png" alt="메뉴" width={30} height={30} />
           </button>
@@ -40,7 +40,7 @@ export default function TopBar() {
         leaveTo="-translate-y-full opacity-0"
         className="tablet:hidden desktop:hidden"
       >
-        <div className="absolute inset-0 z-50 flex h-screen flex-col overflow-x-hidden bg-white tablet:hidden desktop:hidden">
+        <div className="absolute inset-0 z-50 flex h-screen flex-col overflow-x-hidden bg-white desktop:hidden">
           <div className="flex h-[60px] w-full items-center justify-center px-5">
             <Image src="/logo_black.png" alt="카피바라 로고" width={91} height={35} />
             <button type="button" onClick={() => setIsOpen(false)}>
@@ -179,11 +179,8 @@ export default function TopBar() {
       {/*  </div>*/}
       {/*)}*/}
 
-      {/* 태블릿(≥640 & <1024)에서만 보임 */}
-      <footer className="hidden tablet:block desktop:hidden">태블릿</footer>
-
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <footer className="hidden tablet:hidden desktop:block">PC</footer>
+      <footer className="tablet:hidden hidden desktop:block">PC</footer>
     </>
   );
 }

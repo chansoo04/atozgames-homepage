@@ -37,7 +37,7 @@ export default function Page() {
 
       {/* 데스크탑(≥1024)에서만 보임 */}
       <div className="hidden desktop:block desktop:min-h-screen desktop:flex-1">
-        <section className="hidden desktop:flex desktop:w-full">PC</section>
+        <section className="hidden desktop:flex desktop:w-full"></section>
       </div>
 
       <Footer />

@@ -8,7 +8,7 @@ export default function Page() {
 
       {/* 모바일(<640)에서만 보임 */}
       <section
-        className="mt-[60px] flex min-h-[85vh] flex-col items-center px-5 pb-10 pt-8 tablet:hidden desktop:hidden"
+        className="mt-[60px] flex min-h-[85vh] flex-col items-center px-5 pb-10 pt-8 desktop:hidden"
         style={{
           background: "linear-gradient(0deg, #F5F5F8 0%, #DCEFFF 100%)",
         }}
@@ -19,11 +19,8 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 태블릿(≥640 & <1024)에서만 보임 */}
-      <section className="hidden tablet:block desktop:hidden">태블릿</section>
-
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="hidden tablet:hidden desktop:block">PC</section>
+      <section className="hidden desktop:block">PC</section>
 
       <Footer />
     </main>

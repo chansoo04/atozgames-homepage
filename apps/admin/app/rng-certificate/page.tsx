@@ -3,12 +3,12 @@ import Footer from "app/_components/Footer";
 
 export default async function Page() {
   return (
-    <main className="w-full">
+    <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
       <TopBar />
 
       {/* 모바일(<640)에서만 보임 */}
       <section
-        className="mt-[60px] flex flex-col items-center px-5 pb-10 pt-8 tablet:hidden desktop:hidden"
+        className="mt-[60px] flex flex-col items-center px-5 pb-10 pt-8 desktop:hidden"
         style={{
           background: "linear-gradient(0deg, #F5F5F8 0%, #DCEFFF 100%)",
         }}
@@ -253,11 +253,265 @@ export default async function Page() {
         </div>
       </section>
 
-      {/* 태블릿(≥640 & <1024)에서만 보임 */}
-      <footer className="hidden tablet:block desktop:hidden">태블릿</footer>
-
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <footer className="hidden tablet:hidden desktop:block">PC</footer>
+      <section className="hidden desktop:mt-60 desktop:block desktop:min-h-screen desktop:flex-1 ">
+        <div className="desktop:mx-auto desktop:flex desktop:w-full desktop:max-w-[1200px] desktop:flex-col">
+          <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
+            RNG 인증 및 공정성
+          </h1>
+          <div className="desktop:mt-[142px] desktop:flex desktop:gap-x-[50px] desktop:rounded-[30px] desktop:bg-[#16172D]/70 desktop:p-[70px]">
+            <div className="bg-white desktop:max-h-[810px] desktop:min-h-[810px] desktop:min-w-[510px] desktop:max-w-[510px]" />
+            <div className="gap-y-10 desktop:flex desktop:flex-col">
+              <div>
+                <div className="px-x relative pt-1.5 text-3xl font-medium text-primary">
+                  2ACE 포커는
+                  <svg
+                    className="absolute left-0 top-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="160"
+                    height="45"
+                    viewBox="0 0 160 45"
+                    fill="none"
+                  >
+                    <g opacity="0.21">
+                      <mask
+                        id="mask0_43_1439"
+                        style={{ maskType: "alpha" }}
+                        maskUnits="userSpaceOnUse"
+                        x="0"
+                        y="0"
+                        width="160"
+                        height="45"
+                      >
+                        <rect width="160" height="44.9984" fill="#D9D9D9" />
+                      </mask>
+                      <g mask="url(#mask0_43_1439)">
+                        <g filter="url(#filter0_f_43_1439)">
+                          <ellipse
+                            cx="80"
+                            cy="51.2982"
+                            rx="48.8889"
+                            ry="24.7491"
+                            fill="#23FFE3"
+                            fillOpacity="0.59"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                    <rect
+                      y="44.2485"
+                      width="160"
+                      height="0.751505"
+                      fill="url(#paint0_linear_43_1439)"
+                    />
+                    <defs>
+                      <filter
+                        id="filter0_f_43_1439"
+                        x="1.11108"
+                        y="-3.45093"
+                        width="157.778"
+                        height="109.498"
+                        filterUnits="userSpaceOnUse"
+                        colorInterpolationFilters="sRGB"
+                      >
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="BackgroundImageFix"
+                          result="shape"
+                        />
+                        <feGaussianBlur stdDeviation="15" result="effect1_foregroundBlur_43_1439" />
+                      </filter>
+                      <linearGradient
+                        id="paint0_linear_43_1439"
+                        x1="0"
+                        y1="44.6243"
+                        x2="160"
+                        y2="44.6243"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopColor="#23FFE3" stopOpacity="0" />
+                        <stop offset="0.5" stopColor="#23FFE3" />
+                        <stop offset="1" stopColor="#23FFE3" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div className="mt-8 whitespace-pre-line text-lg font-medium text-white">
+                  2ACE 포커는 BMM Teatlabs의 RNG(Random Number Generator) 인증을 받았습니다. RNG
+                  인증은 게임의 데이터를 추출하고 분석하여, 인위적인 개입이 없는 공정한 플레이를
+                  검증하는 국제 공식 인증입니다.
+                </div>
+              </div>
+              <div>
+                <div className="px-x relative pt-1.5 text-3xl font-medium text-primary">
+                  2ACE 포커는
+                  <svg
+                    className="absolute left-0 top-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="160"
+                    height="45"
+                    viewBox="0 0 160 45"
+                    fill="none"
+                  >
+                    <g opacity="0.21">
+                      <mask
+                        id="mask0_43_1439"
+                        style={{ maskType: "alpha" }}
+                        maskUnits="userSpaceOnUse"
+                        x="0"
+                        y="0"
+                        width="160"
+                        height="45"
+                      >
+                        <rect width="160" height="44.9984" fill="#D9D9D9" />
+                      </mask>
+                      <g mask="url(#mask0_43_1439)">
+                        <g filter="url(#filter0_f_43_1439)">
+                          <ellipse
+                            cx="80"
+                            cy="51.2982"
+                            rx="48.8889"
+                            ry="24.7491"
+                            fill="#23FFE3"
+                            fillOpacity="0.59"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                    <rect
+                      y="44.2485"
+                      width="160"
+                      height="0.751505"
+                      fill="url(#paint0_linear_43_1439)"
+                    />
+                    <defs>
+                      <filter
+                        id="filter0_f_43_1439"
+                        x="1.11108"
+                        y="-3.45093"
+                        width="157.778"
+                        height="109.498"
+                        filterUnits="userSpaceOnUse"
+                        colorInterpolationFilters="sRGB"
+                      >
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="BackgroundImageFix"
+                          result="shape"
+                        />
+                        <feGaussianBlur stdDeviation="15" result="effect1_foregroundBlur_43_1439" />
+                      </filter>
+                      <linearGradient
+                        id="paint0_linear_43_1439"
+                        x1="0"
+                        y1="44.6243"
+                        x2="160"
+                        y2="44.6243"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopColor="#23FFE3" stopOpacity="0" />
+                        <stop offset="0.5" stopColor="#23FFE3" />
+                        <stop offset="1" stopColor="#23FFE3" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div className="mt-8 whitespace-pre-line text-lg font-medium text-white">
+                  2ACE 포커는 BMM Teatlabs의 RNG(Random Number Generator) 인증을 받았습니다. RNG
+                  인증은 게임의 데이터를 추출하고 분석하여, 인위적인 개입이 없는 공정한 플레이를
+                  검증하는 국제 공식 인증입니다.
+                </div>
+              </div>
+              <div>
+                <div className="px-x relative pt-1.5 text-3xl font-medium text-primary">
+                  2ACE 포커는
+                  <svg
+                    className="absolute left-0 top-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="160"
+                    height="45"
+                    viewBox="0 0 160 45"
+                    fill="none"
+                  >
+                    <g opacity="0.21">
+                      <mask
+                        id="mask0_43_1439"
+                        style={{ maskType: "alpha" }}
+                        maskUnits="userSpaceOnUse"
+                        x="0"
+                        y="0"
+                        width="160"
+                        height="45"
+                      >
+                        <rect width="160" height="44.9984" fill="#D9D9D9" />
+                      </mask>
+                      <g mask="url(#mask0_43_1439)">
+                        <g filter="url(#filter0_f_43_1439)">
+                          <ellipse
+                            cx="80"
+                            cy="51.2982"
+                            rx="48.8889"
+                            ry="24.7491"
+                            fill="#23FFE3"
+                            fillOpacity="0.59"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                    <rect
+                      y="44.2485"
+                      width="160"
+                      height="0.751505"
+                      fill="url(#paint0_linear_43_1439)"
+                    />
+                    <defs>
+                      <filter
+                        id="filter0_f_43_1439"
+                        x="1.11108"
+                        y="-3.45093"
+                        width="157.778"
+                        height="109.498"
+                        filterUnits="userSpaceOnUse"
+                        colorInterpolationFilters="sRGB"
+                      >
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="BackgroundImageFix"
+                          result="shape"
+                        />
+                        <feGaussianBlur stdDeviation="15" result="effect1_foregroundBlur_43_1439" />
+                      </filter>
+                      <linearGradient
+                        id="paint0_linear_43_1439"
+                        x1="0"
+                        y1="44.6243"
+                        x2="160"
+                        y2="44.6243"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopColor="#23FFE3" stopOpacity="0" />
+                        <stop offset="0.5" stopColor="#23FFE3" />
+                        <stop offset="1" stopColor="#23FFE3" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div className="mt-8 whitespace-pre-line text-lg font-medium text-white">
+                  2ACE 포커는 BMM Teatlabs의 RNG(Random Number Generator) 인증을 받았습니다. RNG
+                  인증은 게임의 데이터를 추출하고 분석하여, 인위적인 개입이 없는 공정한 플레이를
+                  검증하는 국제 공식 인증입니다.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </main>

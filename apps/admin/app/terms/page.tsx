@@ -3,7 +3,7 @@ import Footer from "app/_components/Footer";
 
 export default function Page() {
   return (
-    <main className="w-full">
+    <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
       <TopBar />
 
       {/* 모바일(<640)에서만 보임 */}
@@ -20,7 +20,18 @@ export default function Page() {
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="hidden desktop:block">PC</section>
+      <section className="mb-80 hidden desktop:mt-60 desktop:block desktop:min-h-screen desktop:flex-1">
+        <div className="desktop:mx-auto desktop:flex desktop:w-full desktop:max-w-[1200px] desktop:flex-col">
+          <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
+            이용약관
+          </h1>
+          <div className="desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+            <div className="whitespace-pre-line pb-20 pt-10 text-lg font-normal text-white">
+              {terms}
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </main>

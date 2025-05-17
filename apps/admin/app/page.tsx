@@ -3,12 +3,12 @@ import Footer from "app/_components/Footer";
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen w-full flex-col bg-[url(/bg_mobile.png)] bg-cover bg-center bg-no-repeat">
+    <main className="flex min-h-screen w-full flex-col bg-[url(/bg_mobile.png)] bg-cover bg-center bg-no-repeat desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
       <TopBar />
 
       {/* 모바일(<640)에서만 보임 */}
-      <div className="flex-1">
-        <section className="flex w-full flex-col items-center tablet:hidden desktop:hidden">
+      <div className="min-h-screen flex-1 desktop:hidden">
+        <section className="flex w-full flex-col items-center desktop:hidden">
           <div className="mt-36 h-48 w-80 rounded-lg bg-gray-300"></div>
           <button
             type="button"
@@ -35,11 +35,11 @@ export default function Page() {
         </section>
       </div>
 
-      {/* 태블릿(≥640 & <1024)에서만 보임 */}
-      <section className="hidden tablet:block desktop:hidden">태블릿</section>
-
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="hidden tablet:hidden desktop:block">PC</section>
+      <div className="hidden desktop:block desktop:min-h-screen desktop:flex-1">
+        <section className="hidden desktop:flex desktop:w-full">PC</section>
+      </div>
+
       <Footer />
     </main>
   );

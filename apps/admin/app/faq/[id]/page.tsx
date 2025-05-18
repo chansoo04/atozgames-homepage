@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { id: number } }) {
   const faq: any = await getPageData(id);
 
   return (
-    <main className="w-full">
+    <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
       <TopBar />
 
       {/* 모바일(<640)에서만 보임 */}
@@ -56,7 +56,35 @@ export default async function Page({ params }: { params: { id: number } }) {
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="tablet:hidden hidden desktop:block">PC</section>
+      <section className="hidden desktop:mt-60 desktop:block desktop:min-h-screen desktop:flex-1">
+        <div className="desktop:mx-auto desktop:flex desktop:w-full desktop:max-w-[1200px] desktop:flex-col">
+          <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
+            자주 묻는 질문
+          </h1>
+          <div className="desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+            <div className="flex justify-between pt-10">
+              <div
+                className={`flex h-[30px] w-[64px] items-center justify-center rounded-full text-lg font-medium ${faq.category === "공지" ? "bg-serve text-white" : "bg-primary text-gray-700"}`}
+              >
+                {faq.category}
+              </div>
+              <div className="flex items-center gap-x-1">
+                <Image src="/clock.png" alt="작성일" width={20} height={20} />
+                <div className="text-lg font-medium text-gray-400">
+                  {changeDate(faq.created_at)}
+                </div>
+              </div>
+            </div>
+            <h3 className="mt-[15px] border-b border-gray-600 pb-10 text-xl font-bold text-white">
+              {faq.title}
+            </h3>
+
+            <div className="mt-[35px] whitespace-pre-line pb-80 text-lg font-normal text-white">
+              {faq.content}
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </main>

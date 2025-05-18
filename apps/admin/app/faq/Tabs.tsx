@@ -15,7 +15,7 @@ export default function Tabs({ faqs }: { faqs: any }) {
   const [active, setActive] = useState<(typeof tabs)[number]>("게임문의");
 
   return (
-    <main className="w-full">
+    <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
       <TopBar />
 
       {/* 모바일(<640)에서만 보임 */}
@@ -39,6 +39,7 @@ export default function Tabs({ faqs }: { faqs: any }) {
                 </button>
                 {active === tab ? (
                   <svg
+                    onClick={() => setActive(tab)}
                     className="absolute bottom-0 left-1/2 -translate-x-1/2"
                     xmlns="http://www.w3.org/2000/svg"
                     width="90"
@@ -145,7 +146,128 @@ export default function Tabs({ faqs }: { faqs: any }) {
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="tablet:hidden hidden desktop:block">PC</section>
+      <section className="hidden desktop:mt-60 desktop:block desktop:min-h-screen desktop:flex-1 ">
+        <div className="desktop:mx-auto desktop:flex desktop:w-full desktop:max-w-[1200px] desktop:flex-col">
+          <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
+            자주 묻는 질문
+          </h1>
+          <div className="desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:pb-5 desktop:pt-[30px]">
+            <nav className="desktop:flex">
+              {tabs.map((tab) => (
+                <div key={tab} className="relative">
+                  <button
+                    onClick={() => setActive(tab)}
+                    className={`flex h-[100px] w-[200px] items-center justify-center text-3xl font-medium ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : "text-white/60"}`}
+                  >
+                    {tab}
+                  </button>
+                  {active === tab ? (
+                    <svg
+                      onClick={() => setActive(tab)}
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="200"
+                      height="100"
+                      viewBox="0 0 200 100"
+                      fill="none"
+                    >
+                      <g opacity="0.21">
+                        <mask
+                          id="mask0_99_623"
+                          style={{ maskType: "alpha" }}
+                          maskUnits="userSpaceOnUse"
+                          x="0"
+                          y="0"
+                          width="200"
+                          height="100"
+                        >
+                          <rect width="200" height="100" fill="#D9D9D9" />
+                        </mask>
+                        <g mask="url(#mask0_99_623)">
+                          <g filter="url(#filter0_f_99_623)">
+                            <ellipse
+                              cx="99.9998"
+                              cy="114"
+                              rx="61.1111"
+                              ry="55"
+                              fill="#2398FF"
+                              fillOpacity="0.59"
+                            />
+                          </g>
+                        </g>
+                      </g>
+                      <rect y="99" width="200" height="1" fill="url(#paint0_linear_99_623)" />
+                      <defs>
+                        <filter
+                          id="filter0_f_99_623"
+                          x="8.88867"
+                          y="29"
+                          width="182.223"
+                          height="170"
+                          filterUnits="userSpaceOnUse"
+                          colorInterpolationFilters="sRGB"
+                        >
+                          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                          <feBlend
+                            mode="normal"
+                            in="SourceGraphic"
+                            in2="BackgroundImageFix"
+                            result="shape"
+                          />
+                          <feGaussianBlur
+                            stdDeviation="15"
+                            result="effect1_foregroundBlur_99_623"
+                          />
+                        </filter>
+                        <linearGradient
+                          id="paint0_linear_99_623"
+                          x1="0"
+                          y1="99.5"
+                          x2="200"
+                          y2="99.5"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stopColor="#2398FF" stopOpacity="0" />
+                          <stop offset="0.5" stopColor="#2398FF" />
+                          <stop offset="1" stopColor="#2398FF" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  ) : null}
+                </div>
+              ))}
+            </nav>
+            <div className="mb-20 desktop:mt-5 desktop:flex desktop:flex-col">
+              {faqs
+                ?.filter((faq: any) => faq.category === active)
+                ?.map((item: any) => (
+                  <Link
+                    key={item.id.toString()}
+                    href={`/faq/${item.id}`}
+                    className="flex w-full justify-between border-b border-gray-600 py-10"
+                  >
+                    <div className="flex items-center gap-x-4">
+                      <div
+                        className={`flex h-[30px] w-[64px] items-center justify-center rounded-full text-lg font-medium ${item.subcategory === "공지" ? "bg-serve text-white" : "bg-primary text-gray-700"}`}
+                      >
+                        {item.subcategory}
+                      </div>
+                      <div className="w-[500px] truncate text-lg font-medium text-white">
+                        {item.title}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-x-1">
+                      <Image src="/clock.png" alt="작성일" width={20} height={20} />
+                      <div className="text-lg font-medium text-gray-400">
+                        {changeDate(item.created_at)}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </main>

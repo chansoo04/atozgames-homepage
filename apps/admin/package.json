@@ -34,6 +34,7 @@
     "autoprefixer": "10.4.17",
     "chart.js": "^4.4.7",
     "chartjs-plugin-annotation": "^3.1.0",
+    "cookies-next": "^5.1.0",
     "date-fns": "^4.1.0",
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.21",

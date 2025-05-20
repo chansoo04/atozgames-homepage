@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Transition } from "@headlessui/react";
+import { usePathname } from "next/navigation";
 
 const tabs = ["게임소개", "공지사항", "문의하기"] as const;
 const subTabs = {
@@ -21,6 +22,7 @@ const subTabs = {
 export default function TopBar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [active, setActive] = useState<(typeof tabs)[number]>("게임소개");
+  const pathname = usePathname();
 
   useEffect(() => {
     if (["/", "/rng-certificate"].includes(window.location.pathname)) {
@@ -127,12 +129,20 @@ export default function TopBar() {
               1:1 문의
             </Link>
           </details>
+          <div className="absolute bottom-10 flex w-full justify-center">
+            <Link
+              href={`/login?redirect_uri=${pathname ?? "/"}`}
+              className="text-base font-normal text-gray-500 underline"
+            >
+              로그인
+            </Link>
+          </div>
         </div>
       </Transition>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <nav className="hidden desktop:absolute desktop:top-0 desktop:flex desktop:w-full desktop:flex-col desktop:items-center">
-        <div className="desktop:mx-auto desktop:flex desktop:h-[120px] desktop:min-w-[1024px] desktop:items-center desktop:border-b desktop:border-b-white/20">
+      <nav className="hidden desktop:absolute desktop:top-0 desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:border-b desktop:border-b-white/20">
+        <div className="desktop:mx-auto desktop:flex desktop:h-[120px] desktop:min-w-[1024px] desktop:items-center ">
           <Link href="/">
             <Image src="/logo_white.png" alt="카피바라 로고" width={181} height={70} />
           </Link>

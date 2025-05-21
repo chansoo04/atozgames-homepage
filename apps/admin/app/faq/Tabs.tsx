@@ -151,7 +151,7 @@ export default function Tabs({ faqs }: { faqs: any }) {
           <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
             자주 묻는 질문
           </h1>
-          <div className="desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:pb-5 desktop:pt-[30px]">
+          <div className="mb-20 min-h-[1150px] desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:pb-5 desktop:pt-[30px]">
             <nav className="desktop:flex">
               {tabs.map((tab) => (
                 <div key={tab} className="relative">

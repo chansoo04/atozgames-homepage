@@ -62,7 +62,7 @@ export default async function Page() {
           <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
             공지사항
           </h1>
-          <div className="desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+          <div className="mb-20 min-h-[1150px] desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
             {announcements.map((announcement: any) => (
               <Link
                 key={announcement.id.toString()}

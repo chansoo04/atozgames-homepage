@@ -95,6 +95,9 @@ export default function Page() {
 
         <div className="mt-20 flex flex-col items-center gap-y-5">
           <Image
+            onClick={() =>
+              (window.location.href = `/login/atoz?redirect_uri=${searchParams.get("redirect_uri") ?? "/"}`)
+            }
             src="/atoz_login.png"
             width={400}
             height={61}
@@ -131,6 +134,7 @@ export default function Page() {
 
           <div className="desktop:mt-20 desktop:flex desktop:flex-col desktop:items-center desktop:gap-y-5">
             <Image
+              onClick={() => (window.location.href = "/login/atoz")}
               src="/atoz_login.png"
               width={500}
               height={61}

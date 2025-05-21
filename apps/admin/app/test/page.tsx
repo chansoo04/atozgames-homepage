@@ -1,8 +1,17 @@
 "use client";
+import { useEffect, useContext } from "react";
+import { AuthContext } from "app/AuthProvider";
 import { auth, googleProvider, appleProvider } from "lib/firebaseClient";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signOut } from "firebase/auth";
 
 export default function Page() {
+  const context = useContext(AuthContext);
+
+  useEffect(() => {
+    // console.log(context, "context");
+    signOut(auth);
+  }, [context]);
+
   const handleGoogle = async () => {
     try {
       const hi = await signInWithPopup(auth, googleProvider);

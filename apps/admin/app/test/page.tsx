@@ -44,29 +44,7 @@ export default function Page() {
 
   return (
     <main className="relative min-h-screen w-full bg-[url('/bg_desktop.png')] bg-cover bg-center">
-      <TopBar />
-      
-      <div className="flex min-h-screen flex-col items-center justify-center">
-        <div className="mb-8">
-          <img src="/logo.svg" alt="ATOZ" className="h-12" />
-        </div>
-        
-        <div className="w-full max-w-[510px] rounded-[20px] bg-white p-12">
-          <textarea 
-            className="min-h-[300px] w-full resize-none rounded-lg border border-gray-200 p-4 text-gray-700 focus:border-blue-500 focus:outline-none"
-            placeholder="문의하기"
-          />
-        </div>
-        
-        <button 
-          onClick={handleGoogle}
-          className="mt-4 w-full max-w-[510px] rounded-lg bg-[#4285F4] px-6 py-3 text-white hover:bg-[#357ABD] transition-colors"
-        >
-          시작해보기
-        </button>
-      </div>
-
-      <Footer />
+      <div>TEST</div>
     </main>
   );
 }

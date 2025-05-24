@@ -32,13 +32,13 @@ export async function GET(request: Request) {
       "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
     },
     body: JSON.stringify({
-      token: access_token, // TODO: 문회님 확인 필요
+      token: access_token,
       provider: "kakao",
     }),
   });
 
   if (!atozRes.ok) {
-    if (response.status === 404) {
+    if (atozRes.status === 404) {
       return NextResponse.json(
         {
           result: "failure",
@@ -95,6 +95,7 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     result: "success",
+    account_id: responseData.account.account_id,
     token: responseData.token,
     uid: responseData.account.uid,
   });

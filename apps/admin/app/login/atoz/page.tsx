@@ -33,6 +33,7 @@ export default function Page() {
       if (data.result === "success") {
         setCookie("token", data.token);
         setCookie("uid", data.uid);
+        setCookie("account_id", data.account_id);
         window.location.href = searchParams.get("redirect_uri") ?? "/";
       }
     } catch (err: any) {

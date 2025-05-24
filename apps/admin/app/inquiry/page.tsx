@@ -6,8 +6,8 @@ import Footer from "app/_components/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import axios from "lib/axios";
 
-// TODO: 비로그인 상태에서 들어올 때 로그인 페이지로 redirect
 // TODO: 검색엔진 크롤링 비활성화
 
 const tabs = ["문의하기", "내 문의내역"] as const;
@@ -16,6 +16,7 @@ export default function Page() {
   const [active, setActive] = useState<(typeof tabs)[number]>("문의하기");
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const [myInquiry, setMyInquiry] = useState<any[]>([]);
   const context = useContext(AuthContext);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -26,24 +27,69 @@ export default function Page() {
   useEffect(() => {
     if (!isLoading && !context.user) {
       redirect("/login?redirect_uri=inquiry");
+    } else {
+      getMyInquiry();
     }
     console.log(context.user);
   }, [isLoading, context.user]);
 
+  const getMyInquiry = async () => {
+    const resp = await axios({
+      method: "get",
+      url: "api/inquiry",
+    });
+
+    if (resp.data.result === "success") {
+      console.log(resp.data.inquiry);
+      setMyInquiry(resp.data.inquiry);
+    } else {
+      console.error("내 질문 불러오기 실패");
+    }
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault(); // 새로고침 방지
     if (!title || !content || !context.user) return; // 빈 값 보호, 비로그인 유저 처리
-    alert("기능 개발중입니다!");
+
+    const resp = await axios({
+      method: "post",
+      url: "api/inquiry",
+      data: {
+        title,
+        content,
+      },
+    });
+
+    if (resp.data.result === "success") {
+      setTitle("");
+      setContent("");
+      alert("문의사항 등록에 성공하였습니다\n최대한 빠른 시일 내 답변드릴 수 있도록 하겠습니다");
+    } else {
+      alert("문의사항 등록에 실패했습니다!\n잠시 후 다시 시도해주세요");
+    }
   };
 
   const handleSelect = () => fileRef.current?.click();
 
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // jpg, jpeg, png만 받음
+  const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
     const file = e.target.files[0];
-    console.log(file); // → 서버 전송 또는 미리보기
+
+    const fileType = file.type.split("/")[1];
+
+    const getPresignedUrlRes = await fetch(process.env.NEXT_PUBLIC_S3_POST_URL as string, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ContentType: fileType }),
+    });
+    const getPresignedUrl = await getPresignedUrlRes.json();
+    console.log(getPresignedUrl, "getPresignedUrl");
+
     // TODO: 파일 업로드 기능 개발 필요
-    alert("파일 업로드 기능 개발중!");
+    // alert("파일 업로드 기능 개발중!");
   };
 
   return (
@@ -200,7 +246,13 @@ export default function Page() {
                     영역을 클릭하여{"\n"}파일을 추가하세요
                   </div>
                 </div>
-                <input ref={fileRef} type="file" accept="image/*" hidden onChange={onFileChange} />
+                <input
+                  ref={fileRef}
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg"
+                  hidden
+                  onChange={onFileChange}
+                />
 
                 <button
                   type="submit"
@@ -210,7 +262,44 @@ export default function Page() {
                   전송하기
                 </button>
               </form>
-            ) : null}
+            ) : (
+              <div className="flex flex-col">
+                {myInquiry?.map((inquiry) => (
+                  <Link
+                    key={inquiry.id.toString()}
+                    className="flex h-[105px] w-full flex-col border-b border-gray-200 py-[15px]"
+                    href={`/inquiry/${inquiry.id}`}
+                  >
+                    <div className="h-5">
+                      <span
+                        className={`rounded-full px-2.5 text-center text-sm font-semibold leading-none text-white ${inquiry.state === "QUESTION_STATE_OPEN" ? "bg-gray-600" : "bg-serve"}`}
+                      >
+                        {inquiry.state === "QUESTION_STATE_OPEN" ? "대기중" : "답변완료"}
+                      </span>
+                    </div>
+                    <div className="mt-2 truncate text-base font-medium text-gray-700">
+                      {inquiry.title}
+                    </div>
+                    <div className="mt-[5px] flex items-center">
+                      <Image src="/profile.png" alt="프로필" width={14} height={14} />
+                      <div className="ml-1 text-sm font-normal text-gray-500">
+                        {context?.user?.displayName ?? "작성자"}
+                      </div>
+                      <Image
+                        className="ml-2.5"
+                        src="/clock.png"
+                        alt="작성일자"
+                        width={14}
+                        height={14}
+                      />
+                      <div className="ml-1 text-sm font-normal text-gray-500">
+                        {inquiry.created_at.slice(0, 10)}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -383,7 +472,34 @@ export default function Page() {
                     전송하기
                   </button>
                 </form>
-              ) : null}
+              ) : (
+                <div className="mt-5 flex flex-col">
+                  {myInquiry.map((inquiry: any) => (
+                    <Link
+                      key={inquiry.id.toString()}
+                      href={`/inquiry/${inquiry.id}`}
+                      className="flex w-full justify-between border-b border-gray-600 py-10"
+                    >
+                      <div className="flex items-center gap-x-4">
+                        <div
+                          className={`flex h-[30px] w-[64px] items-center justify-center rounded-full text-lg font-medium ${inquiry.state === "QUESTION_STATE_OPEN" ? "bg-gray-600 text-white" : "bg-serve text-white"}`}
+                        >
+                          {inquiry.state === "QUESTION_STATE_OPEN" ? "대기중" : "답변완료"}
+                        </div>
+                        <div className="w-[500px] truncate text-lg font-medium text-white">
+                          {inquiry.title}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-x-1">
+                        <Image src="/clock.png" alt="작성일" width={20} height={20} />
+                        <div className="text-lg font-medium text-gray-400">
+                          {inquiry.created_at.slice(0, 10)}
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

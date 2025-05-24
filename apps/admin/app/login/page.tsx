@@ -37,6 +37,7 @@ export default function Page() {
         // TODO: 해당 uid를 가지고 서버 통신 시 매번 꺼내써야 함
         setCookie("token", data.token);
         setCookie("uid", data.uid);
+        setCookie("account_id", data.account_id);
 
         // 기존 위치로 리다이렉션
         window.location.href = searchParams.get("redirect_uri") ?? "/";
@@ -71,6 +72,7 @@ export default function Page() {
         // TODO: 해당 uid를 가지고 서버 통신 시 매번 꺼내써야 함
         setCookie("token", data.token);
         setCookie("uid", data.uid);
+        setCookie("account_id", data.account_id);
 
         // 기존 위치로 리다이렉션
         window.location.href = searchParams.get("redirect_uri") ?? "/";

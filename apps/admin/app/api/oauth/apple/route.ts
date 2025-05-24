@@ -34,6 +34,7 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     result: "success",
+    account_id: responseData.account.account_id,
     token: responseData.token,
     uid: responseData.account.uid,
   });

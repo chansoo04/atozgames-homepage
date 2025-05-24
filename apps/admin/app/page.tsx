@@ -10,7 +10,7 @@ export default function Page() {
         <h1 className="text-center text-lg font-bold leading-relaxed  text-white">
           사전예약 모집 준비중입니다
         </h1>
-        <div className="px-5 ">
+        <div className="w-full px-5">
           <div className="mt-5 flex w-full flex-col whitespace-pre-line rounded-[20px] bg-gray-100 p-5 text-sm font-normal leading-tight text-gray-700">
             잠시만 기다려주세요
           </div>

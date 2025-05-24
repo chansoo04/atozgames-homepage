@@ -13,7 +13,7 @@ export default async function Page() {
       >
         <TopBar />
         <h1 className="text-lg font-bold leading-relaxed text-gray-700">RNG 인증 및 공정성</h1>
-        <div className="px-5">
+        <div className="w-full px-5">
           <div className="mt-5 h-[380px] w-full rounded-lg bg-gray-400" />
           <div className="mt-[30px] flex flex-col rounded-2xl bg-white px-4 pb-5 pt-4">
             <div className="relative pb-1 pl-1 pr-2 pt-1.5">

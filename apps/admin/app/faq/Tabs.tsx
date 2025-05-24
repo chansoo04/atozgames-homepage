@@ -26,7 +26,7 @@ export default function Tabs({ faqs }: { faqs: any }) {
         <TopBar />
         <h1 className="text-lg font-bold leading-relaxed text-gray-700">자주 묻는 질문</h1>
 
-        <div className="px-5 ">
+        <div className="w-full px-5">
           <div className="mt-5 flex w-full flex-col rounded-[20px] bg-gray-100 px-5 pb-5 pt-2.5">
             <nav className="grid grid-cols-3 gap-x-[5px]">
               {tabs.map((tab) => (

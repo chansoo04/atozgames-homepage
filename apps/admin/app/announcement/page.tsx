@@ -28,7 +28,7 @@ export default async function Page() {
         <TopBar />
         <h1 className="text-lg font-bold leading-relaxed text-gray-700">공지사항</h1>
 
-        <div className="px-5 ">
+        <div className="w-full px-5">
           <div className="mt-5 flex w-full flex-col rounded-[20px] bg-gray-100 p-5">
             {(announcements as any)?.map((item: any) => (
               <Link

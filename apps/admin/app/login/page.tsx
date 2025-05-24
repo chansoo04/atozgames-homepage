@@ -92,7 +92,7 @@ export default function Page() {
         <TopBar />
         <h1 className="text-lg font-bold leading-relaxed text-gray-700">로그인</h1>
 
-        <div className="px-5 ">
+        <div className="w-full px-5">
           <div className="mt-20 flex flex-col items-center gap-y-5">
             <Image
               onClick={() =>

@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: { id: number } }) {
         <TopBar />
         <h1 className="text-lg font-bold leading-relaxed text-gray-700">자주 묻는 질문</h1>
 
-        <div className="px-5 ">
+        <div className="w-full px-5">
           <div className="mt-5 w-full rounded-[20px] bg-gray-100 px-5 pb-[30px] pt-5">
             <div className="py-[15px]">
               <div

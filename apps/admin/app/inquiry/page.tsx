@@ -313,7 +313,7 @@ export default function Page() {
             1:1 문의
           </h1>
 
-          <div className="w-[1200px] desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+          <div className="w-[1200px] desktop:my-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
             <div className="mb-20 min-h-[1150px] desktop:flex desktop:flex-col desktop:pb-[60px]">
               <nav className="desktop:flex">
                 {tabs.map((tab) => (

@@ -67,7 +67,7 @@ export default async function Page() {
             공지사항
           </h1>
 
-          <div className="w-[1200px] desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+          <div className="w-[1200px] desktop:my-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
             <div className="min-h-[1150px] desktop:flex desktop:flex-col ">
               {announcements.map((announcement: any) => (
                 <Link

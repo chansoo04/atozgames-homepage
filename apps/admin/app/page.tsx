@@ -3,42 +3,35 @@ import Footer from "app/_components/Footer";
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen w-full flex-col bg-[url(/bg_mobile.png)] bg-cover bg-center bg-no-repeat desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
-      <TopBar />
-
+    <main className="relative w-full">
       {/* 모바일(<640)에서만 보임 */}
-      <div className="min-h-screen flex-1 desktop:hidden">
-        <section className="flex w-full flex-col items-center desktop:hidden">
-          <div className="mt-36 h-48 w-80 rounded-lg bg-gray-300"></div>
-          <button
-            type="button"
-            className="mt-8 h-12 w-56 rounded-xl bg-gradient-to-b from-indigo-700 via-indigo-900 to-indigo-900"
-            style={{
-              boxShadow: "-1px -1px 3px #4852b0 inset, 1px 1px 2.9px #6a72d2 inset",
-              background:
-                "linear-gradient(107.24deg, #4751af 15.87%, #363882 25.48%, #4751af 36.54%, #2a2c68 66.89%)",
-            }}
-          >
-            <span
-              className="text-[18px] font-semibold leading-relaxed"
-              style={{
-                background:
-                  "linear-gradient(98deg, #FAF9FB 10.67%, #8294BA 28.23%, #FAF9FB 45.78%, #72809D 86.35%, #FAF9FB 125.7%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text", // -webkit-background-clip
-                WebkitTextFillColor: "transparent", // -webkit-text-fill-color
-              }}
-            >
-              사전예약하기
-            </span>
-          </button>
-        </section>
-      </div>
+      <section className="relative aspect-[1440/3040] w-full flex-col items-center bg-[url('/bg_mobile.png')] bg-[length:100%_auto] bg-top bg-repeat-y pb-10 pt-[92px] desktop:hidden">
+        <TopBar />
+        <h1 className="text-center text-lg font-bold leading-relaxed  text-white">
+          사전예약 모집 준비중입니다
+        </h1>
+        <div className="px-5 ">
+          <div className="mt-5 flex w-full flex-col whitespace-pre-line rounded-[20px] bg-gray-100 p-5 text-sm font-normal leading-tight text-gray-700">
+            잠시만 기다려주세요
+          </div>
+        </div>
+      </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <div className="hidden desktop:block desktop:min-h-screen desktop:flex-1">
-        <section className="hidden desktop:flex desktop:w-full"></section>
-      </div>
+      <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
+        <TopBar />
+
+        <div className="desktop:flex desktop:flex-col desktop:items-center desktop:pt-60">
+          <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
+            사전예약 모집 준비중입니다
+          </h1>
+          <div className="max-w-[1200px] desktop:mb-52 desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+            <div className="whitespace-pre-line pb-20 pt-10 text-lg font-normal text-white">
+              잠시만 기다려주세요
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </main>

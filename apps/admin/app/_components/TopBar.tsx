@@ -21,17 +21,20 @@ const subTabs = {
 };
 export default function TopBar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [active, setActive] = useState<(typeof tabs)[number]>("게임소개");
+  const [active, setActive] = useState<(typeof tabs)[number] | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
-    if (["/", "/rng-certificate"].includes(window.location.pathname)) {
+    if (window.location.pathname === "/" || window.location.pathname.includes("/rng-certificate")) {
       setActive("게임소개");
     }
-    if (["/announcement"].includes(window.location.pathname)) {
+    if (window.location.pathname.includes("/announcement")) {
       setActive("공지사항");
     }
-    if (["/faq", "/inquiry"].includes(window.location.pathname)) {
+    if (
+      window.location.pathname.includes("/faq") ||
+      window.location.pathname.includes("/inquiry")
+    ) {
       setActive("문의하기");
     }
   }, []);

@@ -68,7 +68,7 @@ export default async function Page({ params }: { params: { id: number } }) {
             공지사항
           </h1>
 
-          <div className="max-w-[1200px] desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+          <div className="w-[1200px] desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
             <div className="desktop:flex desktop:flex-col">
               <div className="flex justify-between pt-10">
                 <div

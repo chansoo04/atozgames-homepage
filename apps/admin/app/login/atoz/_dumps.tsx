@@ -51,19 +51,20 @@ export default function Page() {
   };
 
   return (
-    <main className="relative w-full">
+    <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
+      <TopBar />
+
       {/* 모바일(<640)에서만 보임 */}
       <section
-        className="flex min-h-[90vh] flex-col items-center pb-10 pt-[92px] desktop:hidden"
+        className="tablet:hidden mt-[60px] flex min-h-[85vh] flex-col items-center px-5 pb-10 pt-8 desktop:hidden"
         style={{
           background: "linear-gradient(0deg, #F5F5F8 0%, #DCEFFF 100%)",
         }}
       >
-        <TopBar />
         <h1 className="text-lg font-bold leading-relaxed text-gray-700">로그인</h1>
 
         {/* 🔑 입력 영역을 form으로 감싸고 onSubmit 사용 */}
-        <form onSubmit={handleSubmit} className="mt-20 flex w-full flex-col px-5">
+        <form onSubmit={handleSubmit} className="mt-20 flex w-full flex-col">
           {/* 아이디 입력 */}
           <label className="text-left text-base font-medium text-gray-700">
             아이디
@@ -100,17 +101,14 @@ export default function Page() {
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
-        <TopBar />
-
-        <div className="desktop:flex desktop:flex-col desktop:items-center desktop:pt-60">
+      <section className="hidden desktop:mt-60 desktop:block desktop:min-h-screen desktop:flex-1 ">
+        <div className="desktop:mx-auto desktop:flex desktop:w-full desktop:max-w-[1200px] desktop:flex-col">
           <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
             로그인
           </h1>
-
           <form
             onSubmit={handleSubmit}
-            className="mb-20 min-h-[600px] w-[1200px] desktop:mt-20 desktop:flex desktop:flex-col desktop:justify-center desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px]"
+            className="mb-20 min-h-[600px] desktop:mt-20 desktop:flex desktop:flex-col desktop:justify-center desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px]"
           >
             <label className="text-left text-base font-medium text-white">
               아이디

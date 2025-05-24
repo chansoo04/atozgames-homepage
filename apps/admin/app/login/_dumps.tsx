@@ -81,56 +81,53 @@ export default function Page() {
   };
 
   return (
-    <main className="relative w-full">
+    <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
+      <TopBar />
+
       {/* 모바일(<640)에서만 보임 */}
       <section
-        className="flex min-h-[90vh] flex-col items-center pb-10 pt-[92px] desktop:hidden"
+        className="mt-[60px] flex min-h-[85vh] flex-col items-center px-5 pb-10 pt-8 desktop:hidden"
         style={{
           background: "linear-gradient(0deg, #F5F5F8 0%, #DCEFFF 100%)",
         }}
       >
-        <TopBar />
         <h1 className="text-lg font-bold leading-relaxed text-gray-700">로그인</h1>
 
-        <div className="px-5 ">
-          <div className="mt-20 flex flex-col items-center gap-y-5">
-            <Image
-              onClick={() =>
-                (window.location.href = `/login/atoz?redirect_uri=${searchParams.get("redirect_uri") ?? "/"}`)
-              }
-              src="/atoz_login.png"
-              width={400}
-              height={61}
-              alt="아토즈 로그인"
-              className="cursor-pointer"
-            />
-            <Image
-              onClick={() => handleGoogle()}
-              className="cursor-pointer"
-              src="/google_login.png"
-              width={400}
-              height={61}
-              alt="구글 로그인"
-            />
-            <Image
-              onClick={() => handleApple()}
-              className="cursor-pointer"
-              src="/apple_login.png"
-              width={400}
-              height={61}
-              alt="애플 로그인"
-            />
-            <Image src="/kakao_login.png" width={400} height={61} alt="카카오 로그인" />
-            <Image src="/naver_login.png" width={400} height={61} alt="네이버 로그인" />
-          </div>
+        <div className="mt-20 flex flex-col items-center gap-y-5">
+          <Image
+            onClick={() =>
+              (window.location.href = `/login/atoz?redirect_uri=${searchParams.get("redirect_uri") ?? "/"}`)
+            }
+            src="/atoz_login.png"
+            width={400}
+            height={61}
+            alt="아토즈 로그인"
+            className="cursor-pointer"
+          />
+          <Image
+            onClick={() => handleGoogle()}
+            className="cursor-pointer"
+            src="/google_login.png"
+            width={400}
+            height={61}
+            alt="구글 로그인"
+          />
+          <Image
+            onClick={() => handleApple()}
+            className="cursor-pointer"
+            src="/apple_login.png"
+            width={400}
+            height={61}
+            alt="애플 로그인"
+          />
+          <Image src="/kakao_login.png" width={400} height={61} alt="카카오 로그인" />
+          <Image src="/naver_login.png" width={400} height={61} alt="네이버 로그인" />
         </div>
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
-        <TopBar />
-
-        <div className="desktop:flex desktop:flex-col desktop:items-center desktop:pt-60">
+      <section className="hidden desktop:mt-60 desktop:block desktop:min-h-screen desktop:flex-1 ">
+        <div className="desktop:mx-auto desktop:flex desktop:w-full desktop:max-w-[1200px] desktop:flex-col">
           <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
             로그인
           </h1>

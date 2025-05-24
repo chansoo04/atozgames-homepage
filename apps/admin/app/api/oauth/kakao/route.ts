@@ -5,10 +5,6 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code")!;
 
-  // TODO: STEP1. 서버로 code값을 보냄(createCustomToken) -> 파이어베이스 로그인 할 수 있는 토큰을 줌
-  // TODO: STEP2. firebase 토큰을 받아서 signIn을 다시 해야해(firebase login 필요, signinWithCustom Token을 해야한다) -> 이거 하면 credentials가 나옴
-  // TODO: STEP3. credential을 가지고 atoz서버 login을 하면 됨
-
   // 토큰 교환
   const tokenRes = await fetch("https://kauth.kakao.com/oauth/token", {
     method: "POST",

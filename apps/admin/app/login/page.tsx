@@ -33,8 +33,6 @@ export default function Page() {
       const data = await response.json();
 
       if (data.result === "success") {
-        // TODO: 해당 토큰과 uid를 가지고 서버 요청 발송 전 verify 필요
-        // TODO: 해당 uid를 가지고 서버 통신 시 매번 꺼내써야 함
         setCookie("token", data.token);
         setCookie("uid", data.uid);
         setCookie("account_id", data.account_id);
@@ -68,8 +66,6 @@ export default function Page() {
       const data = await response.json();
 
       if (data.result === "success") {
-        // TODO: 해당 토큰과 uid를 가지고 서버 요청 발송 전 verify 필요
-        // TODO: 해당 uid를 가지고 서버 통신 시 매번 꺼내써야 함
         setCookie("token", data.token);
         setCookie("uid", data.uid);
         setCookie("account_id", data.account_id);

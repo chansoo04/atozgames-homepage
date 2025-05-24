@@ -7,9 +7,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-// TODO: 비로그인 상태에서 들어올 때 로그인 페이지로 redirect
-// TODO: 검색엔진 크롤링 비활성화
-
 const tabs = ["문의하기", "내 문의내역"] as const;
 export default function Page() {
   const [isLoading, setIsLoading] = useState<boolean>(true);

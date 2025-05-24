@@ -39,7 +39,7 @@ export default function Page() {
       console.error(err);
       if (err?.message?.includes("Firebase"))
         return alert("로그인에 실패했습니다\n아이디, 비밀번호를 확인해주세요");
-      alert(err?.message ?? "애플 로그인에 실패했습니다!\n잠시 후 다시 시도해주세요");
+      alert(err?.message ?? "아토즈 로그인에 실패했습니다!\n잠시 후 다시 시도해주세요");
     }
   };
 

@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const data = await request.json();
-  console.log(data, "Data!");
 
   const url = process.env.LOGIN_AUTH_URL + "web.WebAuthService/AccountSignIn";
 
@@ -15,8 +14,6 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify({ credential: JSON.stringify(data) }),
   });
-
-  console.log(response, "response");
 
   if (!response.ok) {
     if (response.status === 404) {

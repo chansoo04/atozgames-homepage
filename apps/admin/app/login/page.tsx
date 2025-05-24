@@ -80,6 +80,14 @@ export default function Page() {
     }
   };
 
+  const handleKakao = () => {
+    window.location.href = "/api/oauth/kakao/login";
+  };
+
+  const handleNaver = () => {
+    window.location.href = "/api/oauth/naver/login";
+  };
+
   return (
     <main className="relative w-full">
       {/* 모바일(<640)에서만 보임 */}
@@ -120,8 +128,20 @@ export default function Page() {
               height={61}
               alt="애플 로그인"
             />
-            <Image src="/kakao_login.png" width={400} height={61} alt="카카오 로그인" />
-            <Image src="/naver_login.png" width={400} height={61} alt="네이버 로그인" />
+            <Image
+              onClick={() => handleKakao()}
+              src="/kakao_login.png"
+              width={400}
+              height={61}
+              alt="카카오 로그인"
+            />
+            <Image
+              onClick={() => handleNaver()}
+              src="/naver_login.png"
+              width={400}
+              height={61}
+              alt="네이버 로그인"
+            />
           </div>
         </div>
       </section>
@@ -137,7 +157,9 @@ export default function Page() {
 
           <div className="desktop:mt-20 desktop:flex desktop:flex-col desktop:items-center desktop:gap-y-5">
             <Image
-              onClick={() => (window.location.href = "/login/atoz")}
+              onClick={() =>
+                (window.location.href = `/login/atoz?redirect_uri=${searchParams.get("redirect_uri") ?? "/"}`)
+              }
               src="/atoz_login.png"
               width={500}
               height={61}
@@ -152,9 +174,30 @@ export default function Page() {
               height={61}
               alt="구글 로그인"
             />
-            <Image src="/apple_login.png" width={500} height={61} alt="애플 로그인" />
-            <Image src="/kakao_login.png" width={500} height={61} alt="카카오 로그인" />
-            <Image src="/naver_login.png" width={500} height={61} alt="네이버 로그인" />
+            <Image
+              onClick={() => handleApple()}
+              className="desktop:cursor-pointer"
+              src="/apple_login.png"
+              width={500}
+              height={61}
+              alt="애플 로그인"
+            />
+            <Image
+              onClick={() => handleKakao()}
+              className="desktop:cursor-pointer"
+              src="/kakao_login.png"
+              width={500}
+              height={61}
+              alt="카카오 로그인"
+            />
+            <Image
+              onClick={() => handleNaver()}
+              className="desktop:cursor-pointer"
+              src="/naver_login.png"
+              width={500}
+              height={61}
+              alt="네이버 로그인"
+            />
           </div>
         </div>
       </section>

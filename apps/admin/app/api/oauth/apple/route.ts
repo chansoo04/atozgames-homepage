@@ -14,8 +14,6 @@ export async function POST(request: Request) {
     body: JSON.stringify({ credential: JSON.stringify(data) }),
   });
 
-  console.log(response, "response");
-
   if (!response.ok) {
     if (response.status === 404) {
       return NextResponse.json(
@@ -33,7 +31,6 @@ export async function POST(request: Request) {
   }
 
   const responseData = await response.json();
-  console.log(responseData, "responseDAta");
 
   return NextResponse.json({
     result: "success",

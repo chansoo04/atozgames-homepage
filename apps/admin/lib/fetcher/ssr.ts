@@ -9,7 +9,6 @@ const getErrorMessage: BeforeErrorHook = async (error: HTTPError) => {
   return error;
 };
 
-// TODO : SSR에서도 revalidate 관련 값을 받아와야 함. 현재는 0으로 처리
 const ssr = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_URL,
   credentials: "include",

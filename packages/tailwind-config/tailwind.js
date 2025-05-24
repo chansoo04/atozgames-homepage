@@ -27,7 +27,6 @@ module.exports = {
         ...colors,
         transparent: "transparent",
         current: "currentColor",
-        // TODO : primary색상 팔레트 만들기
         primary: {
           // DEFAULT: '#7A98FF'
           DEFAULT: "#6485F4",

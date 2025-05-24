@@ -3,29 +3,32 @@ import Footer from "app/_components/Footer";
 
 export default function Page() {
   return (
-    <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
-      <TopBar />
-
+    <main className="relative w-full">
       {/* 모바일(<640)에서만 보임 */}
       <section
-        className="mt-[60px] flex min-h-[85vh] flex-col items-center px-5 pb-10 pt-8 desktop:hidden"
+        className="flex min-h-[90vh] flex-col items-center pb-10 pt-[92px] desktop:hidden"
         style={{
           background: "linear-gradient(0deg, #F5F5F8 0%, #DCEFFF 100%)",
         }}
       >
+        <TopBar />
         <h1 className="text-lg font-bold leading-relaxed text-gray-700">개인정보 처리방침</h1>
-        <div className="mt-5 flex w-full flex-col whitespace-pre-line rounded-[20px] bg-gray-100 p-5 text-sm font-normal leading-tight text-gray-700">
-          {privacyPolicy}
+        <div className="px-5 ">
+          <div className="mt-5 flex w-full flex-col whitespace-pre-line rounded-[20px] bg-gray-100 p-5 text-sm font-normal leading-tight text-gray-700">
+            {privacyPolicy}
+          </div>
         </div>
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="mb-80 hidden desktop:mt-60 desktop:block desktop:min-h-screen desktop:flex-1">
-        <div className="desktop:mx-auto desktop:flex desktop:w-full desktop:max-w-[1200px] desktop:flex-col">
+      <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
+        <TopBar />
+
+        <div className="desktop:flex desktop:flex-col desktop:items-center desktop:pt-60">
           <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
             개인정보 처리방침
           </h1>
-          <div className="desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+          <div className="max-w-[1200px] desktop:mb-52 desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
             <div className="whitespace-pre-line pb-20 pt-10 text-lg font-normal text-white">
               {privacyPolicy}
             </div>

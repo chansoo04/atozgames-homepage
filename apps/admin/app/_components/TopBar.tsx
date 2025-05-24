@@ -141,7 +141,7 @@ export default function TopBar() {
       </Transition>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <nav className="hidden desktop:absolute desktop:top-0 desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:border-b desktop:border-b-white/20">
+      <nav className="hidden desktop:absolute desktop:top-0 desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:border-b desktop:border-b-white/20 desktop:bg-transparent">
         <div className="desktop:mx-auto desktop:flex desktop:h-[120px] desktop:min-w-[1024px] desktop:items-center ">
           <Link href="/">
             <Image src="/logo_white.png" alt="카피바라 로고" width={181} height={70} />

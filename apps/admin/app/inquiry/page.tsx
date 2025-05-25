@@ -76,17 +76,32 @@ export default function Page() {
     if (!e.target.files?.length) return;
     const file = e.target.files[0];
 
-    const fileType = file.type.split("/")[1];
+    const formData = new FormData();
+    formData.append("file", file, file.name);
 
-    const getPresignedUrlRes = await fetch(process.env.NEXT_PUBLIC_S3_POST_URL as string, {
+    const req = await fetch("/api/inquiry/file", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ContentType: fileType }),
+      body: formData,
     });
-    const getPresignedUrl = await getPresignedUrlRes.json();
-    console.log(getPresignedUrl, "getPresignedUrl");
+
+    const resp = await req.json();
+    console.log(resp, "resp");
+
+    if (resp.result === "failure") {
+      alert(resp.message ?? "파일 업로드에 실패했습니다");
+    }
+
+    // const fileType = file.type.split("/")[1];
+    //
+    // const getPresignedUrlRes = await fetch(process.env.NEXT_PUBLIC_S3_POST_URL as string, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ ContentType: fileType }),
+    // });
+    // const getPresignedUrl = await getPresignedUrlRes.json();
+    // console.log(getPresignedUrl, "getPresignedUrl");
 
     // TODO: 파일 업로드 기능 개발 필요
     // alert("파일 업로드 기능 개발중!");

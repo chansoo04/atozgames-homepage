@@ -1,5 +1,29 @@
+import type { Metadata } from "next";
 import TopBar from "app/_components/TopBar";
 import Footer from "app/_components/Footer";
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://www.atozgames.net/rng-certificate"),
+  title: "아토즈포커 - 빠르고 스릴있는 포커게임",
+  openGraph: {
+    type: "website",
+    title: "아토즈포커 - 빠르고 스릴있는 포커게임",
+    description:
+      "아토즈포커는 BMM TestLabs로부터 RNG 인증을 받았습니다. 공정한 게임 진행을 보장합니다",
+    url: "https://www.atozgames.net/rng-certificate",
+    siteName: "아토즈포커",
+    // images: "https://storage.googleapis.com/static.carepet.io/cvsc/cvsc_opengraph.png",
+    // TODO: 이미지 제작 후 받기
+  },
+  category: "game",
+  keywords: ["아토즈포커", "모바일포커", "텍사스홀덤", "로우바둑이"],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
+  description:
+    "아토즈포커는 BMM TestLabs로부터 RNG 인증을 받았습니다. 공정한 게임 진행을 보장합니다",
+};
 
 export default async function Page() {
   return (

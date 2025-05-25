@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 
+// TODO: 페이지넹션 만들기
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.atozgames.net/announcement"),
   title: "아토즈포커 - 공지사항",

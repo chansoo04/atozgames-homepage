@@ -8,6 +8,8 @@ import axios from "lib/axios";
 import Image from "next/image";
 import Link from "next/link";
 
+// TODO: 답변 달리면 어떻게 보일지 만들기
+
 export default function Page() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [myInquiry, setMyInquiry] = useState<any>({});

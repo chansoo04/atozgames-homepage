@@ -5,6 +5,8 @@ import Footer from "app/_components/Footer";
 import Link from "next/link";
 import Image from "next/image";
 
+// TODO: 페이지네이션 만들기
+
 const changeDate = (date: number) => {
   const createdAt = new Date(date).toISOString();
   return createdAt.slice(0, 10).replaceAll("-", ".");

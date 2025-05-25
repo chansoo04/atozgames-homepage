@@ -16,7 +16,6 @@ export default function Page() {
   const handleAtozLogin = async () => {
     try {
       const atozAuth = await signInWithEmailAndPassword(auth, id + "@atozgames.net", password);
-      console.log(atozAuth, "AtozAuth");
 
       const response = await fetch("/api/oauth/atoz", {
         method: "POST",

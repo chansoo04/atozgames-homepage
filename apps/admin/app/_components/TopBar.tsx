@@ -145,7 +145,7 @@ export default function TopBar() {
 
       {/* 데스크탑(≥1024)에서만 보임 */}
       <nav className="hidden desktop:absolute desktop:top-0 desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:border-b desktop:border-b-white/20 desktop:bg-transparent">
-        <div className="desktop:mx-auto desktop:flex desktop:h-[120px] desktop:min-w-[1024px] desktop:items-center ">
+        <div className="desktop:mx-auto desktop:flex desktop:h-[120px] desktop:min-w-[1200px] desktop:items-center ">
           <Link href="/">
             <Image src="/logo_white.png" alt="카피바라 로고" width={181} height={70} />
           </Link>
@@ -251,7 +251,7 @@ export default function TopBar() {
           leaveTo="-translate-y-full opacity-0"
           className="hidden desktop:flex desktop:w-full "
         >
-          <div className="pl-[301px] desktop:mx-auto desktop:grid desktop:min-w-[1024px] desktop:grid-cols-3 desktop:gap-x-10">
+          <div className="pl-[301px] desktop:mx-auto desktop:grid desktop:min-w-[1200px] desktop:grid-cols-3 desktop:gap-x-10">
             {tabs.map((tab) => (
               <div key={tab} className="relative">
                 {tab === "공지사항" ? (

@@ -16,7 +16,6 @@ export default function Page() {
   }, [searchParams]);
 
   const finishKakaoLogin = async (custom_token: string) => {
-    console.log(custom_token, "custom_token");
     try {
       const kakaoAuth = await signInWithCustomToken(auth, custom_token);
 
@@ -45,10 +44,9 @@ export default function Page() {
         window.location.href = searchParams.get("redirect_uri") ?? "/";
       }
     } catch (err) {
-      console.log(err, "err");
+      console.error(err, "err");
       alert((err as any)?.message ?? "카카오 로그인에 실패했습니다!\n잠시 후 다시 시도해주세요");
-      // TODO: 살려야함
-      // window.location.href = "/login";
+      window.location.href = "/login";
     }
   };
 

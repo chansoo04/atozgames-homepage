@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import axios from "lib/axios";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -32,8 +33,7 @@ export default function Page() {
     });
 
     if (resp.data.result === "success") {
-      console.log(resp.data.inquiry);
-      setMyInquiry(resp.data.inquiry);
+      setMyInquiry({ ...resp.data.inquiry, append: JSON.parse(resp.data.inquiry.append ?? []) });
     } else {
       console.error("내 질문 불러오기 실패");
     }
@@ -72,6 +72,18 @@ export default function Page() {
             <div className="whitespace-pre-line py-5 text-sm font-normal leading-tight text-gray-700">
               {myInquiry.content}
             </div>
+            <div className="mt-10 flex w-full gap-x-2.5 overflow-auto">
+              {myInquiry?.append?.map((item: any, index: number) => (
+                <Image
+                  key={index.toString()}
+                  src={item}
+                  width={100}
+                  alt="이미지"
+                  height={100}
+                  onClick={() => (window.location.href = item)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -85,7 +97,7 @@ export default function Page() {
             1:1 문의
           </h1>
 
-          <div className="w-[1200px] desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+          <div className="min-h-[50vh] w-[1200px] desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
             <div className="desktop:flex desktop:flex-col">
               <div className="flex justify-between pt-10">
                 <div
@@ -104,8 +116,21 @@ export default function Page() {
                 {myInquiry.title}
               </h3>
 
-              <div className="mt-[35px] whitespace-pre-line pb-80 text-lg font-normal text-white">
+              <div className="mt-[35px] whitespace-pre-line text-lg font-normal text-white">
                 {myInquiry.content}
+              </div>
+
+              <div className="mt-[35px] flex w-full gap-x-5 overflow-auto">
+                {myInquiry?.append.map((item: any, index: number) => (
+                  <Image
+                    key={index.toString()}
+                    src={item}
+                    width={300}
+                    alt="이미지"
+                    height={300}
+                    onClick={() => (window.location.href = item)}
+                  />
+                ))}
               </div>
             </div>
           </div>

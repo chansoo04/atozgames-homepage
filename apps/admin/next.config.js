@@ -5,7 +5,7 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true,
     mdxRs: true,
-    missingSuspenseWithCSRBailout: false, // TODO: true로 변경
+    missingSuspenseWithCSRBailout: false,
   },
   headers: () => [
     {
@@ -51,6 +51,18 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "storage.googleapis.com",
+      },
+      {
+        protocol: "https",
+        hostname: "assets.dev.atozgames.net",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "assets.dev.atozgames.net",
+        port: "",
+        pathname: "/**",
       },
     ],
   },

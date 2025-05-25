@@ -64,8 +64,7 @@ export async function POST(request: NextRequest) {
       account_id: account_id,
       title: body.title,
       content: body.content,
-      // append: "",
-      // TODO: 파일 첨부 관련 기능 추가 필요
+      append: JSON.stringify(body.appendFile),
     }),
   });
 

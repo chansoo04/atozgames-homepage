@@ -12,8 +12,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
     });
   }
 
-  console.log(id, "id");
-
   const inquiryGetURL = process.env.LOGIN_AUTH_URL + "cs.CustomerService/GetCustomerQuestion";
   const response = await fetch(inquiryGetURL, {
     method: "POST",
@@ -29,7 +27,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
   });
 
   const data = await response.json();
-  console.log(data, "data");
 
   if (data.success === false) {
     return NextResponse.json({

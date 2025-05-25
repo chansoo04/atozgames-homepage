@@ -8,7 +8,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import axios from "lib/axios";
 
-// TODO: 검색엔진 크롤링 비활성화
+// TODO: 파일 삭제 기능 추가
 
 const tabs = ["문의하기", "내 문의내역"] as const;
 export default function Page() {
@@ -16,6 +16,7 @@ export default function Page() {
   const [active, setActive] = useState<(typeof tabs)[number]>("문의하기");
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const [appendFile, setAppendFile] = useState<string[]>([]);
   const [myInquiry, setMyInquiry] = useState<any[]>([]);
   const context = useContext(AuthContext);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -30,7 +31,6 @@ export default function Page() {
     } else {
       getMyInquiry();
     }
-    console.log(context.user);
   }, [isLoading, context.user]);
 
   const getMyInquiry = async () => {
@@ -40,7 +40,6 @@ export default function Page() {
     });
 
     if (resp.data.result === "success") {
-      console.log(resp.data.inquiry);
       setMyInquiry(resp.data.inquiry);
     } else {
       console.error("내 질문 불러오기 실패");
@@ -57,6 +56,7 @@ export default function Page() {
       data: {
         title,
         content,
+        appendFile,
       },
     });
 
@@ -85,26 +85,16 @@ export default function Page() {
     });
 
     const resp = await req.json();
-    console.log(resp, "resp");
 
     if (resp.result === "failure") {
       alert(resp.message ?? "파일 업로드에 실패했습니다");
     }
 
-    // const fileType = file.type.split("/")[1];
-    //
-    // const getPresignedUrlRes = await fetch(process.env.NEXT_PUBLIC_S3_POST_URL as string, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ ContentType: fileType }),
-    // });
-    // const getPresignedUrl = await getPresignedUrlRes.json();
-    // console.log(getPresignedUrl, "getPresignedUrl");
-
-    // TODO: 파일 업로드 기능 개발 필요
-    // alert("파일 업로드 기능 개발중!");
+    setAppendFile((oldState) => [resp.url, ...oldState]);
+    // input 초기화
+    if (fileRef.current) {
+      fileRef.current.value = "";
+    }
   };
 
   return (
@@ -260,6 +250,18 @@ export default function Page() {
                   <div className="mt-2.5 whitespace-pre-line text-center text-sm font-normal text-gray-500">
                     영역을 클릭하여{"\n"}파일을 추가하세요
                   </div>
+                  {appendFile.length === 0 ? null : (
+                    <div className="mt-2.5 flex flex-col gap-y-2.5">
+                      {appendFile.map((item, index: number) => (
+                        <div
+                          key={index.toString()}
+                          className="w-[250px] truncate rounded-[5px] bg-gray-300 p-[15px] text-sm font-semibold text-gray-600"
+                        >
+                          {item.split("/cs/")[1]}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <input
                   ref={fileRef}
@@ -458,7 +460,7 @@ export default function Page() {
                     <div className="text-xl font-bold text-gray-100">첨부파일</div>
                     <div
                       onClick={handleSelect}
-                      className="mt-5 flex w-full cursor-pointer flex-col items-center rounded-[5px] bg-white/15 py-10 "
+                      className="mt-5 flex w-full cursor-pointer flex-col items-center rounded-[5px] bg-white/15 px-[30px] py-10"
                     >
                       <Image
                         src="/file_upload_desktop.png"
@@ -469,6 +471,18 @@ export default function Page() {
                       <div className="mt-5 text-lg font-normal text-gray-400">
                         영역을 클릭하여 파일을 추가하세요
                       </div>
+                      {appendFile.length === 0 ? null : (
+                        <div className="mt-5 flex w-full flex-col gap-y-2.5">
+                          {appendFile.map((item, index: number) => (
+                            <div
+                              key={index.toString()}
+                              className="truncate rounded-[5px] border border-gray-400 bg-white/15 px-[30px] py-[15px] text-lg font-normal text-gray-100"
+                            >
+                              {item.split("/cs/")[1]}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     <input
                       ref={fileRef}

@@ -3,9 +3,7 @@ import { NextResponse, NextRequest } from "next/server";
 export async function POST(request: NextRequest) {
   // 1) req.formData()로 FormData 파싱 :contentReference[oaicite:8]{index=8}
   const formData = await request.formData();
-  console.log(formData, "formData");
   const file = formData.get("file") as File;
-  console.log(file, "file");
 
   // STEP 1. 파일 검증
   const fileType = file.type.split("/")[1];
@@ -29,16 +27,29 @@ export async function POST(request: NextRequest) {
       ContentType: fileType,
     }),
   });
-  console.log(presignedURLReq, "presignedURLReq");
   const presignedURLResp = await presignedURLReq.json();
-  console.log(presignedURLResp, "presignedURLResp");
 
-  // 2) 파일 데이터 접근 (Blob → ArrayBuffer 등으로 변환)
-  const arrayBuffer = await file.arrayBuffer();
-  console.log(arrayBuffer, "arrayBuffer");
-  // ...파일 저장 로직(예: AWS S3 업로드, 로컬 디스크 저장 등)
+  const uploadURL = presignedURLResp.uploadUrl;
+  const key = presignedURLResp.key;
+
+  // STEP 3. 파일 업로드
+  const uploadReq = await fetch(uploadURL, {
+    method: "PUT",
+    body: file,
+  });
+
+  if (!uploadReq.ok) {
+    return NextResponse.json({
+      result: "failure",
+      message: "파일 업로드에 실패했습니다. 잠시 후 다시 시도해주세요",
+    });
+  }
+
+  const resourceURL = process.env.S3_RESOURCE_URL + key;
 
   return NextResponse.json({
     result: "success",
+    message: "",
+    url: resourceURL,
   });
 }

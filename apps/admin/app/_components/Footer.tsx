@@ -37,7 +37,7 @@ export default function Footer() {
 
       {/* 데스크탑(≥1024)에서만 보임 */}
       <footer className="hidden desktop:flex desktop:w-full desktop:flex-col desktop:bg-[#16172D] desktop:pb-10 desktop:pt-[30px]">
-        <div className="desktop:mx-auto desktop:min-w-[1024px]">
+        <div className="desktop:mx-auto desktop:min-w-[1200px]">
           <div className="desktop:flex desktop:items-center desktop:justify-between">
             <Image src="/logo_gray.png" alt="카피바라 로고" width={156} height={60} />
             <div className="desktop:flex desktop:items-center ">

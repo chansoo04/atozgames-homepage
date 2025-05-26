@@ -251,7 +251,7 @@ export default function TopBar() {
           leaveTo="-translate-y-full opacity-0"
           className="hidden desktop:flex desktop:w-full "
         >
-          <div className="pl-[301px] desktop:mx-auto desktop:grid desktop:min-w-[1200px] desktop:grid-cols-3 desktop:gap-x-10">
+          <div className="pl-[301px] desktop:mx-auto desktop:flex desktop:min-w-[1200px] desktop:gap-x-10">
             {tabs.map((tab) => (
               <div key={tab} className="relative">
                 {tab === "공지사항" ? (

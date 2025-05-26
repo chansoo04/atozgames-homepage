@@ -33,6 +33,7 @@ export default function Page() {
       method: "get",
       url: `api/inquiry/${id}`,
     });
+    console.log(resp.data, "resp.data");
 
     if (resp.data.result === "success") {
       setMyInquiry({ ...resp.data.inquiry, append: JSON.parse(resp.data.inquiry.append ?? []) });
@@ -40,6 +41,8 @@ export default function Page() {
       console.error("내 질문 불러오기 실패");
     }
   };
+
+  const adminReply = myInquiry.customer_question_reply?.[0];
 
   return (
     <main className="relative w-full">
@@ -87,6 +90,43 @@ export default function Page() {
               ))}
             </div>
           </div>
+
+          {/* === 관리자 답변(있을 때만) === */}
+          {adminReply && (
+            <div className="mt-5 w-full rounded-[20px] bg-white px-5 pb-6 pt-5 shadow">
+              <div className="flex items-center gap-x-1">
+                <Image src="/profile.png" alt="관리자" width={20} height={20} />
+                <span className="text-sm font-semibold text-blue-600">관리자 답변</span>
+              </div>
+
+              <div
+                className="prose prose-sm mt-2 max-w-none text-gray-700"
+                dangerouslySetInnerHTML={{ __html: adminReply.reply }}
+              />
+
+              {/* 답변 첨부 이미지 */}
+              {adminReply.append &&
+                adminReply.append !== "null" &&
+                JSON.parse(adminReply.append).length > 0 && (
+                  <div className="mt-4 flex gap-x-2 overflow-auto">
+                    {JSON.parse(adminReply.append).map((imgSrc: string, idx: number) => (
+                      <Image
+                        key={idx}
+                        src={imgSrc}
+                        width={100}
+                        height={100}
+                        alt="답변 이미지"
+                        onClick={() => (window.location.href = imgSrc)}
+                      />
+                    ))}
+                  </div>
+                )}
+
+              <div className="mt-3 text-end text-xs text-gray-400">
+                {adminReply.created_at.slice(0, 10)}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -99,7 +139,7 @@ export default function Page() {
             1:1 문의
           </h1>
 
-          <div className="min-h-[50vh] w-[1200px] desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+          <div className="min-h-[50vh] w-[1200px] desktop:my-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
             <div className="desktop:flex desktop:flex-col">
               <div className="flex justify-between pt-10">
                 <div
@@ -123,7 +163,7 @@ export default function Page() {
               </div>
 
               <div className="mt-[35px] flex w-full gap-x-5 overflow-auto">
-                {myInquiry?.append.map((item: any, index: number) => (
+                {myInquiry?.append?.map((item: any, index: number) => (
                   <Image
                     key={index.toString()}
                     src={item}
@@ -135,6 +175,42 @@ export default function Page() {
                 ))}
               </div>
             </div>
+
+            {/* 답변 */}
+            {adminReply && (
+              <div className="mt-[50px] rounded-[20px] bg-white/10 px-8 py-6 backdrop-blur-md">
+                <div className="flex items-center gap-x-2">
+                  <Image src="/profile.png" alt="관리자" width={24} height={24} />
+                  <span className="text-lg font-semibold text-white">관리자 답변</span>
+                </div>
+
+                <div
+                  className="prose prose-invert mt-4 max-w-none text-white"
+                  dangerouslySetInnerHTML={{ __html: adminReply.reply }}
+                />
+
+                {adminReply.append &&
+                  adminReply.append !== "null" &&
+                  JSON.parse(adminReply.append).length > 0 && (
+                    <div className="mt-6 flex gap-x-5 overflow-auto">
+                      {JSON.parse(adminReply.append).map((imgSrc: string, idx: number) => (
+                        <Image
+                          key={idx}
+                          src={imgSrc}
+                          width={300}
+                          height={300}
+                          alt="답변 이미지"
+                          onClick={() => (window.location.href = imgSrc)}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                <div className="mt-4 text-right text-sm text-gray-400">
+                  {adminReply.created_at.slice(0, 10)}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

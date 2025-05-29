@@ -279,7 +279,7 @@ export default async function Page() {
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
+      <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
         <TopBar />
 
         <div className="desktop:flex desktop:flex-col desktop:items-center desktop:pt-60">
@@ -542,7 +542,7 @@ export default async function Page() {
       </section>
       <Footer />
     </main>
-    // <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
+    // <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop1.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
     //   <TopBar />
     //
     //   {/* 모바일(<640)에서만 보임 */}

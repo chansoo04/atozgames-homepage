@@ -144,101 +144,106 @@ export default function TopBar() {
       </Transition>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <nav className="hidden desktop:absolute desktop:top-0 desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:border-b desktop:border-b-white/20 desktop:bg-transparent">
-        <div className="desktop:mx-auto desktop:flex desktop:h-[120px] desktop:min-w-[1200px] desktop:items-center ">
-          <Link href="/">
-            <Image src="/logo_white.png" alt="카피바라 로고" width={181} height={70} />
-          </Link>
-          <div className="desktop:ml-[120px] desktop:grid desktop:grid-cols-3 desktop:gap-x-10">
-            {tabs.map((tab) => (
-              <div key={tab} className="relative">
-                {tab === "공지사항" ? (
-                  <Link
-                    href="/announcement"
-                    className={`desktop:flex desktop:h-[120px] desktop:w-[220px] desktop:items-center desktop:justify-center desktop:text-3xl desktop:font-medium  ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : "desktop:text-white/60"}`}
-                  >
-                    {tab}
-                  </Link>
-                ) : (
-                  <button
-                    className={`desktop:h-[120px] desktop:w-[220px] desktop:text-3xl desktop:font-medium ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : " desktop:text-white/60"}`}
-                    onClick={() => setIsOpen((oldState) => !oldState)}
-                  >
-                    {tab}
-                  </button>
-                )}
-                {active === tab ? (
-                  <svg
-                    onClick={() => setIsOpen((oldState) => !oldState)}
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="220"
-                    height="120"
-                    viewBox="0 0 220 120"
-                    fill="none"
-                  >
-                    <g opacity="0.21">
-                      <mask
-                        id="mask0_99_313"
-                        style={{ maskType: "alpha" }}
-                        maskUnits="userSpaceOnUse"
-                        x="0"
-                        y="0"
-                        width="220"
-                        height="120"
-                      >
-                        <rect width="220" height="120" fill="#D9D9D9" />
-                      </mask>
-                      <g mask="url(#mask0_99_313)">
-                        <g filter="url(#filter0_f_99_313)">
-                          <ellipse
-                            cx="110"
-                            cy="136.8"
-                            rx="67.2222"
-                            ry="66"
-                            fill="#2398FF"
-                            fillOpacity="0.59"
-                          />
+      <nav className="hidden desktop:absolute desktop:top-0 desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:bg-transparent">
+        <div className="desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:border-b desktop:border-b-white/20">
+          <div className="desktop:mx-auto desktop:flex desktop:h-[120px] desktop:min-w-[1200px] desktop:items-center ">
+            <Link href="/">
+              <Image src="/logo_white.png" alt="카피바라 로고" width={181} height={70} />
+            </Link>
+            <div className="desktop:ml-[120px] desktop:grid desktop:grid-cols-3 desktop:gap-x-10">
+              {tabs.map((tab) => (
+                <div key={tab} className="relative">
+                  {tab === "공지사항" ? (
+                    <Link
+                      href="/announcement"
+                      className={`desktop:flex desktop:h-[120px] desktop:w-[220px] desktop:items-center desktop:justify-center desktop:text-3xl desktop:font-medium  ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : "desktop:text-white/60"}`}
+                    >
+                      {tab}
+                    </Link>
+                  ) : (
+                    <button
+                      className={`desktop:h-[120px] desktop:w-[220px] desktop:text-3xl desktop:font-medium ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : " desktop:text-white/60"}`}
+                      onClick={() => setIsOpen((oldState) => !oldState)}
+                    >
+                      {tab}
+                    </button>
+                  )}
+                  {active === tab ? (
+                    <svg
+                      onClick={() => setIsOpen((oldState) => !oldState)}
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="220"
+                      height="120"
+                      viewBox="0 0 220 120"
+                      fill="none"
+                    >
+                      <g opacity="0.21">
+                        <mask
+                          id="mask0_99_313"
+                          style={{ maskType: "alpha" }}
+                          maskUnits="userSpaceOnUse"
+                          x="0"
+                          y="0"
+                          width="220"
+                          height="120"
+                        >
+                          <rect width="220" height="120" fill="#D9D9D9" />
+                        </mask>
+                        <g mask="url(#mask0_99_313)">
+                          <g filter="url(#filter0_f_99_313)">
+                            <ellipse
+                              cx="110"
+                              cy="136.8"
+                              rx="67.2222"
+                              ry="66"
+                              fill="#2398FF"
+                              fillOpacity="0.59"
+                            />
+                          </g>
                         </g>
                       </g>
-                    </g>
-                    <rect y="118.8" width="220" height="1.2" fill="url(#paint0_linear_99_313)" />
-                    <defs>
-                      <filter
-                        id="filter0_f_99_313"
-                        x="12.7778"
-                        y="40.8"
-                        width="194.444"
-                        height="192"
-                        filterUnits="userSpaceOnUse"
-                        colorInterpolationFilters="sRGB"
-                      >
-                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                        <feBlend
-                          mode="normal"
-                          in="SourceGraphic"
-                          in2="BackgroundImageFix"
-                          result="shape"
-                        />
-                        <feGaussianBlur stdDeviation="15" result="effect1_foregroundBlur_99_313" />
-                      </filter>
-                      <linearGradient
-                        id="paint0_linear_99_313"
-                        x1="0"
-                        y1="119.4"
-                        x2="220"
-                        y2="119.4"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop stopColor="#2398FF" stopOpacity="0" />
-                        <stop offset="0.5" stopColor="#2398FF" />
-                        <stop offset="1" stopColor="#2398FF" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                ) : null}
-              </div>
-            ))}
+                      <rect y="118.8" width="220" height="1.2" fill="url(#paint0_linear_99_313)" />
+                      <defs>
+                        <filter
+                          id="filter0_f_99_313"
+                          x="12.7778"
+                          y="40.8"
+                          width="194.444"
+                          height="192"
+                          filterUnits="userSpaceOnUse"
+                          colorInterpolationFilters="sRGB"
+                        >
+                          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                          <feBlend
+                            mode="normal"
+                            in="SourceGraphic"
+                            in2="BackgroundImageFix"
+                            result="shape"
+                          />
+                          <feGaussianBlur
+                            stdDeviation="15"
+                            result="effect1_foregroundBlur_99_313"
+                          />
+                        </filter>
+                        <linearGradient
+                          id="paint0_linear_99_313"
+                          x1="0"
+                          y1="119.4"
+                          x2="220"
+                          y2="119.4"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stopColor="#2398FF" stopOpacity="0" />
+                          <stop offset="0.5" stopColor="#2398FF" />
+                          <stop offset="1" stopColor="#2398FF" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  ) : null}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <Transition

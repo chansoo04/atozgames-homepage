@@ -89,7 +89,7 @@ export default function Page() {
             setActiveMobileSection(Number(e.target.getAttribute("data-index")));
           }
         }),
-      { root, threshold: 0.6 },
+      { root, threshold: 0.3 },
     );
     secs.forEach((s) => io.observe(s));
     return () => secs.forEach((s) => io.unobserve(s));
@@ -254,8 +254,271 @@ export default function Page() {
                   width={40}
                   height={94}
                 />
+                <table className="w-full">
+                  <tbody className="w-full">
+                    <tr className="h-[30px]">
+                      <th className="w-[55px] text-left text-[10px] font-medium text-[#A0ABDC]">
+                        딜러비
+                      </th>
+                      <th className="text-left text-sm font-medium text-white">5%→2%할인</th>
+                    </tr>
+                    <tr className="h-[30px] border-y  border-[#232741]">
+                      <th className="w-[55px] text-left text-[10px] font-medium text-[#A0ABDC]">
+                        보유한도
+                      </th>
+                      <th className="text-left text-sm font-medium text-white">10배 증가</th>
+                    </tr>
+                    <tr className="h-[30px]">
+                      <th className="w-[55px] text-left text-[10px] font-medium text-[#A0ABDC]">
+                        전용상점
+                      </th>
+                      <th className="text-left text-sm font-medium text-white">
+                        S클래스 전용 상점
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
+            <form className="flex w-full flex-col rounded-b-[20px] bg-[#F3F3F3] px-5 pb-5 pt-[22px]">
+              <div className="flex gap-x-[29px] pl-2.5">
+                <label className="flex items-center gap-x-1.5">
+                  <input
+                    type="radio"
+                    name="store"
+                    value="google"
+                    style={{
+                      // 기본 외형 제거
+                      appearance: "none",
+                      WebkitAppearance: "none",
+                      MozAppearance: "none",
+                      // 공통 크기와 테두리
+                      width: 20,
+                      height: 20,
+                      borderRadius: "50%",
+                      border: "1px solid black",
+                      margin: 0,
+                      cursor: "pointer",
+                      outline: "none",
+                      background: store === "google" ? "#1C4154" : "white",
+                      boxShadow: store === "google" ? "inset 0 0 0 4px #FFFFFF" : "none",
+                      transition: "background .15s ease",
+                    }}
+                    checked={store === "google"}
+                    onChange={(e) => setStore(e.target.value)}
+                  />
+                  <span className="text-sm font-normal leading-none text-black">Google Play</span>
+                </label>
+                <label className="flex items-center gap-x-1.5">
+                  <input
+                    type="radio"
+                    name="store"
+                    value="ios"
+                    style={{
+                      // 기본 외형 제거
+                      appearance: "none",
+                      WebkitAppearance: "none",
+                      MozAppearance: "none",
+                      // 공통 크기와 테두리
+                      width: 20,
+                      height: 20,
+                      borderRadius: "50%",
+                      border: "1px solid black",
+                      margin: 0,
+                      cursor: "pointer",
+                      outline: "none",
+                      background: store === "ios" ? "#1C4154" : "white",
+                      boxShadow: store === "ios" ? "inset 0 0 0 4px #FFFFFF" : "none",
+                      transition: "background .15s ease",
+                    }}
+                    checked={store === "ios"}
+                    onChange={(e) => setStore(e.target.value)}
+                  />
+                  <span className="text-sm font-normal leading-none text-black">App Store</span>
+                </label>
+              </div>
+              <div className="mt-[17px] w-full rounded-[10px] border-2 border-[#AAAAAA]">
+                <label className="flex items-center border-b-2 border-[#AAAAAA] px-3 py-3.5">
+                  <input
+                    type="checkbox"
+                    checked={allChecked}
+                    onChange={(e) => toggleAll(e.target.checked)}
+                    style={{
+                      // 기본 외형 제거
+                      appearance: "none",
+                      WebkitAppearance: "none",
+                      MozAppearance: "none",
+                      // 공통 크기와 테두리
+                      width: 20,
+                      height: 20,
+                      borderRadius: "5px",
+                      border: allChecked ? "1px solid #1C4154" : "1px solid black",
+                      cursor: "pointer",
+                      outline: "none",
+                      transition: "background .15s",
+                      background: allChecked
+                        ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
+                        : "#FFFFFF",
+                      boxShadow: "none",
+                    }}
+                  />
+                  <span className="px-2.5 text-sm font-semibold text-black">전체동의</span>
+                </label>
+                <div className="flex flex-col gap-y-2.5 py-3.5 pl-6">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="age"
+                      checked={checkedList.includes("age")}
+                      onChange={(e) => toggleOne(e.target.name)}
+                      style={{
+                        // 기본 외형 제거
+                        appearance: "none",
+                        WebkitAppearance: "none",
+                        MozAppearance: "none",
+                        // 공통 크기와 테두리
+                        width: 20,
+                        height: 20,
+                        borderRadius: "5px",
+                        border: checkedList.includes("age")
+                          ? "1px solid #1C4154"
+                          : "1px solid black",
+                        cursor: "pointer",
+                        outline: "none",
+                        transition: "background .15s",
+                        background: checkedList.includes("age")
+                          ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
+                          : "#FFFFFF",
+                        boxShadow: "none",
+                      }}
+                    />
+                    <span className="pl-2.5 text-xs font-normal text-black">만 18세 이상</span>
+                  </label>
+                  <div className="flex items-center">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="privacy"
+                        checked={checkedList.includes("privacy")}
+                        onChange={(e) => toggleOne(e.target.name)}
+                        style={{
+                          // 기본 외형 제거
+                          appearance: "none",
+                          WebkitAppearance: "none",
+                          MozAppearance: "none",
+                          // 공통 크기와 테두리
+                          width: 20,
+                          height: 20,
+                          borderRadius: "5px",
+                          border: checkedList.includes("privacy")
+                            ? "1px solid #1C4154"
+                            : "1px solid black",
+                          cursor: "pointer",
+                          outline: "none",
+                          transition: "background .15s",
+                          background: checkedList.includes("privacy")
+                            ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
+                            : "#FFFFFF",
+                          boxShadow: "none",
+                        }}
+                      />
+                      <span className="pl-2.5 text-xs font-normal text-black">
+                        개인정보 수집 및 이용 동의
+                      </span>
+                    </label>
+                    <span
+                      className="ml-2 rounded-full bg-[#1C4154] px-2 py-[3px] text-[10px] font-normal leading-[12px] text-white "
+                      onClick={() => alert("개발 예정")}
+                    >
+                      자세히
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="alarm"
+                        checked={checkedList.includes("alarm")}
+                        onChange={(e) => toggleOne(e.target.name)}
+                        style={{
+                          // 기본 외형 제거
+                          appearance: "none",
+                          WebkitAppearance: "none",
+                          MozAppearance: "none",
+                          // 공통 크기와 테두리
+                          width: 20,
+                          height: 20,
+                          borderRadius: "5px",
+                          border: checkedList.includes("alarm")
+                            ? "1px solid #1C4154"
+                            : "1px solid black",
+                          cursor: "pointer",
+                          outline: "none",
+                          transition: "background .15s",
+                          background: checkedList.includes("alarm")
+                            ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
+                            : "#FFFFFF",
+                          boxShadow: "none",
+                        }}
+                      />
+                      <span className="pl-2.5 text-xs font-normal text-black">
+                        게임 서비스 소식 받기
+                      </span>
+                    </label>
+                    <span
+                      className="ml-2 rounded-full bg-[#1C4154] px-2 py-[3px] text-[10px] font-normal leading-[12px] text-white "
+                      onClick={() => alert("개발 예정")}
+                    >
+                      자세히
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-2.5 flex h-12 w-full items-center rounded-[10px] border-2 border-[#AAAAAA] px-3.5 py-3">
+                <div className="pr-2 text-lg font-semibold text-[#1F1F1F]">010 -</div>
+                <input
+                  type="text" /* 숫자+하이픈 표시 위해 text */
+                  value={formatPhone(phoneNumber)}
+                  onChange={(e) => {
+                    // 숫자만 보존
+                    const raw = e.target.value.replace(/[^0-9]/g, "").slice(0, 8);
+                    setPhoneNumber(raw);
+                  }}
+                  placeholder="숫자만 입력해 주세요"
+                  className="w-[50vw] border-none p-0 text-lg font-semibold text-[#1F1F1F] outline-none placeholder:font-normal placeholder:leading-[40px] placeholder:text-gray-500 focus:border-transparent focus:ring-0"
+                />
+              </div>
+              <button
+                disabled={!allChecked || store === "" || phoneNumber === ""}
+                type="submit"
+                className="mt-2.5 h-[58px] w-full rounded-[10px] bg-[#1C4154] text-xl font-semibold leading-none text-white disabled:bg-gray-400"
+              >
+                사전등록하기
+              </button>
+              <div className="mt-4 flex justify-between">
+                <Image
+                  src="/advance_reservation_apple_mobile.png"
+                  alt="앱스토어 사전예약"
+                  width={73}
+                  height={118}
+                  onClick={() => alert("액션 머임?")}
+                />
+                <Image
+                  src="/advance_reservation_google_mobile.png"
+                  alt="구글 플레이스토어 사전예약"
+                  width={73}
+                  height={118}
+                  onClick={() => alert("액션 머임?")}
+                />
+                <Image
+                  src="/advance_reservation_onestore_mobile.png"
+                  alt="원스토어 사전예약"
+                  width={73}
+                  height={118}
+                  onClick={() => alert("액션 머임?")}
+                />
+              </div>
+            </form>
           </div>
         </section>
       </div>

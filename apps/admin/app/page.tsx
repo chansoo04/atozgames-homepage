@@ -1,7 +1,6 @@
 "use client";
 /* ----------------------------------------------------------------
   TODO LIST (keep for future tasks)
-  1) 백엔드 API 연동 → 사전등록 정보 DB 저장
   2) 데스크탑 · 모바일 공통 영상 모달 구현 (play 버튼 클릭 시)
   3) 모바일 전용 슬라이드 추가 디자인 및 내용 확정
   4) 배경 이미지 프리로드 & 퍼포먼스 최적화
@@ -21,6 +20,7 @@ export default function Page() {
 
   const [index, setIndex] = useState(0);
   const [activeDesktopSection, setActiveDesktopSection] = useState(0); // 0 or 1
+  const [activeMobileSection, setActiveMobileSection] = useState(0); // 0 or 1
   const [store, setStore] = useState<string>("");
   const [checkedList, setCheckedList] = useState<string[]>([]);
   const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -75,6 +75,26 @@ export default function Page() {
     return () => sections.forEach((s) => observer.unobserve(s));
   }, []);
 
+  /* 모바일 섹션 IntersectionObserver */
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const root = document.getElementById("mobile-scroll");
+    if (!root) return;
+    const secs = root.querySelectorAll<HTMLElement>(".mobile-section");
+    const io = new IntersectionObserver(
+      (es) =>
+        es.forEach((e) => {
+          if (e.isIntersecting) {
+            setActiveMobileSection(Number(e.target.getAttribute("data-index")));
+          }
+        }),
+      { root, threshold: 0.6 },
+    );
+    secs.forEach((s) => io.observe(s));
+    return () => secs.forEach((s) => io.unobserve(s));
+  }, []);
+
   const mobileBg = images.mobile[index];
   const desktopBg = images.desktop[index];
 
@@ -86,6 +106,16 @@ export default function Page() {
     const target = root.querySelector<HTMLElement>(`.desktop-section[data-index='${targetIdx}']`);
     if (target) {
       root.scrollTo({ top: target.offsetTop, behavior: "smooth" });
+    }
+  };
+
+  /* 모바일 버튼 클릭 시 섹션으로 스크롤 */
+  const scrollToMobileSection = (i: number) => {
+    if (typeof window === "undefined") return;
+    const root = document.getElementById("mobile-scroll");
+    const tgt = root?.querySelector<HTMLElement>(`.mobile-section[data-index='${i}']`);
+    if (tgt) {
+      root?.scrollTo({ top: tgt.offsetTop, behavior: "smooth" });
     }
   };
 
@@ -129,7 +159,6 @@ export default function Page() {
       age: checkedList.includes("age"),
       privacy: checkedList.includes("privacy"),
       alarm: checkedList.includes("alarm"),
-      // alarm: "1234",
     };
 
     const req = await csr
@@ -153,20 +182,81 @@ export default function Page() {
     <main className="relative w-full">
       {/* ───── 모바일 전용 ───── */}
       <div
+        id="mobile-scroll"
         className="h-screen snap-y snap-mandatory overflow-y-scroll bg-cover bg-fixed bg-top transition-[background-image] duration-1000 ease-in-out desktop:hidden"
         style={{ backgroundImage: `url(${mobileBg})` }}
       >
-        {/* 슬라이드 1 */}
-        <section className="flex min-h-screen snap-start flex-col items-center px-5 pt-24">
-          <h1 className="text-center text-lg font-bold text-white">사전예약 모집 준비중입니다</h1>
-          <div className="mt-5 w-full whitespace-pre-line rounded-[20px] bg-gray-100/80 p-5 text-sm font-normal leading-tight text-gray-700">
-            잠시만 기다려주세요
+        {/* 모바일 슬라이드 1 */}
+        <section
+          className="mobile-section flex min-h-screen snap-start flex-col items-center"
+          data-index={0}
+        >
+          <Image
+            src="/advance_reservation_logo_bar_mobile.png"
+            alt="로고"
+            width={150}
+            height={85}
+            className="mt-[102px]"
+          />
+          <h1 className="mt-[27px] whitespace-pre-line text-center font-gmarket text-3xl font-light text-white">
+            빠른 속도감과 100%{"\n"}공정한 카드 분배,{"\n"}아토즈포커
+          </h1>
+          <Image
+            src="/advance_reservation_play.png"
+            alt="play"
+            width={100}
+            height={100}
+            className="mt-[43px]"
+            onClick={() => alert("영상 재생 필요")}
+          />
+          <div className="flex w-full justify-center">
+            <button
+              type="button"
+              className="mt-[70px] w-[69vw] rounded-lg bg-[#1C4154] py-5 text-xl font-semibold text-white"
+              onClick={() => scrollToMobileSection(1)}
+            >
+              사전등록
+            </button>
           </div>
+          {/* 모바일 1페이지만 스크롤 아이콘 */}
+          {activeMobileSection === 0 && (
+            <Image
+              src="/advance_reservation_mouse_scroll.png"
+              alt="scroll"
+              width={63}
+              height={81}
+              className="absolute bottom-12"
+            />
+          )}
         </section>
 
-        {/* 슬라이드 2 */}
-        <section className="flex min-h-screen snap-start flex-col items-center justify-center">
-          <h2 className="text-2xl font-semibold text-white">두 번째 페이지</h2>
+        {/* 모바일 슬라이드 2 */}
+        <section
+          className="mobile-section flex min-h-screen snap-start items-center justify-center"
+          data-index={1}
+        >
+          <div className="mx-auto flex w-[83.3vw] flex-col">
+            <div className="flex w-full flex-col items-center rounded-t-[20px] bg-[#161B38] px-5 py-4">
+              <Image
+                src="/advance_reservation_reservation_mobile.png"
+                width={217}
+                height={97}
+                alt="아토즈포커 사전예약 사전등록"
+              />
+              <div className="mt-2 text-[10px] font-normal leading-none text-white">
+                기간: 2025년 7월 12일(토) - 2025년 8월 11일(월) 23:59
+              </div>
+              <div className="mt-5 text-xs font-medium leading-none text-white">사전등록 선물</div>
+              <div className="mt-[7px] flex h-[120px] w-full gap-x-4 rounded-[15px] bg-[#0C1027] px-6 py-[13px]">
+                <Image
+                  src="/advance_reservation_sclass.png"
+                  alt="사전등록 선물 S-Class"
+                  width={40}
+                  height={94}
+                />
+              </div>
+            </div>
+          </div>
         </section>
       </div>
 

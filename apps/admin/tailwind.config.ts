@@ -16,6 +16,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ["Pretendard", "-apple-system", "sans-serif"],
+      gmarket: ["GmarketSans", "sans-serif"],
     },
     screens: {
       // 모바일은 접두사 없이 ⇒ ‘0px’ 로 선언 안 해도 됨

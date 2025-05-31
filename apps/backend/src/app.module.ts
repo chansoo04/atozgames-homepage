@@ -13,6 +13,7 @@ import { DatabaseModule } from "./database/database.module";
 import { TestModule } from "./http/test/test.module";
 import { AnnouncementModule } from "./http/announcement/announcement.module";
 import { FaqModule } from "./http/faq/faq.module";
+import { AdvanceReservationModule } from "./http/advance-reservation/advance-reservation.module";
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { FaqModule } from "./http/faq/faq.module";
     TestModule,
     AnnouncementModule,
     FaqModule,
+    AdvanceReservationModule,
   ],
   providers: [{ provide: APP_PIPE, useClass: ValidationPipe }],
 })

@@ -25,6 +25,9 @@ export default function Page() {
   const [checkedList, setCheckedList] = useState<string[]>([]);
   const [phoneNumber, setPhoneNumber] = useState<string>("");
 
+  /* 4글자 이상 입력 시 자동 하이픈 삽입용 헬퍼 */
+  const formatPhone = (v: string) => (v.length > 4 ? `${v.slice(0, 4)}-${v.slice(4, 8)}` : v);
+
   const toggleAll = (flag: boolean) => {
     setCheckedList(flag ? agreementItems : []);
   };
@@ -472,12 +475,15 @@ export default function Page() {
               <div className="mt-5 flex w-full rounded-[10px] border-2 border-[#AAAAAA] px-5 py-4">
                 <div className="pr-3 text-2xl font-semibold text-[#1F1F1F]">010 -</div>
                 <input
-                  // TODO: 4글자 이상 입력 시 자동으로 -가 생기도록
-                  type="number"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  type="text" /* 숫자+하이픈 표시 위해 text */
+                  value={formatPhone(phoneNumber)}
+                  onChange={(e) => {
+                    // 숫자만 보존
+                    const raw = e.target.value.replace(/[^0-9]/g, "").slice(0, 8);
+                    setPhoneNumber(raw);
+                  }}
                   placeholder="'-'을 제외한 숫자만 입력해 주세요."
-                  className="w-[200px] border-none p-0 text-2xl font-semibold text-[#1F1F1F] placeholder-[#1F1F1F] outline-none focus:border-transparent focus:ring-0"
+                  className="w-[400px] border-none p-0 text-2xl font-semibold text-[#1F1F1F] outline-none placeholder:font-normal placeholder:leading-[40px] placeholder:text-gray-500 focus:border-transparent focus:ring-0"
                 />
               </div>
               <button

@@ -25,7 +25,6 @@ export class AdvanceReservationController {
     }
 
     const { store, phoneNumber, age, privacy, alarm } = body;
-    console.log(body, "body");
 
     if (
       !store ||

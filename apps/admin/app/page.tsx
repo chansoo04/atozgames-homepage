@@ -280,7 +280,10 @@ export default function Page() {
                 </table>
               </div>
             </div>
-            <form className="flex w-full flex-col rounded-b-[20px] bg-[#F3F3F3] px-5 pb-5 pt-[22px]">
+            <form
+              onSubmit={handleSubmit}
+              className="flex w-full flex-col rounded-b-[20px] bg-[#F3F3F3] px-5 pb-5 pt-[22px]"
+            >
               <div className="flex gap-x-[29px] pl-2.5">
                 <label className="flex items-center gap-x-1.5">
                   <input

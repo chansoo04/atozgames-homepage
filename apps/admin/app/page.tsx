@@ -502,6 +502,9 @@ export default function Page() {
                 <Image
                   src="/advance_reservation_apple_mobile.png"
                   alt="앱스토어 사전예약"
+                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                  quality={100}
+                  unoptimized
                   width={73}
                   height={118}
                   onClick={() => alert("액션 머임?")}
@@ -509,6 +512,9 @@ export default function Page() {
                 <Image
                   src="/advance_reservation_google_mobile.png"
                   alt="구글 플레이스토어 사전예약"
+                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                  quality={100}
+                  unoptimized
                   width={73}
                   height={118}
                   onClick={() => alert("액션 머임?")}
@@ -516,6 +522,9 @@ export default function Page() {
                 <Image
                   src="/advance_reservation_onestore_mobile.png"
                   alt="원스토어 사전예약"
+                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                  quality={100}
+                  unoptimized
                   width={73}
                   height={118}
                   onClick={() => alert("액션 머임?")}
@@ -633,7 +642,7 @@ export default function Page() {
 
             <form
               onSubmit={handleSubmit}
-              className="h-[600px] w-[720px]  rounded-r-[30px] bg-white px-12 pt-[74px]"
+              className="h-[600px] w-[720px]  rounded-r-[30px] bg-[#F3F3F3] px-12 pt-[74px]"
             >
               <div className="flex gap-x-[30px] pl-[13px]">
                 <label className="flex cursor-pointer items-center gap-x-1.5">
@@ -853,6 +862,9 @@ export default function Page() {
                 <Image
                   src="/advance_reservation_apple.png"
                   alt="앱스토어 사전예약"
+                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                  quality={100}
+                  unoptimized
                   width={198}
                   height={91}
                   onClick={() => alert("액션 머임?")}
@@ -860,6 +872,9 @@ export default function Page() {
                 <Image
                   src="/advance_reservation_google.png"
                   alt="구글 플레이스토어 사전예약"
+                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                  quality={100}
+                  unoptimized
                   width={198}
                   height={91}
                   onClick={() => alert("액션 머임?")}
@@ -867,6 +882,9 @@ export default function Page() {
                 <Image
                   src="/advance_reservation_onestore.png"
                   alt="원스토어 사전예약"
+                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                  quality={100}
+                  unoptimized
                   width={198}
                   height={91}
                   onClick={() => alert("액션 머임?")}

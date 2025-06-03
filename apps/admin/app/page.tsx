@@ -6,7 +6,7 @@
   4) 배경 이미지 프리로드 & 퍼포먼스 최적화
   ※ 위 TODO는 기능 구현 순서 논의를 위해 남겨두는 주석입니다.
 ---------------------------------------------------------------- */
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, useRef } from "react";
 import Image from "next/image";
 import csr from "lib/fetcher/csr";
 
@@ -23,7 +23,9 @@ export default function Page() {
   const [activeMobileSection, setActiveMobileSection] = useState(0); // 0 or 1
   const [store, setStore] = useState<string>("");
   const [checkedList, setCheckedList] = useState<string[]>([]);
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [frontPhoneNumber, setFrontPhoneNumber] = useState<string>("");
+  const [backPhoneNumber, setBackPhoneNumber] = useState<string>("");
+  const backPhoneRef = useRef<HTMLInputElement>(null);
 
   /* 4글자 이상 입력 시 자동 하이픈 삽입용 헬퍼 */
   const formatPhone = (v: string) => (v.length > 4 ? `${v.slice(0, 4)}-${v.slice(4, 8)}` : v);
@@ -146,9 +148,10 @@ export default function Page() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault(); // 새로고침 방지
-    if (store === "" || !allChecked || phoneNumber === "") {
+    if (store === "" || !allChecked || frontPhoneNumber === "" || backPhoneNumber === "") {
       return alert("사전 등록을 위해서 필요한 정보를 입력해주세요");
     }
+    const phoneNumber = frontPhoneNumber + backPhoneNumber;
     if (phoneNumber.length !== 8) {
       return alert("핸드폰번호를 정확하게 입력해주세요");
     }
@@ -168,7 +171,8 @@ export default function Page() {
         if (resp.result === "success") {
           setStore("");
           setCheckedList([]);
-          setPhoneNumber("");
+          setFrontPhoneNumber("");
+          setBackPhoneNumber("");
           alert("사전예약에 성공하였습니다");
         }
       })
@@ -477,22 +481,38 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-              <div className="mt-2.5 flex h-12 w-full items-center rounded-[10px] border-2 border-[#AAAAAA] px-3.5 py-3">
-                <div className="pr-2 text-lg font-semibold text-[#1F1F1F]">010 -</div>
+              <div className="mt-2.5 flex h-12 w-full items-center rounded-[10px] border-2 border-[#AAAAAA] bg-white px-3.5 py-3">
+                <div className="text-lg font-semibold text-[#1F1F1F]">010&nbsp;-&nbsp;</div>
                 <input
-                  type="text" /* 숫자+하이픈 표시 위해 text */
-                  value={formatPhone(phoneNumber)}
+                  type="number"
+                  placeholder="1234"
+                  value={frontPhoneNumber}
                   onChange={(e) => {
-                    // 숫자만 보존
-                    const raw = e.target.value.replace(/[^0-9]/g, "").slice(0, 8);
-                    setPhoneNumber(raw);
+                    if (e.target.value.length < 5) {
+                      setFrontPhoneNumber(e.target.value);
+                    }
+                    if (e.target.value.length === 4) {
+                      backPhoneRef?.current?.focus();
+                    }
                   }}
-                  placeholder="숫자만 입력해 주세요"
-                  className="w-[50vw] border-none p-0 text-lg font-semibold text-[#1F1F1F] outline-none placeholder:font-normal placeholder:leading-[40px] placeholder:text-gray-500 focus:border-transparent focus:ring-0"
+                  className="m-0 w-[46px] border-none p-0 text-lg font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
+                />
+                <div className="text-lg font-semibold leading-none text-[#1F1F1F]">
+                  &nbsp;-&nbsp;
+                </div>
+                <input
+                  type="number"
+                  placeholder="5678"
+                  value={backPhoneNumber}
+                  ref={backPhoneRef}
+                  onChange={(e) => setBackPhoneNumber(e.target.value)}
+                  className="m-0 w-[46px] border-none p-0 text-lg font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
                 />
               </div>
               <button
-                disabled={!allChecked || store === "" || phoneNumber === ""}
+                disabled={
+                  !allChecked || store === "" || frontPhoneNumber === "" || backPhoneNumber === ""
+                }
                 type="submit"
                 className="mt-2.5 h-[58px] w-full rounded-[10px] bg-[#1C4154] text-xl font-semibold leading-none text-white disabled:bg-gray-400"
               >
@@ -663,7 +683,7 @@ export default function Page() {
                       margin: 0,
                       cursor: "pointer",
                       outline: "none",
-                      background: store === "google" ? "#1C4154" : "white",
+                      background: store === "google" ? "#1C4154" : "#F3F3F3",
                       boxShadow: store === "google" ? "inset 0 0 0 4px #FFFFFF" : "none",
                       transition: "background .15s ease",
                     }}
@@ -690,7 +710,7 @@ export default function Page() {
                       margin: 0,
                       cursor: "pointer",
                       outline: "none",
-                      background: store === "ios" ? "#1C4154" : "white",
+                      background: store === "ios" ? "#1C4154" : "#F3F3F3",
                       boxShadow: store === "ios" ? "inset 0 0 0 4px #FFFFFF" : "none",
                       transition: "background .15s ease",
                     }}
@@ -721,7 +741,7 @@ export default function Page() {
                       transition: "background .15s",
                       background: allChecked
                         ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
-                        : "#FFFFFF",
+                        : "#F3F3F3",
                       boxShadow: "none",
                     }}
                   />
@@ -751,7 +771,7 @@ export default function Page() {
                         transition: "background .15s",
                         background: checkedList.includes("age")
                           ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
-                          : "#FFFFFF",
+                          : "#F3F3F3",
                         boxShadow: "none",
                       }}
                     />
@@ -781,7 +801,7 @@ export default function Page() {
                           transition: "background .15s",
                           background: checkedList.includes("privacy")
                             ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
-                            : "#FFFFFF",
+                            : "#F3F3F3",
                           boxShadow: "none",
                         }}
                       />
@@ -820,7 +840,7 @@ export default function Page() {
                           transition: "background .15s",
                           background: checkedList.includes("alarm")
                             ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
-                            : "#FFFFFF",
+                            : "#F3F3F3",
                           boxShadow: "none",
                         }}
                       />
@@ -837,22 +857,38 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-              <div className="mt-5 flex w-full rounded-[10px] border-2 border-[#AAAAAA] px-5 py-4">
-                <div className="pr-3 text-2xl font-semibold text-[#1F1F1F]">010 -</div>
+              <div className="mt-5 flex h-[58px] w-full items-center rounded-[10px] border-2 border-[#AAAAAA] bg-white px-5 py-4">
+                <div className="text-2xl font-semibold text-[#1F1F1F]">010&nbsp;-&nbsp;</div>
                 <input
-                  type="text" /* 숫자+하이픈 표시 위해 text */
-                  value={formatPhone(phoneNumber)}
+                  type="number"
+                  placeholder="1234"
+                  value={frontPhoneNumber}
                   onChange={(e) => {
-                    // 숫자만 보존
-                    const raw = e.target.value.replace(/[^0-9]/g, "").slice(0, 8);
-                    setPhoneNumber(raw);
+                    if (e.target.value.length < 5) {
+                      setFrontPhoneNumber(e.target.value);
+                    }
+                    if (e.target.value.length === 4) {
+                      backPhoneRef?.current?.focus();
+                    }
                   }}
-                  placeholder="'-'을 제외한 숫자만 입력해 주세요."
-                  className="w-[400px] border-none p-0 text-2xl font-semibold text-[#1F1F1F] outline-none placeholder:font-normal placeholder:leading-[40px] placeholder:text-gray-500 focus:border-transparent focus:ring-0"
+                  className="m-0 w-[60px] border-none p-0 text-2xl font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
+                />
+                <div className="text-2xl font-semibold leading-none text-[#1F1F1F]">
+                  &nbsp;-&nbsp;
+                </div>
+                <input
+                  type="number"
+                  placeholder="5678"
+                  value={backPhoneNumber}
+                  ref={backPhoneRef}
+                  onChange={(e) => setBackPhoneNumber(e.target.value)}
+                  className="m-0 w-[60px] border-none p-0 text-2xl font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
                 />
               </div>
               <button
-                disabled={!allChecked || store === "" || phoneNumber === ""}
+                disabled={
+                  !allChecked || store === "" || backPhoneNumber === "" || frontPhoneNumber === ""
+                }
                 type="submit"
                 className="mt-3.5 h-[68px] w-full rounded-[10px] bg-[#1C4154] text-xl font-semibold text-white disabled:bg-gray-400"
               >

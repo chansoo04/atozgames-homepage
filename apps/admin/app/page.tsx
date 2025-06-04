@@ -203,6 +203,7 @@ export default function Page() {
             width={150}
             height={85}
             className="mt-[102px]"
+            unoptimized
           />
           <h1 className="mt-[27px] whitespace-pre-line text-center font-gmarket text-3xl font-light text-white">
             빠른 속도감과 100%{"\n"}공정한 카드 분배,{"\n"}아토즈포커

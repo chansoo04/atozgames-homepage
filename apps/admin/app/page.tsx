@@ -14,9 +14,9 @@ const agreementItems = ["age", "privacy", "alarm"];
 // 원래 버전 + 데스크탑 인디케이터(클릭 스크롤 지원) + 마우스 스크롤 이미지 1페이지만 노출
 export default function Page() {
   const images = {
-    mobile: ["/bg_mobile2.png", "/bg_mobile2.png"],
+    mobile: ["/bg_mobile2.png"],
     // mobile: ["/test_1.png", "/test_2.png", "/test_3.png", "/test_4.png"],
-    desktop: ["/bg_desktop2.png", "/bg_desktop2.png"],
+    desktop: ["/bg_desktop2.png"],
     // desktop: ["/test_1.png", "/test_2.png", "/test_3.png", "/test_4.png"],
   } as const;
 
@@ -127,7 +127,7 @@ export default function Page() {
   const Indicator = () => {
     const items = ["메인", "사전등록"];
     return (
-      <div className="fixed right-[30px] top-1/2 z-50 flex -translate-y-1/2 flex-col items-end gap-[18px] desktop:flex">
+      <div className="fixed right-[30px] top-1/2 z-50 flex -translate-y-1/2 flex-col items-end gap-y-[18px] desktop:flex">
         {items.map((label, i) => {
           const isActive = i === activeDesktopSection;
           return (
@@ -579,7 +579,7 @@ export default function Page() {
             height={7}
             className="mt-16"
           />
-          <h1 className="mt-5 font-gmarket text-4xl font-light text-white">
+          <h1 className="mt-[21px] font-gmarket text-[38px] font-light leading-none tracking-wider text-white">
             빠른 속도감과 100% 공정한 카드 분배, 아토즈포커
           </h1>
           <Image

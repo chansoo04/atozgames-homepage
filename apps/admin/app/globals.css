@@ -78,6 +78,9 @@
     text-size-adjust: none;
     -webkit-text-size-adjust: none;
     -webkit-tap-highlight-color: transparent;
+    --tw-shadow-color: 0 0 0;
+    text-shadow: 0 0 1px rgb(var(--tw-shadow-color) / 0.30); /* 윈도우 폰트에 적용됨 */
+    @apply antialiased; /* ios 폰트에 적용됨 */
   }
 
   a,

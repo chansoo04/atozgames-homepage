@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import ClientProviders from "./ClientProvider";
 import { AuthProvider } from "./AuthProvider";
 import ClarityTracker from "./ClarityTracker";
+import { gmarketSans } from "app/fonts/gmarket";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.atozgames.net"),
@@ -37,7 +38,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ko" className="bg-white">
+    <html lang="ko" className={`bg-white ${gmarketSans.variable}`}>
       <head>
         <meta name="naver-site-verification" content="5dd4b35471d6a5a94c12da502d53a617fd69dd82" />
       </head>

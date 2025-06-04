@@ -133,10 +133,9 @@ export default function Page() {
           return (
             <div
               key={label}
-              className={`flex cursor-pointer items-center transition-all duration-300 ${isActive ? "flex h-10 w-[110px] items-center gap-x-2 rounded-lg bg-[#1C4154] px-[15px] text-lg font-semibold text-white" : "pr-[17px] text-lg font-normal text-white"}`}
+              className={`flex cursor-pointer items-center justify-center transition-all duration-300 ${isActive ? "flex h-10 w-[110px] items-center gap-x-2 rounded-lg bg-[#1C4154] px-[15px] text-lg font-semibold text-white" : "w-full justify-center text-lg font-normal text-white"}`}
               onClick={() => scrollToDesktopSection(i)}
             >
-              {isActive && <Image src="/arrow_left.png" alt="화살표" width={6.41} height={9.98} />}
               <span>{label}</span>
             </div>
           );
@@ -232,6 +231,7 @@ export default function Page() {
               width={63}
               height={81}
               className="absolute bottom-12"
+              unoptimized
             />
           )}
         </section>
@@ -579,7 +579,7 @@ export default function Page() {
             height={7}
             className="mt-16"
           />
-          <h1 className="mt-[21px] font-gmarket text-[38px] font-light leading-none tracking-wider text-white">
+          <h1 className="mt-[21px] font-gmarket text-[38px] font-light leading-none tracking-wide text-white">
             빠른 속도감과 100% 공정한 카드 분배, 아토즈포커
           </h1>
           <Image
@@ -592,7 +592,7 @@ export default function Page() {
           />
           <button
             type="button"
-            className="mt-[55px] h-[64px] w-[250px] rounded-lg bg-[#1C4154] text-xl font-semibold text-white"
+            className="mt-[55px] h-[64px] w-[250px] rounded-lg bg-[#1C4154] text-[22px] font-semibold text-white"
             onClick={() => scrollToDesktopSection(1)}
           >
             사전등록
@@ -600,6 +600,7 @@ export default function Page() {
           {/* 마우스 스크롤 이미지는 1페이지에서만 표시 */}
           {activeDesktopSection === 0 && (
             <Image
+              unoptimized
               src="/advance_reservation_mouse_scroll.png"
               alt="마우스 스크롤"
               width={63}

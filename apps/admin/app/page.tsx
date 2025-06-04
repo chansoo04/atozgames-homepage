@@ -15,7 +15,9 @@ const agreementItems = ["age", "privacy", "alarm"];
 export default function Page() {
   const images = {
     mobile: ["/bg_mobile2.png", "/bg_mobile2.png"],
+    // mobile: ["/test_1.png", "/test_2.png", "/test_3.png", "/test_4.png"],
     desktop: ["/bg_desktop2.png", "/bg_desktop2.png"],
+    // desktop: ["/test_1.png", "/test_2.png", "/test_3.png", "/test_4.png"],
   } as const;
 
   const [index, setIndex] = useState(0);
@@ -46,7 +48,7 @@ export default function Page() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.mobile.length);
-    }, 8000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 

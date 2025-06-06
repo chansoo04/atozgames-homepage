@@ -581,7 +581,7 @@ export default function Page() {
             height={7}
             className="mt-16"
           />
-          <h1 className="mt-[21px] font-gmarket text-[38px] font-light leading-none tracking-wide text-white">
+          <h1 className="mt-[21px] font-gmarket text-[38px] font-light leading-none text-white">
             빠른 속도감과 100% 공정한 카드 분배, 아토즈포커
           </h1>
           <Image

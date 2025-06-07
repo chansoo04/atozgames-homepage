@@ -10,7 +10,7 @@
 import { useState, useEffect, FormEvent, useRef } from "react";
 import Image from "next/image";
 import csr from "lib/fetcher/csr";
-import useWindowSize, { WindowSize } from "app/_components/useWindowSize";
+import useWindowSize, { type WindowSize } from "app/_components/useWindowSize";
 import { sizeCalc } from "app/_components/sizeCalculator";
 
 const agreementItems = ["age", "privacy", "alarm"];

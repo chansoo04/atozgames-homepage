@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export interface WindowSize {
+export type WindowSize = {
   width: number;
   height: number;
   ratio: number;
-}
+};
 
 export default function useWindowSize(): WindowSize {
   const [size, setSize] = useState<WindowSize>({

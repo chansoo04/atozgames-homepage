@@ -10,7 +10,7 @@
 import { useState, useEffect, FormEvent, useRef } from "react";
 import Image from "next/image";
 import csr from "lib/fetcher/csr";
-import useWindowSize, { type WindowSize } from "app/_components/useWindowSize";
+import useWindowSize from "app/_components/useWindowSize";
 import { sizeCalc } from "app/_components/sizeCalculator";
 
 const agreementItems = ["age", "privacy", "alarm"];
@@ -32,7 +32,7 @@ export default function Page() {
   const [backPhoneNumber, setBackPhoneNumber] = useState<string>("");
   const backPhoneRef = useRef<HTMLInputElement>(null);
   const frontPhoneRef = useRef<HTMLInputElement>(null);
-  const { ratio, width, height } = useWindowSize<WindowSize>();
+  const { ratio } = useWindowSize();
 
   const toggleAll = (flag: boolean) => {
     setCheckedList(flag ? agreementItems : []);

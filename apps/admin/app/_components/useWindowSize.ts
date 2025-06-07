@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export type WindowSize = {
+type WindowSize = {
   width: number;
   height: number;
   ratio: number;

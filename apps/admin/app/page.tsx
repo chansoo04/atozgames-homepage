@@ -10,6 +10,8 @@
 import { useState, useEffect, FormEvent, useRef } from "react";
 import Image from "next/image";
 import csr from "lib/fetcher/csr";
+import useWindowSize, { WindowSize } from "app/_components/useWindowSize";
+import { sizeCalc } from "app/_components/sizeCalculator";
 
 const agreementItems = ["age", "privacy", "alarm"];
 // 원래 버전 + 데스크탑 인디케이터(클릭 스크롤 지원) + 마우스 스크롤 이미지 1페이지만 노출
@@ -30,9 +32,7 @@ export default function Page() {
   const [backPhoneNumber, setBackPhoneNumber] = useState<string>("");
   const backPhoneRef = useRef<HTMLInputElement>(null);
   const frontPhoneRef = useRef<HTMLInputElement>(null);
-
-  /* 4글자 이상 입력 시 자동 하이픈 삽입용 헬퍼 */
-  const formatPhone = (v: string) => (v.length > 4 ? `${v.slice(0, 4)}-${v.slice(4, 8)}` : v);
+  const { ratio, width, height } = useWindowSize<WindowSize>();
 
   const toggleAll = (flag: boolean) => {
     setCheckedList(flag ? agreementItems : []);
@@ -190,12 +190,12 @@ export default function Page() {
       {/* ───── 모바일 전용 ───── */}
       <div
         id="mobile-scroll"
-        className="h-screen snap-y snap-mandatory overflow-y-scroll bg-cover bg-fixed bg-top transition-[background-image] duration-1000 ease-in-out desktop:hidden"
+        className="h-dvh snap-y snap-mandatory overflow-y-scroll bg-cover bg-fixed bg-top transition-[background-image] duration-1000 ease-in-out desktop:hidden"
         style={{ backgroundImage: `url(${mobileBg})` }}
       >
         {/* 모바일 슬라이드 1 */}
         <section
-          className="mobile-section flex min-h-screen snap-start flex-col items-center"
+          className="mobile-section flex h-dvh snap-start flex-col items-center"
           data-index={0}
         >
           <Image
@@ -203,10 +203,21 @@ export default function Page() {
             alt="로고"
             width={150}
             height={85}
-            className="mt-[102px]"
+            style={{
+              marginTop: sizeCalc(102, ratio),
+              width: sizeCalc(150, ratio),
+              height: sizeCalc(85, ratio),
+            }}
             unoptimized
           />
-          <h1 className="mt-[27px] whitespace-pre-line text-center font-gmarket text-3xl font-light leading-[40px] text-white">
+          <h1
+            className="whitespace-pre-line text-center font-gmarket font-light text-white"
+            style={{
+              marginTop: sizeCalc(27, ratio),
+              fontSize: sizeCalc(30, ratio),
+              lineHeight: sizeCalc(40, ratio),
+            }}
+          >
             빠른 속도감과 100%{"\n"}공정한 카드 분배,{"\n"}아토즈포커
           </h1>
           <Image
@@ -214,14 +225,24 @@ export default function Page() {
             alt="play"
             width={100}
             height={100}
-            className="mt-[43px]"
+            style={{
+              width: sizeCalc(100, ratio),
+              height: sizeCalc(100, ratio),
+              marginTop: sizeCalc(43, ratio),
+            }}
             onClick={() => alert("영상 재생 필요")}
           />
           <div className="flex w-full justify-center">
             <button
               type="button"
-              className="mt-[69px] h-[64px] w-[69vw] rounded-lg bg-[#1C4154] text-[22px] font-semibold text-white"
+              className="rounded-lg bg-[#1C4154] font-semibold text-white"
               onClick={() => scrollToMobileSection(1)}
+              style={{
+                marginTop: sizeCalc(69, ratio),
+                height: sizeCalc(64, ratio),
+                width: sizeCalc(250, ratio),
+                fontSize: sizeCalc(22, ratio),
+              }}
             >
               사전등록
             </button>
@@ -234,7 +255,11 @@ export default function Page() {
               width={63}
               height={81}
               className="absolute"
-              style={{ bottom: `calc(23px + env(safe-area-inset-bottom))` }}
+              style={{
+                width: sizeCalc(63, ratio),
+                height: sizeCalc(81, ratio),
+                bottom: sizeCalc(23, ratio),
+              }}
               unoptimized
             />
           )}
@@ -242,7 +267,7 @@ export default function Page() {
 
         {/* 모바일 슬라이드 2 */}
         <section
-          className="mobile-section flex min-h-screen snap-start items-center justify-center"
+          className="mobile-section flex h-dvh snap-start items-center justify-center overflow-hidden"
           data-index={1}
         >
           <div className="mx-auto flex w-[83.3vw] flex-col">

@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <meta name="naver-site-verification" content="5dd4b35471d6a5a94c12da502d53a617fd69dd82" />
       </head>
-      <body className="flex min-h-screen w-full justify-center px-0 pt-0 font-sans lining-nums text-gray-900 outline-none">
+      <body className="flex min-h-dvh w-full justify-center px-0 pt-0 font-sans lining-nums text-gray-900 outline-none desktop:min-h-screen">
         <AuthProvider>
           <ClientProviders>{children}</ClientProviders>
           <ClarityTracker />

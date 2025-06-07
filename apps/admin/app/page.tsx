@@ -29,6 +29,7 @@ export default function Page() {
   const [frontPhoneNumber, setFrontPhoneNumber] = useState<string>("");
   const [backPhoneNumber, setBackPhoneNumber] = useState<string>("");
   const backPhoneRef = useRef<HTMLInputElement>(null);
+  const frontPhoneRef = useRef<HTMLInputElement>(null);
 
   /* 4글자 이상 입력 시 자동 하이픈 삽입용 헬퍼 */
   const formatPhone = (v: string) => (v.length > 4 ? `${v.slice(0, 4)}-${v.slice(4, 8)}` : v);
@@ -637,6 +638,7 @@ export default function Page() {
                   alt="사전등록 선물 S-Class"
                   width={59}
                   height={139}
+                  className="mt-2.5"
                 />
                 <table className="w-full">
                   <tbody className="w-full">
@@ -868,6 +870,7 @@ export default function Page() {
                   type="number"
                   placeholder="1234"
                   value={frontPhoneNumber}
+                  ref={frontPhoneRef}
                   onChange={(e) => {
                     if (e.target.value.length < 5) {
                       setFrontPhoneNumber(e.target.value);
@@ -886,7 +889,14 @@ export default function Page() {
                   placeholder="5678"
                   value={backPhoneNumber}
                   ref={backPhoneRef}
-                  onChange={(e) => setBackPhoneNumber(e.target.value)}
+                  onChange={(e) => {
+                    if (e.target.value.length < 5) {
+                      setBackPhoneNumber(e.target.value);
+                    }
+                    if (e.target.value.length === 0) {
+                      frontPhoneRef?.current?.focus();
+                    }
+                  }}
                   className="m-0 w-[60px] border-none p-0 text-2xl font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
                 />
               </div>
@@ -895,7 +905,7 @@ export default function Page() {
                   !allChecked || store === "" || backPhoneNumber === "" || frontPhoneNumber === ""
                 }
                 type="submit"
-                className="mt-3.5 h-[68px] w-full rounded-[10px] bg-[#1C4154] text-xl font-semibold text-white disabled:bg-gray-400"
+                className="mt-3.5 h-[68px] w-full rounded-[10px] bg-[#1C4154] text-[22px] font-semibold text-white disabled:bg-gray-400"
               >
                 사전등록하기
               </button>

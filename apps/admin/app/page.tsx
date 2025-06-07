@@ -206,7 +206,7 @@ export default function Page() {
             className="mt-[102px]"
             unoptimized
           />
-          <h1 className="mt-[27px] whitespace-pre-line text-center font-gmarket text-3xl font-light text-white">
+          <h1 className="mt-[27px] whitespace-pre-line text-center font-gmarket text-3xl font-light leading-[40px] text-white">
             빠른 속도감과 100%{"\n"}공정한 카드 분배,{"\n"}아토즈포커
           </h1>
           <Image
@@ -220,7 +220,7 @@ export default function Page() {
           <div className="flex w-full justify-center">
             <button
               type="button"
-              className="mt-[70px] w-[69vw] rounded-lg bg-[#1C4154] py-5 text-xl font-semibold text-white"
+              className="mt-[69px] h-[64px] w-[69vw] rounded-lg bg-[#1C4154] text-[22px] font-semibold text-white"
               onClick={() => scrollToMobileSection(1)}
             >
               사전등록
@@ -233,7 +233,8 @@ export default function Page() {
               alt="scroll"
               width={63}
               height={81}
-              className="absolute bottom-12"
+              className="absolute"
+              style={{ bottom: `calc(23px + env(safe-area-inset-bottom))` }}
               unoptimized
             />
           )}

@@ -11,7 +11,7 @@ import { useState, useEffect, FormEvent, useRef } from "react";
 import Image from "next/image";
 import csr from "lib/fetcher/csr";
 import useWindowSize from "app/_components/useWindowSize";
-import { sizeCalc } from "app/_components/sizeCalculator";
+import { mobileSizeCalc } from "app/_components/sizeCalculator";
 
 const agreementItems = ["age", "privacy", "alarm"];
 // 원래 버전 + 데스크탑 인디케이터(클릭 스크롤 지원) + 마우스 스크롤 이미지 1페이지만 노출
@@ -30,8 +30,10 @@ export default function Page() {
   const [checkedList, setCheckedList] = useState<string[]>([]);
   const [frontPhoneNumber, setFrontPhoneNumber] = useState<string>("");
   const [backPhoneNumber, setBackPhoneNumber] = useState<string>("");
-  const backPhoneRef = useRef<HTMLInputElement>(null);
-  const frontPhoneRef = useRef<HTMLInputElement>(null);
+  const mobileBackPhoneRef = useRef<HTMLInputElement>(null);
+  const mobileFrontPhoneRef = useRef<HTMLInputElement>(null);
+  const desktopBackPhoneRef = useRef<HTMLInputElement>(null);
+  const desktopFrontPhoneRef = useRef<HTMLInputElement>(null);
   const { ratio } = useWindowSize();
 
   const toggleAll = (flag: boolean) => {
@@ -204,18 +206,18 @@ export default function Page() {
             width={150}
             height={85}
             style={{
-              marginTop: sizeCalc(102, ratio),
-              width: sizeCalc(150, ratio),
-              height: sizeCalc(85, ratio),
+              marginTop: mobileSizeCalc(102, ratio),
+              width: mobileSizeCalc(150, ratio),
+              height: mobileSizeCalc(85, ratio),
             }}
             unoptimized
           />
           <h1
             className="whitespace-pre-line text-center font-gmarket font-light text-white"
             style={{
-              marginTop: sizeCalc(27, ratio),
-              fontSize: sizeCalc(30, ratio),
-              lineHeight: sizeCalc(40, ratio),
+              marginTop: mobileSizeCalc(27, ratio),
+              fontSize: mobileSizeCalc(30, ratio),
+              lineHeight: mobileSizeCalc(40, ratio),
             }}
           >
             빠른 속도감과 100%{"\n"}공정한 카드 분배,{"\n"}아토즈포커
@@ -226,9 +228,9 @@ export default function Page() {
             width={100}
             height={100}
             style={{
-              width: sizeCalc(100, ratio),
-              height: sizeCalc(100, ratio),
-              marginTop: sizeCalc(43, ratio),
+              width: mobileSizeCalc(100, ratio),
+              height: mobileSizeCalc(100, ratio),
+              marginTop: mobileSizeCalc(43, ratio),
             }}
             onClick={() => alert("영상 재생 필요")}
           />
@@ -238,10 +240,10 @@ export default function Page() {
               className="rounded-lg bg-[#1C4154] font-semibold text-white"
               onClick={() => scrollToMobileSection(1)}
               style={{
-                marginTop: sizeCalc(69, ratio),
-                height: sizeCalc(64, ratio),
-                width: sizeCalc(250, ratio),
-                fontSize: sizeCalc(22, ratio),
+                marginTop: mobileSizeCalc(69, ratio),
+                height: mobileSizeCalc(64, ratio),
+                width: mobileSizeCalc(250, ratio),
+                fontSize: mobileSizeCalc(22, ratio),
               }}
             >
               사전등록
@@ -256,9 +258,9 @@ export default function Page() {
               height={81}
               className="absolute"
               style={{
-                width: sizeCalc(63, ratio),
-                height: sizeCalc(81, ratio),
-                bottom: sizeCalc(23, ratio),
+                width: mobileSizeCalc(63, ratio),
+                height: mobileSizeCalc(81, ratio),
+                bottom: mobileSizeCalc(23, ratio),
               }}
               unoptimized
             />
@@ -270,44 +272,151 @@ export default function Page() {
           className="mobile-section flex h-dvh snap-start items-center justify-center overflow-hidden"
           data-index={1}
         >
-          <div className="mx-auto flex w-[83.3vw] flex-col">
-            <div className="flex w-full flex-col items-center rounded-t-[20px] bg-[#161B38] px-5 py-4">
+          <div
+            className="mx-auto flex flex-col"
+            style={{
+              width: mobileSizeCalc(300, ratio),
+              height: mobileSizeCalc(726, ratio),
+            }}
+          >
+            <div
+              className="flex w-full flex-col items-center rounded-t-[20px] bg-[#161B38] py-4"
+              style={{
+                paddingLeft: mobileSizeCalc(20, ratio),
+                paddingRight: mobileSizeCalc(20, ratio),
+                paddingTop: mobileSizeCalc(16, ratio),
+                paddingBottom: mobileSizeCalc(19, ratio),
+                height: mobileSizeCalc(257, ratio),
+              }}
+            >
               <Image
                 src="/advance_reservation_reservation_mobile.png"
-                width={217}
-                height={97}
+                width={202}
+                height={71}
+                style={{
+                  width: mobileSizeCalc(202, ratio),
+                  height: mobileSizeCalc(71, ratio),
+                }}
                 alt="아토즈포커 사전예약 사전등록"
               />
-              <div className="mt-2 text-[10px] font-normal leading-none text-white">
+              <div
+                className="font-normal leading-none text-white"
+                style={{
+                  marginTop: mobileSizeCalc(13, ratio),
+                  fontSize: mobileSizeCalc(10, ratio),
+                }}
+              >
                 기간: 2025년 7월 12일(토) - 2025년 8월 11일(월) 23:59
               </div>
-              <div className="mt-5 text-xs font-medium leading-none text-white">사전등록 선물</div>
-              <div className="mt-[7px] flex h-[120px] w-full gap-x-4 rounded-[15px] bg-[#0C1027] px-6 py-[13px]">
+              <div
+                className="font-medium text-white"
+                style={{
+                  marginTop: mobileSizeCalc(13, ratio),
+                  fontSize: mobileSizeCalc(11, ratio),
+                  lineHeight: mobileSizeCalc(14, ratio),
+                }}
+              >
+                사전등록 선물
+              </div>
+              <div
+                className="flex w-full rounded-[15px] bg-[#0C1027]"
+                style={{
+                  marginTop: mobileSizeCalc(11, ratio),
+                  height: mobileSizeCalc(90, ratio),
+                  columnGap: mobileSizeCalc(17, ratio),
+                  paddingLeft: mobileSizeCalc(20, ratio),
+                  paddingRight: mobileSizeCalc(25, ratio),
+                  paddingTop: mobileSizeCalc(13, ratio),
+                  paddingBottom: mobileSizeCalc(13, ratio),
+                }}
+              >
                 <Image
                   src="/advance_reservation_sclass.png"
                   alt="사전등록 선물 S-Class"
-                  width={40}
-                  height={94}
+                  width={28.56}
+                  height={64}
+                  style={{
+                    width: mobileSizeCalc(28.56, ratio),
+                    height: mobileSizeCalc(64, ratio),
+                  }}
                 />
                 <table className="w-full">
                   <tbody className="w-full">
-                    <tr className="h-[30px]">
-                      <th className="w-[55px] text-left text-[10px] font-medium text-[#A0ABDC]">
+                    <tr
+                      className="flex items-center"
+                      style={{
+                        height: mobileSizeCalc(24, ratio),
+                      }}
+                    >
+                      <th
+                        className="text-left font-medium text-[#A0ABDC]"
+                        style={{
+                          width: mobileSizeCalc(55, ratio),
+                          fontSize: mobileSizeCalc(10, ratio),
+                          lineHeight: mobileSizeCalc(12, ratio),
+                        }}
+                      >
                         딜러비
                       </th>
-                      <th className="text-left text-sm font-medium text-white">5%→2%할인</th>
+                      <th
+                        className="text-left font-medium text-white"
+                        style={{
+                          fontSize: mobileSizeCalc(14, ratio),
+                          lineHeight: mobileSizeCalc(14, ratio),
+                        }}
+                      >
+                        5%→2%할인
+                      </th>
                     </tr>
-                    <tr className="h-[30px] border-y  border-[#232741]">
-                      <th className="w-[55px] text-left text-[10px] font-medium text-[#A0ABDC]">
+                    <tr
+                      className="flex items-center border-y border-[#232741]"
+                      style={{
+                        height: mobileSizeCalc(24, ratio),
+                      }}
+                    >
+                      <th
+                        className="text-left font-medium  text-[#A0ABDC]"
+                        style={{
+                          width: mobileSizeCalc(55, ratio),
+                          fontSize: mobileSizeCalc(10, ratio),
+                          lineHeight: mobileSizeCalc(12, ratio),
+                        }}
+                      >
                         보유한도
                       </th>
-                      <th className="text-left text-sm font-medium text-white">10배 증가</th>
+                      <th
+                        className="text-left font-medium text-white"
+                        style={{
+                          fontSize: mobileSizeCalc(14, ratio),
+                          lineHeight: mobileSizeCalc(14, ratio),
+                        }}
+                      >
+                        10배 증가
+                      </th>
                     </tr>
-                    <tr className="h-[30px]">
-                      <th className="w-[55px] text-left text-[10px] font-medium text-[#A0ABDC]">
+                    <tr
+                      className="flex items-center"
+                      style={{
+                        height: mobileSizeCalc(24, ratio),
+                      }}
+                    >
+                      <th
+                        className="text-left font-medium text-[#A0ABDC]"
+                        style={{
+                          width: mobileSizeCalc(55, ratio),
+                          fontSize: mobileSizeCalc(10, ratio),
+                          lineHeight: mobileSizeCalc(12, ratio),
+                        }}
+                      >
                         전용상점
                       </th>
-                      <th className="text-left text-sm font-medium text-white">
+                      <th
+                        className="text-left font-medium text-white"
+                        style={{
+                          fontSize: mobileSizeCalc(14, ratio),
+                          lineHeight: mobileSizeCalc(14, ratio),
+                        }}
+                      >
                         S클래스 전용 상점
                       </th>
                     </tr>
@@ -317,9 +426,21 @@ export default function Page() {
             </div>
             <form
               onSubmit={handleSubmit}
-              className="flex w-full flex-col rounded-b-[20px] bg-[#F3F3F3] px-5 pb-5 pt-[22px]"
+              className="flex w-full flex-col rounded-b-[20px] bg-[#F3F3F3]"
+              style={{
+                paddingLeft: mobileSizeCalc(20, ratio),
+                paddingRight: mobileSizeCalc(20, ratio),
+                paddingTop: mobileSizeCalc(13, ratio),
+                paddingBottom: mobileSizeCalc(19, ratio),
+              }}
             >
-              <div className="flex gap-x-[29px] pl-2.5">
+              <div
+                className="flex"
+                style={{
+                  paddingLeft: mobileSizeCalc(10, ratio),
+                  columnGap: mobileSizeCalc(29, ratio),
+                }}
+              >
                 <label className="flex items-center gap-x-1.5">
                   <input
                     type="radio"
@@ -331,8 +452,8 @@ export default function Page() {
                       WebkitAppearance: "none",
                       MozAppearance: "none",
                       // 공통 크기와 테두리
-                      width: 20,
-                      height: 20,
+                      width: mobileSizeCalc(20, ratio),
+                      height: mobileSizeCalc(20, ratio),
                       borderRadius: "50%",
                       border: "1px solid black",
                       margin: 0,
@@ -345,7 +466,14 @@ export default function Page() {
                     checked={store === "google"}
                     onChange={(e) => setStore(e.target.value)}
                   />
-                  <span className="text-sm font-normal leading-none text-black">Google Play</span>
+                  <span
+                    className="font-normal leading-none text-black"
+                    style={{
+                      fontSize: mobileSizeCalc(14, ratio),
+                    }}
+                  >
+                    Google Play
+                  </span>
                 </label>
                 <label className="flex items-center gap-x-1.5">
                   <input
@@ -358,8 +486,8 @@ export default function Page() {
                       WebkitAppearance: "none",
                       MozAppearance: "none",
                       // 공통 크기와 테두리
-                      width: 20,
-                      height: 20,
+                      width: mobileSizeCalc(20, ratio),
+                      height: mobileSizeCalc(20, ratio),
                       borderRadius: "50%",
                       border: "1px solid black",
                       margin: 0,
@@ -372,11 +500,30 @@ export default function Page() {
                     checked={store === "ios"}
                     onChange={(e) => setStore(e.target.value)}
                   />
-                  <span className="text-sm font-normal leading-none text-black">App Store</span>
+                  <span
+                    className="font-normal leading-none text-black"
+                    style={{
+                      fontSize: mobileSizeCalc(14, ratio),
+                    }}
+                  >
+                    App Store
+                  </span>
                 </label>
               </div>
-              <div className="mt-[17px] w-full rounded-[10px] border-2 border-[#AAAAAA]">
-                <label className="flex items-center border-b-2 border-[#AAAAAA] px-3 py-3.5">
+              <div
+                className="w-full rounded-[10px] border-2 border-[#AAAAAA]"
+                style={{
+                  marginTop: mobileSizeCalc(10, ratio),
+                }}
+              >
+                <label
+                  className="flex items-center border-b-2 border-[#AAAAAA] py-3.5"
+                  style={{
+                    paddingLeft: mobileSizeCalc(13, ratio),
+                    paddingTop: mobileSizeCalc(11, ratio),
+                    paddingBottom: mobileSizeCalc(10, ratio),
+                  }}
+                >
                   <input
                     type="checkbox"
                     checked={allChecked}
@@ -387,8 +534,8 @@ export default function Page() {
                       WebkitAppearance: "none",
                       MozAppearance: "none",
                       // 공통 크기와 테두리
-                      width: 20,
-                      height: 20,
+                      width: mobileSizeCalc(20, ratio),
+                      height: mobileSizeCalc(20, ratio),
                       borderRadius: "5px",
                       border: allChecked ? "1px solid #1C4154" : "1px solid black",
                       cursor: "pointer",
@@ -400,9 +547,25 @@ export default function Page() {
                       boxShadow: "none",
                     }}
                   />
-                  <span className="px-2.5 text-sm font-semibold text-black">전체동의</span>
+                  <span
+                    className="font-semibold leading-none text-black"
+                    style={{
+                      paddingLeft: mobileSizeCalc(11, ratio),
+                      fontSize: mobileSizeCalc(14, ratio),
+                    }}
+                  >
+                    전체동의
+                  </span>
                 </label>
-                <div className="flex flex-col gap-y-2.5 py-3.5 pl-6">
+                <div
+                  className="flex flex-col"
+                  style={{
+                    paddingLeft: mobileSizeCalc(24, ratio),
+                    paddingTop: mobileSizeCalc(10, ratio),
+                    paddingBottom: mobileSizeCalc(10, ratio),
+                    rowGap: mobileSizeCalc(8, ratio),
+                  }}
+                >
                   <label className="flex items-center">
                     <input
                       type="checkbox"
@@ -415,8 +578,8 @@ export default function Page() {
                         WebkitAppearance: "none",
                         MozAppearance: "none",
                         // 공통 크기와 테두리
-                        width: 20,
-                        height: 20,
+                        width: mobileSizeCalc(20, ratio),
+                        height: mobileSizeCalc(20, ratio),
                         borderRadius: "5px",
                         border: checkedList.includes("age")
                           ? "1px solid #1C4154"
@@ -430,7 +593,15 @@ export default function Page() {
                         boxShadow: "none",
                       }}
                     />
-                    <span className="pl-2.5 text-xs font-normal text-black">만 18세 이상</span>
+                    <span
+                      className="font-normal leading-none text-black"
+                      style={{
+                        paddingLeft: mobileSizeCalc(9, ratio),
+                        fontSize: mobileSizeCalc(13, ratio),
+                      }}
+                    >
+                      만 18세 이상
+                    </span>
                   </label>
                   <div className="flex items-center">
                     <label className="flex items-center">
@@ -445,8 +616,8 @@ export default function Page() {
                           WebkitAppearance: "none",
                           MozAppearance: "none",
                           // 공통 크기와 테두리
-                          width: 20,
-                          height: 20,
+                          width: mobileSizeCalc(20, ratio),
+                          height: mobileSizeCalc(20, ratio),
                           borderRadius: "5px",
                           border: checkedList.includes("privacy")
                             ? "1px solid #1C4154"
@@ -460,12 +631,27 @@ export default function Page() {
                           boxShadow: "none",
                         }}
                       />
-                      <span className="pl-2.5 text-xs font-normal text-black">
+                      <span
+                        className="font-normal leading-none text-black"
+                        style={{
+                          paddingLeft: mobileSizeCalc(9, ratio),
+                          fontSize: mobileSizeCalc(13, ratio),
+                        }}
+                      >
                         개인정보 수집 및 이용 동의
                       </span>
                     </label>
                     <span
-                      className="ml-2 rounded-full bg-[#1C4154] px-2 py-[3px] text-[10px] font-normal leading-[12px] text-white "
+                      className="rounded-full bg-[#1C4154] font-normal text-white "
+                      style={{
+                        marginLeft: mobileSizeCalc(9, ratio),
+                        paddingLeft: mobileSizeCalc(8, ratio),
+                        paddingRight: mobileSizeCalc(8, ratio),
+                        paddingTop: mobileSizeCalc(3, ratio),
+                        paddingBottom: mobileSizeCalc(3, ratio),
+                        fontSize: mobileSizeCalc(11, ratio),
+                        lineHeight: mobileSizeCalc(12, ratio),
+                      }}
                       onClick={() => alert("개발 예정")}
                     >
                       자세히
@@ -484,8 +670,8 @@ export default function Page() {
                           WebkitAppearance: "none",
                           MozAppearance: "none",
                           // 공통 크기와 테두리
-                          width: 20,
-                          height: 20,
+                          width: mobileSizeCalc(20, ratio),
+                          height: mobileSizeCalc(20, ratio),
                           borderRadius: "5px",
                           border: checkedList.includes("alarm")
                             ? "1px solid #1C4154"
@@ -499,12 +685,27 @@ export default function Page() {
                           boxShadow: "none",
                         }}
                       />
-                      <span className="pl-2.5 text-xs font-normal text-black">
+                      <span
+                        className="font-normal leading-none text-black"
+                        style={{
+                          paddingLeft: mobileSizeCalc(9, ratio),
+                          fontSize: mobileSizeCalc(13, ratio),
+                        }}
+                      >
                         게임 서비스 소식 받기
                       </span>
                     </label>
                     <span
-                      className="ml-2 rounded-full bg-[#1C4154] px-2 py-[3px] text-[10px] font-normal leading-[12px] text-white "
+                      className="rounded-full bg-[#1C4154] font-normal text-white "
+                      style={{
+                        marginLeft: mobileSizeCalc(9, ratio),
+                        paddingLeft: mobileSizeCalc(8, ratio),
+                        paddingRight: mobileSizeCalc(8, ratio),
+                        paddingTop: mobileSizeCalc(3, ratio),
+                        paddingBottom: mobileSizeCalc(3, ratio),
+                        fontSize: mobileSizeCalc(11, ratio),
+                        lineHeight: mobileSizeCalc(12, ratio),
+                      }}
                       onClick={() => alert("개발 예정")}
                     >
                       자세히
@@ -512,32 +713,70 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-              <div className="mt-2.5 flex h-12 w-full items-center rounded-[10px] border-2 border-[#AAAAAA] bg-white px-3.5 py-3">
-                <div className="text-lg font-semibold text-[#1F1F1F]">010&nbsp;-&nbsp;</div>
+              <div
+                className="flex w-full items-center rounded-[10px] border-2 border-[#AAAAAA] bg-white"
+                style={{
+                  marginTop: mobileSizeCalc(10, ratio),
+                  height: mobileSizeCalc(49, ratio),
+                  paddingLeft: mobileSizeCalc(15, ratio),
+                  paddingTop: mobileSizeCalc(16, ratio),
+                  paddingBottom: mobileSizeCalc(14, ratio),
+                }}
+              >
+                <div
+                  className="font-semibold leading-none text-[#1F1F1F]"
+                  style={{
+                    fontSize: mobileSizeCalc(18, ratio),
+                  }}
+                >
+                  010&nbsp;-&nbsp;
+                </div>
                 <input
                   type="number"
                   placeholder="1234"
                   value={frontPhoneNumber}
+                  ref={mobileFrontPhoneRef}
                   onChange={(e) => {
                     if (e.target.value.length < 5) {
                       setFrontPhoneNumber(e.target.value);
                     }
                     if (e.target.value.length === 4) {
-                      backPhoneRef?.current?.focus();
+                      console.log("오니???");
+                      setTimeout(() => mobileBackPhoneRef?.current?.focus(), 1);
                     }
                   }}
-                  className="m-0 w-[46px] border-none p-0 text-lg font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
+                  className="m-0 border-none p-0 font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
+                  style={{
+                    fontSize: mobileSizeCalc(18, ratio),
+                    width: mobileSizeCalc(46, ratio),
+                  }}
                 />
-                <div className="text-lg font-semibold leading-none text-[#1F1F1F]">
+                <div
+                  className="font-semibold leading-none text-[#1F1F1F]"
+                  style={{
+                    fontSize: mobileSizeCalc(18, ratio),
+                  }}
+                >
                   &nbsp;-&nbsp;
                 </div>
                 <input
                   type="number"
                   placeholder="5678"
                   value={backPhoneNumber}
-                  ref={backPhoneRef}
-                  onChange={(e) => setBackPhoneNumber(e.target.value)}
-                  className="m-0 w-[46px] border-none p-0 text-lg font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
+                  ref={mobileBackPhoneRef}
+                  onChange={(e) => {
+                    if (e.target.value.length < 5) {
+                      setBackPhoneNumber(e.target.value);
+                    }
+                    if (e.target.value.length === 0) {
+                      mobileFrontPhoneRef.current?.focus();
+                    }
+                  }}
+                  className="m-0 border-none p-0 font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
+                  style={{
+                    fontSize: mobileSizeCalc(18, ratio),
+                    width: mobileSizeCalc(46, ratio),
+                  }}
                 />
               </div>
               <button
@@ -545,11 +784,21 @@ export default function Page() {
                   !allChecked || store === "" || frontPhoneNumber === "" || backPhoneNumber === ""
                 }
                 type="submit"
-                className="mt-2.5 h-[58px] w-full rounded-[10px] bg-[#1C4154] text-xl font-semibold leading-none text-white disabled:bg-gray-400"
+                className="w-full rounded-[10px] bg-[#1C4154] font-semibold leading-none text-white disabled:bg-gray-400"
+                style={{
+                  marginTop: mobileSizeCalc(16, ratio),
+                  height: mobileSizeCalc(60, ratio),
+                  fontSize: mobileSizeCalc(22, ratio),
+                }}
               >
                 사전등록하기
               </button>
-              <div className="mt-4 flex justify-between">
+              <div
+                className="flex justify-between"
+                style={{
+                  marginTop: mobileSizeCalc(16, ratio),
+                }}
+              >
                 <Image
                   src="/advance_reservation_apple_mobile.png"
                   alt="앱스토어 사전예약"
@@ -558,6 +807,10 @@ export default function Page() {
                   unoptimized
                   width={73}
                   height={118}
+                  style={{
+                    width: mobileSizeCalc(73, ratio),
+                    height: mobileSizeCalc(118, ratio),
+                  }}
                   onClick={() => alert("액션 머임?")}
                 />
                 <Image
@@ -568,6 +821,10 @@ export default function Page() {
                   unoptimized
                   width={73}
                   height={118}
+                  style={{
+                    width: mobileSizeCalc(73, ratio),
+                    height: mobileSizeCalc(118, ratio),
+                  }}
                   onClick={() => alert("액션 머임?")}
                 />
                 <Image
@@ -578,6 +835,10 @@ export default function Page() {
                   unoptimized
                   width={73}
                   height={118}
+                  style={{
+                    width: mobileSizeCalc(73, ratio),
+                    height: mobileSizeCalc(118, ratio),
+                  }}
                   onClick={() => alert("액션 머임?")}
                 />
               </div>
@@ -896,13 +1157,13 @@ export default function Page() {
                   type="number"
                   placeholder="1234"
                   value={frontPhoneNumber}
-                  ref={frontPhoneRef}
+                  ref={desktopFrontPhoneRef}
                   onChange={(e) => {
                     if (e.target.value.length < 5) {
                       setFrontPhoneNumber(e.target.value);
                     }
                     if (e.target.value.length === 4) {
-                      backPhoneRef?.current?.focus();
+                      desktopBackPhoneRef?.current?.focus();
                     }
                   }}
                   className="m-0 w-[60px] border-none p-0 text-2xl font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
@@ -914,13 +1175,13 @@ export default function Page() {
                   type="number"
                   placeholder="5678"
                   value={backPhoneNumber}
-                  ref={backPhoneRef}
+                  ref={desktopBackPhoneRef}
                   onChange={(e) => {
                     if (e.target.value.length < 5) {
                       setBackPhoneNumber(e.target.value);
                     }
                     if (e.target.value.length === 0) {
-                      frontPhoneRef?.current?.focus();
+                      desktopFrontPhoneRef?.current?.focus();
                     }
                   }}
                   className="m-0 w-[60px] border-none p-0 text-2xl font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"

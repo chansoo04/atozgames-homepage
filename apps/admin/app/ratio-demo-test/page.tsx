@@ -11,7 +11,7 @@ import { useState, useEffect, FormEvent, useRef } from "react";
 import Image from "next/image";
 import csr from "lib/fetcher/csr";
 import useWindowSize from "app/_components/useWindowSize";
-import { sizeCalc } from "app/_components/sizeCalculator";
+import { mobileSizeCalc } from "app/_components/sizeCalculator";
 
 const agreementItems = ["age", "privacy", "alarm"];
 // 원래 버전 + 데스크탑 인디케이터(클릭 스크롤 지원) + 마우스 스크롤 이미지 1페이지만 노출
@@ -204,18 +204,18 @@ export default function Page() {
             width={150}
             height={85}
             style={{
-              marginTop: sizeCalc(102, ratio),
-              width: sizeCalc(150, ratio),
-              height: sizeCalc(85, ratio),
+              marginTop: mobileSizeCalc(102, ratio),
+              width: mobileSizeCalc(150, ratio),
+              height: mobileSizeCalc(85, ratio),
             }}
             unoptimized
           />
           <h1
             className="whitespace-pre-line text-center font-gmarket font-light text-white"
             style={{
-              marginTop: sizeCalc(27, ratio),
-              fontSize: sizeCalc(30, ratio),
-              lineHeight: sizeCalc(40, ratio),
+              marginTop: mobileSizeCalc(27, ratio),
+              fontSize: mobileSizeCalc(30, ratio),
+              lineHeight: mobileSizeCalc(40, ratio),
             }}
           >
             빠른 속도감과 100%{"\n"}공정한 카드 분배,{"\n"}아토즈포커
@@ -226,9 +226,9 @@ export default function Page() {
             width={100}
             height={100}
             style={{
-              width: sizeCalc(100, ratio),
-              height: sizeCalc(100, ratio),
-              marginTop: sizeCalc(43, ratio),
+              width: mobileSizeCalc(100, ratio),
+              height: mobileSizeCalc(100, ratio),
+              marginTop: mobileSizeCalc(43, ratio),
             }}
             onClick={() => alert("영상 재생 필요")}
           />
@@ -238,10 +238,10 @@ export default function Page() {
               className="rounded-lg bg-[#1C4154] font-semibold text-white"
               onClick={() => scrollToMobileSection(1)}
               style={{
-                marginTop: sizeCalc(69, ratio),
-                height: sizeCalc(64, ratio),
-                width: sizeCalc(250, ratio),
-                fontSize: sizeCalc(22, ratio),
+                marginTop: mobileSizeCalc(69, ratio),
+                height: mobileSizeCalc(64, ratio),
+                width: mobileSizeCalc(250, ratio),
+                fontSize: mobileSizeCalc(22, ratio),
               }}
             >
               사전등록
@@ -256,9 +256,9 @@ export default function Page() {
               height={81}
               className="absolute"
               style={{
-                width: sizeCalc(63, ratio),
-                height: sizeCalc(81, ratio),
-                bottom: sizeCalc(23, ratio),
+                width: mobileSizeCalc(63, ratio),
+                height: mobileSizeCalc(81, ratio),
+                bottom: mobileSizeCalc(23, ratio),
               }}
               unoptimized
             />

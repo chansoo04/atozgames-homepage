@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Transition } from "@headlessui/react";
 import { usePathname } from "next/navigation";
+import useWindowSize from "app/_components/useWindowSize";
+import { mobileSizeCalc, desktopSizeCalc } from "app/_components/sizeCalculator";
 
 const tabs = ["게임소개", "공지사항", "문의하기"] as const;
 const subTabs = {
@@ -23,6 +25,7 @@ export default function TopBar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [active, setActive] = useState<(typeof tabs)[number] | null>(null);
   const pathname = usePathname();
+  const { ratio } = useWindowSize();
 
   useEffect(() => {
     if (window.location.pathname === "/" || window.location.pathname.includes("/rng-certificate")) {
@@ -51,12 +54,40 @@ export default function TopBar() {
         leaveTo="opacity-0"
         className="w-full desktop:hidden"
       >
-        <nav className="absolute top-0 flex h-[60px] w-full items-center gap-x-2.5 bg-white px-5 py-3 desktop:hidden">
+        <nav
+          className="absolute top-0 flex w-full items-center bg-white desktop:hidden"
+          style={{
+            height: mobileSizeCalc(60, ratio),
+            paddingLeft: mobileSizeCalc(20, ratio),
+            paddingRight: mobileSizeCalc(20, ratio),
+            paddingTop: mobileSizeCalc(15, ratio),
+            paddingBottom: mobileSizeCalc(15, ratio),
+            columnGap: mobileSizeCalc(10, ratio),
+          }}
+        >
           <button type="button" onClick={() => setIsOpen(true)}>
-            <Image src="/menu.png" alt="메뉴" width={30} height={30} />
+            <Image
+              src="/menu.png"
+              alt="메뉴"
+              width={30}
+              height={30}
+              style={{
+                width: mobileSizeCalc(30, ratio),
+                height: mobileSizeCalc(30, ratio),
+              }}
+            />
           </button>
           <Link href="/">
-            <Image src="/logo_black.png" alt="카피바라 로고" width={91} height={35} />
+            <Image
+              src="/logo_black.png"
+              alt="카피바라 로고"
+              width={91}
+              height={35}
+              style={{
+                width: mobileSizeCalc(91, ratio),
+                height: mobileSizeCalc(35, ratio),
+              }}
+            />
           </Link>
         </nav>
       </Transition>
@@ -72,70 +103,168 @@ export default function TopBar() {
         className="desktop:hidden"
       >
         <div className="absolute inset-0 z-50 flex h-screen flex-col overflow-x-hidden bg-white desktop:hidden">
-          <div className="flex h-[60px] w-full items-center justify-center px-5">
-            <Image src="/logo_black.png" alt="카피바라 로고" width={91} height={35} />
+          <div
+            className="flex w-full items-center justify-center"
+            style={{
+              height: mobileSizeCalc(60, ratio),
+              paddingLeft: mobileSizeCalc(20, ratio),
+              paddingRight: mobileSizeCalc(20, ratio),
+            }}
+          >
+            <Image
+              src="/logo_black.png"
+              alt="카피바라 로고"
+              width={91}
+              height={35}
+              style={{
+                width: mobileSizeCalc(91, ratio),
+                height: mobileSizeCalc(35, ratio),
+              }}
+            />
             <button type="button" onClick={() => setIsOpen(false)}>
               <Image
                 src="/close.png"
                 alt="닫기"
                 width={30}
                 height={30}
-                className="absolute left-5 top-[15px]"
+                className="absolute"
+                style={{
+                  left: mobileSizeCalc(20, ratio),
+                  top: mobileSizeCalc(15, ratio),
+                  width: mobileSizeCalc(30, ratio),
+                  height: mobileSizeCalc(30, ratio),
+                }}
               />
             </button>
           </div>
           <details open className="w-full border-b-[0.5px] border-gray-300">
-            <summary className="flex h-[50px] w-full items-center justify-between px-5 py-[15px]">
-              <span className="text-sm font-semibold leading-relaxed text-gray-600">게임소개</span>
+            <summary
+              className="flex w-full items-center justify-between"
+              style={{
+                height: mobileSizeCalc(50, ratio),
+                paddingLeft: mobileSizeCalc(20, ratio),
+                paddingRight: mobileSizeCalc(20, ratio),
+                paddingTop: mobileSizeCalc(15, ratio),
+                paddingBottom: mobileSizeCalc(15, ratio),
+              }}
+            >
+              <span
+                className="font-semibold leading-relaxed text-gray-600"
+                style={{
+                  fontSize: mobileSizeCalc(14, ratio),
+                  lineHeight: mobileSizeCalc(26, ratio),
+                }}
+              >
+                게임소개
+              </span>
               <Image
                 src="/dropdown.png"
-                className="icon size-4"
+                className="icon"
                 width={16}
                 height={16}
+                style={{
+                  width: mobileSizeCalc(16, ratio),
+                  height: mobileSizeCalc(16, ratio),
+                }}
                 alt="펼치기"
               />
             </summary>
             <Link
               href="/rng-certificate"
-              className="flex h-[50px] w-full items-center pl-10 text-sm font-semibold leading-relaxed text-gray-600"
+              className="flex w-full items-center font-semibold text-gray-600"
+              style={{
+                height: mobileSizeCalc(50, ratio),
+                paddingLeft: mobileSizeCalc(40, ratio),
+                fontSize: mobileSizeCalc(14, ratio),
+                lineHeight: mobileSizeCalc(26, ratio),
+              }}
             >
               RNG 인증 및 공정성
             </Link>
           </details>
           <Link
             href="/announcement"
-            className="flex h-[50px] w-full items-center border-b-[0.5px] border-gray-300 pl-5 text-sm font-semibold leading-relaxed text-gray-600"
+            className="flex w-full items-center border-b-[0.5px] border-gray-300 font-semibold text-gray-600"
+            style={{
+              height: mobileSizeCalc(50, ratio),
+              paddingLeft: mobileSizeCalc(20, ratio),
+              fontSize: mobileSizeCalc(14, ratio),
+              lineHeight: mobileSizeCalc(26, ratio),
+            }}
           >
             공지사항
           </Link>
           <details open className="w-full border-b-[0.5px] border-gray-300">
-            <summary className="flex h-[50px] w-full items-center justify-between px-5 py-[15px]">
-              <span className="text-sm font-semibold leading-relaxed text-gray-600">문의하기</span>
+            <summary
+              className="flex w-full items-center justify-between"
+              style={{
+                height: mobileSizeCalc(50, ratio),
+                paddingLeft: mobileSizeCalc(20, ratio),
+                paddingRight: mobileSizeCalc(20, ratio),
+                paddingTop: mobileSizeCalc(15, ratio),
+                paddingBottom: mobileSizeCalc(15, ratio),
+              }}
+            >
+              <span
+                className="font-semibold text-gray-600"
+                style={{
+                  fontSize: mobileSizeCalc(14, ratio),
+                  lineHeight: mobileSizeCalc(26, ratio),
+                }}
+              >
+                문의하기
+              </span>
               <Image
                 src="/dropdown.png"
-                className="icon size-4"
+                className="icon"
                 width={16}
                 height={16}
+                style={{
+                  width: mobileSizeCalc(16, ratio),
+                  height: mobileSizeCalc(16, ratio),
+                }}
                 alt="펼치기"
               />
             </summary>
             <Link
               href="/faq"
-              className="ml-5 flex h-[50px] w-full items-center border-b-[0.5px] border-gray-300 pl-5 text-sm font-semibold leading-relaxed text-gray-600"
+              className="flex w-full items-center border-b-[0.5px] border-gray-300 font-semibold text-gray-600"
+              style={{
+                height: mobileSizeCalc(50, ratio),
+                marginLeft: mobileSizeCalc(20, ratio),
+                paddingLeft: mobileSizeCalc(20, ratio),
+                fontSize: mobileSizeCalc(14, ratio),
+                lineHeight: mobileSizeCalc(26, ratio),
+              }}
             >
               자주 묻는 질문
             </Link>
             <Link
               href="/inquiry"
-              className="flex h-[50px] w-full items-center pl-10 text-sm font-semibold leading-relaxed text-gray-600"
+              className="flex w-full items-center font-semibold text-gray-600"
+              style={{
+                height: mobileSizeCalc(50, ratio),
+                marginLeft: mobileSizeCalc(20, ratio),
+                paddingLeft: mobileSizeCalc(20, ratio),
+                fontSize: mobileSizeCalc(14, ratio),
+                lineHeight: mobileSizeCalc(26, ratio),
+              }}
             >
               1:1 문의
             </Link>
           </details>
-          <div className="absolute bottom-10 flex w-full justify-center">
+          <div
+            className="absolute flex w-full justify-center"
+            style={{
+              bottom: mobileSizeCalc(40, ratio),
+            }}
+          >
             <Link
               href={`/login?redirect_uri=${pathname ?? "/"}`}
               className="text-base font-normal text-gray-500 underline"
+              style={{
+                fontSize: mobileSizeCalc(16, ratio),
+              }}
             >
               로그인
             </Link>
@@ -146,23 +275,54 @@ export default function TopBar() {
       {/* 데스크탑(≥1024)에서만 보임 */}
       <nav className="hidden desktop:absolute desktop:top-0 desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:bg-transparent">
         <div className="desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:border-b desktop:border-b-white/20">
-          <div className="desktop:mx-auto desktop:flex desktop:h-[120px] desktop:min-w-[1200px] desktop:items-center ">
+          <div
+            className="desktop:mx-auto desktop:flex desktop:items-center "
+            style={{
+              height: desktopSizeCalc(120, ratio),
+              minWidth: desktopSizeCalc(1200, ratio),
+            }}
+          >
             <Link href="/">
-              <Image src="/logo_white.png" alt="카피바라 로고" width={181} height={70} />
+              <Image
+                src="/logo_white.png"
+                alt="카피바라 로고"
+                width={181}
+                height={70}
+                style={{
+                  width: desktopSizeCalc(181, ratio),
+                  height: desktopSizeCalc(70, ratio),
+                }}
+              />
             </Link>
-            <div className="desktop:ml-[120px] desktop:grid desktop:grid-cols-3 desktop:gap-x-10">
+            <div
+              className="desktop:grid desktop:grid-cols-3 "
+              style={{
+                marginLeft: desktopSizeCalc(120, ratio),
+                columnGap: desktopSizeCalc(40, ratio),
+              }}
+            >
               {tabs.map((tab) => (
                 <div key={tab} className="relative">
                   {tab === "공지사항" ? (
                     <Link
                       href="/announcement"
-                      className={`desktop:flex desktop:h-[120px] desktop:w-[220px] desktop:items-center desktop:justify-center desktop:text-3xl desktop:font-medium  ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : "desktop:text-white/60"}`}
+                      className={`desktop:flex desktop:items-center desktop:justify-center desktop:font-medium  ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : "desktop:text-white/60"}`}
+                      style={{
+                        height: desktopSizeCalc(120, ratio),
+                        width: desktopSizeCalc(220, ratio),
+                        fontSize: desktopSizeCalc(28, ratio),
+                      }}
                     >
                       {tab}
                     </Link>
                   ) : (
                     <button
-                      className={`desktop:h-[120px] desktop:w-[220px] desktop:text-3xl desktop:font-medium ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : " desktop:text-white/60"}`}
+                      className={`desktop:font-medium ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : " desktop:text-white/60"}`}
+                      style={{
+                        height: desktopSizeCalc(120, ratio),
+                        width: desktopSizeCalc(220, ratio),
+                        fontSize: desktopSizeCalc(28, ratio),
+                      }}
                       onClick={() => setIsOpen((oldState) => !oldState)}
                     >
                       {tab}
@@ -256,18 +416,42 @@ export default function TopBar() {
           leaveTo="-translate-y-full opacity-0"
           className="hidden desktop:flex desktop:w-full "
         >
-          <div className="pl-[301px] desktop:mx-auto desktop:flex desktop:min-w-[1200px] desktop:gap-x-10">
+          <div
+            className="desktop:mx-auto desktop:flex"
+            style={{
+              paddingLeft: desktopSizeCalc(301, ratio),
+              minWidth: desktopSizeCalc(1200, ratio),
+              columnGap: desktopSizeCalc(40, ratio),
+            }}
+          >
             {tabs.map((tab) => (
-              <div key={tab} className="relative">
+              <div key={tab} className="relative" style={{ width: desktopSizeCalc(220, ratio) }}>
                 {tab === "공지사항" ? (
-                  <div className="desktop:h-[120px] desktop:w-[220px]" />
+                  <div
+                    style={{
+                      height: desktopSizeCalc(120, ratio),
+                      width: desktopSizeCalc(220, ratio),
+                    }}
+                  />
                 ) : (
-                  <div className="desktop:flex desktop:w-[220px] desktop:flex-col">
+                  <div
+                    className="desktop:flex desktop:flex-col"
+                    style={{
+                      width: desktopSizeCalc(220, ratio),
+                      marginTop: desktopSizeCalc(11, ratio),
+                    }}
+                  >
                     {subTabs[tab]?.map((subTab) => (
                       <Link
                         key={subTab.text}
                         href={subTab.url}
-                        className={`text-white desktop:h-[50px] desktop:py-2.5 desktop:text-center desktop:text-xl desktop:font-medium`}
+                        className={`leading-none text-white desktop:text-center desktop:font-medium`}
+                        style={{
+                          height: desktopSizeCalc(50, ratio),
+                          paddingTop: desktopSizeCalc(11, ratio),
+                          paddingBottom: desktopSizeCalc(11, ratio),
+                          fontSize: desktopSizeCalc(20, ratio),
+                        }}
                       >
                         {subTab.text}
                       </Link>

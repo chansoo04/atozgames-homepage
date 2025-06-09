@@ -17,7 +17,7 @@ export const mobileSizeCalc = (크기: number, ratio: number, 기준비율?: num
 // 기준 비율: 1920 * 1080
 export const desktopSizeCalc = (크기: number, ratio: number, 기준비율?: number) => {
   if (기준비율 === undefined || 기준비율 === null) {
-    기준비율 = 1.78;
+    기준비율 = 0.56;
   }
 
   if (ratio < 기준비율) {

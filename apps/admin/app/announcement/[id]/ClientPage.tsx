@@ -1,9 +1,9 @@
 "use client";
 import useWindowSize from "app/_components/useWindowSize";
 import { mobileSizeCalc, desktopSizeCalc } from "app/_components/sizeCalculator";
-import TopBar from "../../_components/TopBar";
+import TopBar from "app/_components/TopBar";
 import Image from "next/image";
-import Footer from "../../_components/Footer";
+import Footer from "app/_components/Footer";
 
 const changeDate = (date: number) => {
   const createdAt = new Date(date).toISOString();
@@ -17,7 +17,7 @@ export default function ClientPage({ announcement }: { announcement: any }) {
     <main className="relative w-full">
       {/* 모바일(<640)에서만 보임 */}
       <section
-        className="flex min-h-[90vh] flex-col items-center desktop:hidden"
+        className="flex flex-col items-center desktop:hidden"
         style={{
           background: "linear-gradient(0deg, #F5F5F8 0%, #DCEFFF 100%)",
           minHeight: mobileSizeCalc(783, ratio),

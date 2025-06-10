@@ -1,20 +1,53 @@
+"use client";
 import TopBar from "app/_components/TopBar";
 import Footer from "app/_components/Footer";
+import { mobileSizeCalc, desktopSizeCalc } from "app/_components/sizeCalculator";
+import useWindowSize from "app/_components/useWindowSize";
 
 export default function Page() {
+  const { ratio } = useWindowSize();
+
   return (
     <main className="relative w-full">
       {/* 모바일(<640)에서만 보임 */}
       <section
-        className="flex min-h-[90vh] flex-col items-center pb-10 pt-[92px] desktop:hidden"
+        className="flex flex-col items-center desktop:hidden"
         style={{
           background: "linear-gradient(0deg, #F5F5F8 0%, #DCEFFF 100%)",
+          minHeight: mobileSizeCalc(783, ratio),
+          paddingBottom: mobileSizeCalc(40, ratio),
+          paddingTop: mobileSizeCalc(92, ratio),
         }}
       >
         <TopBar />
-        <h1 className="text-lg font-bold leading-relaxed text-gray-700">개인정보 처리방침</h1>
-        <div className="w-full px-5">
-          <div className="mt-5 flex w-full flex-col whitespace-pre-line rounded-[20px] bg-gray-100 p-5 text-sm font-normal leading-tight text-gray-700">
+        <h1
+          className="font-bold text-gray-700"
+          style={{
+            fontSize: mobileSizeCalc(18, ratio),
+            lineHeight: mobileSizeCalc(26, ratio),
+          }}
+        >
+          개인정보 처리방침
+        </h1>
+        <div
+          className="w-full"
+          style={{
+            paddingLeft: mobileSizeCalc(20, ratio),
+            paddingRight: mobileSizeCalc(20, ratio),
+          }}
+        >
+          <div
+            className="flex w-full flex-col whitespace-pre-line rounded-[20px] bg-gray-100 font-normal text-gray-700"
+            style={{
+              marginTop: mobileSizeCalc(20, ratio),
+              paddingLeft: mobileSizeCalc(20, ratio),
+              paddingRight: mobileSizeCalc(20, ratio),
+              paddingBottom: mobileSizeCalc(30, ratio),
+              paddingTop: mobileSizeCalc(20, ratio),
+              fontSize: mobileSizeCalc(14, ratio),
+              lineHeight: mobileSizeCalc(20, ratio),
+            }}
+          >
             {privacyPolicy}
           </div>
         </div>
@@ -24,12 +57,42 @@ export default function Page() {
       <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
         <TopBar />
 
-        <div className="desktop:flex desktop:flex-col desktop:items-center desktop:pt-60">
-          <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
+        <div
+          className="desktop:flex desktop:flex-col desktop:items-center"
+          style={{
+            paddingTop: desktopSizeCalc(240, ratio),
+          }}
+        >
+          <h1
+            className="desktop:text-center desktop:font-bold desktop:text-white"
+            style={{
+              fontSize: desktopSizeCalc(50, ratio),
+              lineHeight: desktopSizeCalc(50, ratio),
+            }}
+          >
             개인정보 처리방침
           </h1>
-          <div className="max-w-[1200px] desktop:mb-52 desktop:mt-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
-            <div className="whitespace-pre-line pb-20 pt-10 text-lg font-normal text-white">
+          <div
+            className="desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70"
+            style={{
+              width: desktopSizeCalc(1200, ratio),
+              marginBottom: desktopSizeCalc(208, ratio),
+              marginTop: desktopSizeCalc(80, ratio),
+              paddingLeft: desktopSizeCalc(50, ratio),
+              paddingRight: desktopSizeCalc(50, ratio),
+              paddingTop: desktopSizeCalc(20, ratio),
+              paddingBottom: desktopSizeCalc(20, ratio),
+            }}
+          >
+            <div
+              className="whitespace-pre-line font-normal text-white"
+              style={{
+                paddingBottom: desktopSizeCalc(80, ratio),
+                paddingTop: desktopSizeCalc(40, ratio),
+                fontSize: desktopSizeCalc(18, ratio),
+                lineHeight: desktopSizeCalc(34, ratio),
+              }}
+            >
               {privacyPolicy}
             </div>
           </div>

@@ -272,6 +272,7 @@ export default function TopBar() {
         </div>
       </Transition>
 
+      {/* TODO: 오류가 있음. 사이즈 조정 시 이상해보임 */}
       {/* 데스크탑(≥1024)에서만 보임 */}
       <nav className="hidden desktop:absolute desktop:top-0 desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:bg-transparent">
         <div className="desktop:flex desktop:w-full desktop:flex-col desktop:items-center desktop:border-b desktop:border-b-white/20">

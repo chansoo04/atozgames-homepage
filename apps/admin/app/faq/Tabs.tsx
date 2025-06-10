@@ -4,6 +4,8 @@ import TopBar from "app/_components/TopBar";
 import Footer from "app/_components/Footer";
 import Link from "next/link";
 import Image from "next/image";
+import useWindowSize from "app/_components/useWindowSize";
+import { mobileSizeCalc, desktopSizeCalc } from "app/_components/sizeCalculator";
 
 // TODO: 페이지네이션 만들기
 
@@ -15,27 +17,65 @@ const changeDate = (date: number) => {
 const tabs = ["게임문의", "유료/결제", "계정"] as const;
 export default function Tabs({ faqs }: { faqs: any }) {
   const [active, setActive] = useState<(typeof tabs)[number]>("게임문의");
+  const { ratio } = useWindowSize();
 
   return (
     <main className="relative w-full">
       {/* 모바일(<640)에서만 보임 */}
       <section
-        className="flex min-h-[90vh] flex-col items-center pb-10 pt-[92px] desktop:hidden"
+        className="flex flex-col items-center desktop:hidden"
         style={{
           background: "linear-gradient(0deg, #F5F5F8 0%, #DCEFFF 100%)",
+          minHeight: mobileSizeCalc(783, ratio),
+          paddingBottom: mobileSizeCalc(40, ratio),
+          paddingTop: mobileSizeCalc(92, ratio),
         }}
       >
         <TopBar />
-        <h1 className="text-lg font-bold leading-relaxed text-gray-700">자주 묻는 질문</h1>
+        <h1
+          className="font-bold text-gray-700"
+          style={{
+            fontSize: mobileSizeCalc(18, ratio),
+            lineHeight: mobileSizeCalc(26, ratio),
+          }}
+        >
+          자주 묻는 질문
+        </h1>
 
-        <div className="w-full px-5">
-          <div className="mt-5 flex w-full flex-col rounded-[20px] bg-gray-100 px-5 pb-5 pt-2.5">
-            <nav className="grid grid-cols-3 gap-x-[5px]">
+        <div
+          className="w-full"
+          style={{
+            paddingLeft: mobileSizeCalc(20, ratio),
+            paddingRight: mobileSizeCalc(20, ratio),
+          }}
+        >
+          <div
+            className="flex w-full flex-col rounded-[20px] bg-gray-100"
+            style={{
+              marginTop: mobileSizeCalc(20, ratio),
+              paddingLeft: mobileSizeCalc(20, ratio),
+              paddingRight: mobileSizeCalc(20, ratio),
+              paddingBottom: mobileSizeCalc(20, ratio),
+              paddingTop: mobileSizeCalc(10, ratio),
+            }}
+          >
+            <nav
+              className="grid grid-cols-3"
+              style={{
+                columnGap: mobileSizeCalc(5, ratio),
+              }}
+            >
               {tabs.map((tab) => (
                 <div key={tab} className="relative">
                   <button
                     onClick={() => setActive(tab)}
-                    className={`w-full py-3 text-center ${active === tab ? "text-base font-semibold text-primary" : "text-base font-normal text-gray-400"}`}
+                    className={`w-full text-center ${active === tab ? "font-semibold text-primary" : "font-normal text-gray-400"}`}
+                    style={{
+                      paddingTop: mobileSizeCalc(12, ratio),
+                      paddingBottom: mobileSizeCalc(12, ratio),
+                      fontSize: mobileSizeCalc(16, ratio),
+                      lineHeight: mobileSizeCalc(26, ratio),
+                    }}
                   >
                     {tab}
                   </button>
@@ -126,22 +166,67 @@ export default function Tabs({ faqs }: { faqs: any }) {
               ?.map((item: any) => (
                 <Link
                   key={item.id.toString()}
-                  className="flex w-full flex-col gap-y-2.5 border-b border-gray-200 py-[15px]"
+                  className="flex w-full flex-col border-b border-gray-200"
                   href={`/faq/${item.id}`}
+                  style={{
+                    rowGap: mobileSizeCalc(10, ratio),
+                    paddingTop: mobileSizeCalc(15, ratio),
+                    paddingBottom: mobileSizeCalc(15, ratio),
+                  }}
                 >
-                  <div className="grid grid-cols-[45px_1fr] items-center gap-x-2.5">
+                  <div
+                    className="grid items-center"
+                    style={{
+                      columnGap: mobileSizeCalc(10, ratio),
+                      gridTemplateColumns: `${mobileSizeCalc(45, ratio)} 1fr`,
+                    }}
+                  >
                     <div
-                      className={`rounded-full px-2.5 text-sm font-semibold ${item.subcategory === "공지" ? "bg-serve text-gray-100" : "bg-primary text-gray-700"}`}
+                      className={`flex items-center rounded-full font-semibold ${item.subcategory === "공지" ? "bg-serve text-gray-100" : "bg-primary text-gray-700"}`}
+                      style={{
+                        paddingLeft: mobileSizeCalc(10, ratio),
+                        paddingRight: mobileSizeCalc(10, ratio),
+                        fontSize: mobileSizeCalc(14, ratio),
+                        lineHeight: mobileSizeCalc(14, ratio),
+                        width: mobileSizeCalc(45, ratio),
+                        height: mobileSizeCalc(20, ratio),
+                      }}
                     >
                       {item.subcategory}
                     </div>
-                    <div className="truncate text-base font-medium leading-tight text-gray-700">
+                    <div
+                      className="truncate font-medium text-gray-700"
+                      style={{
+                        fontSize: mobileSizeCalc(16, ratio),
+                        lineHeight: mobileSizeCalc(22, ratio),
+                      }}
+                    >
                       {item.title}
                     </div>
                   </div>
-                  <div className="flex items-center gap-x-[5px]">
-                    <Image src="/clock.png" alt="작성일" width={14} height={14} />
-                    <div className="text-sm font-normal text-gray-500">
+                  <div
+                    className="flex items-center"
+                    style={{
+                      columnGap: mobileSizeCalc(5, ratio),
+                    }}
+                  >
+                    <Image
+                      src="/clock.png"
+                      alt="작성일"
+                      width={14}
+                      height={14}
+                      style={{
+                        width: mobileSizeCalc(14, ratio),
+                        height: mobileSizeCalc(14, ratio),
+                      }}
+                    />
+                    <div
+                      className="font-normal text-gray-500"
+                      style={{
+                        fontSize: mobileSizeCalc(14, ratio),
+                        lineHeight: mobileSizeCalc(20, ratio),
+                      }}
+                    >
                       {changeDate(item.created_at)}
                     </div>
                   </div>
@@ -155,18 +240,47 @@ export default function Tabs({ faqs }: { faqs: any }) {
       <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
         <TopBar />
 
-        <div className="desktop:flex desktop:flex-col desktop:items-center desktop:pt-60">
-          <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
+        <div
+          className="desktop:flex desktop:flex-col desktop:items-center"
+          style={{
+            paddingTop: desktopSizeCalc(240, ratio),
+          }}
+        >
+          <h1
+            className="desktop:text-center desktop:font-bold desktop:text-white"
+            style={{
+              fontSize: desktopSizeCalc(50, ratio),
+              lineHeight: desktopSizeCalc(50, ratio),
+            }}
+          >
             자주 묻는 질문
           </h1>
 
-          <div className="min-h-[1150px] w-[1200px] desktop:my-20 desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70 desktop:px-[50px] desktop:py-5">
+          <div
+            className="desktop:flex desktop:flex-col desktop:rounded-[25px] desktop:bg-[#16172D]/70"
+            style={{
+              width: desktopSizeCalc(1200, ratio),
+              minHeight: desktopSizeCalc(1150, ratio),
+              marginTop: desktopSizeCalc(80, ratio),
+              marginBottom: desktopSizeCalc(80, ratio),
+              paddingLeft: desktopSizeCalc(50, ratio),
+              paddingRight: desktopSizeCalc(50, ratio),
+              paddingTop: desktopSizeCalc(20, ratio),
+              paddingBottom: desktopSizeCalc(20, ratio),
+            }}
+          >
             <nav className="desktop:flex">
               {tabs.map((tab) => (
                 <div key={tab} className="relative">
                   <button
                     onClick={() => setActive(tab)}
-                    className={`flex h-[100px] w-[200px] items-center justify-center text-3xl font-medium ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : "text-white/60"}`}
+                    className={`flex items-center justify-center font-medium ${active === tab ? "bg-gradient-to-b from-[#2167FF] to-[#2398FF] bg-clip-text text-transparent" : "text-white/60"}`}
+                    style={{
+                      height: desktopSizeCalc(100, ratio),
+                      width: desktopSizeCalc(200, ratio),
+                      fontSize: desktopSizeCalc(28, ratio),
+                      lineHeight: desktopSizeCalc(28, ratio),
+                    }}
                   >
                     {tab}
                   </button>
@@ -246,28 +360,76 @@ export default function Tabs({ faqs }: { faqs: any }) {
                 </div>
               ))}
             </nav>
-            <div className="mb-20 desktop:mt-5 desktop:flex desktop:flex-col">
+            <div
+              className="desktop:flex desktop:flex-col"
+              style={{
+                marginBottom: desktopSizeCalc(80, ratio),
+                marginTop: desktopSizeCalc(20, ratio),
+              }}
+            >
               {faqs
                 ?.filter((faq: any) => faq.category === active)
                 ?.map((item: any) => (
                   <Link
                     key={item.id.toString()}
                     href={`/faq/${item.id}`}
-                    className="flex w-full justify-between border-b border-gray-600 py-10"
+                    className="flex w-full justify-between border-b border-gray-600"
+                    style={{
+                      paddingBottom: desktopSizeCalc(40, ratio),
+                      paddingTop: desktopSizeCalc(40, ratio),
+                    }}
                   >
-                    <div className="flex items-center gap-x-4">
+                    <div
+                      className="flex items-center"
+                      style={{
+                        columnGap: desktopSizeCalc(16, ratio),
+                      }}
+                    >
                       <div
-                        className={`flex h-[30px] w-[64px] items-center justify-center rounded-full text-lg font-medium ${item.subcategory === "공지" ? "bg-serve text-white" : "bg-primary text-gray-700"}`}
+                        className={`flex items-center justify-center rounded-full font-medium ${item.subcategory === "공지" ? "bg-serve text-white" : "bg-primary text-gray-700"}`}
+                        style={{
+                          height: desktopSizeCalc(30, ratio),
+                          width: desktopSizeCalc(64, ratio),
+                          fontSize: desktopSizeCalc(18, ratio),
+                          lineHeight: desktopSizeCalc(18, ratio),
+                        }}
                       >
                         {item.subcategory}
                       </div>
-                      <div className="w-[500px] truncate text-lg font-medium text-white">
+                      <div
+                        className="truncate font-medium text-white"
+                        style={{
+                          width: desktopSizeCalc(500, ratio),
+                          fontSize: desktopSizeCalc(18, ratio),
+                          lineHeight: desktopSizeCalc(26, ratio),
+                        }}
+                      >
                         {item.title}
                       </div>
                     </div>
-                    <div className="flex items-center gap-x-1">
-                      <Image src="/clock.png" alt="작성일" width={20} height={20} />
-                      <div className="text-lg font-medium text-gray-400">
+                    <div
+                      className="flex items-center"
+                      style={{
+                        columnGap: desktopSizeCalc(4, ratio),
+                      }}
+                    >
+                      <Image
+                        src="/clock.png"
+                        alt="작성일"
+                        width={20}
+                        height={20}
+                        style={{
+                          width: desktopSizeCalc(20, ratio),
+                          height: desktopSizeCalc(20, ratio),
+                        }}
+                      />
+                      <div
+                        className="font-medium text-gray-400"
+                        style={{
+                          fontSize: desktopSizeCalc(18, ratio),
+                          lineHeight: desktopSizeCalc(26, ratio),
+                        }}
+                      >
                         {changeDate(item.created_at)}
                       </div>
                     </div>

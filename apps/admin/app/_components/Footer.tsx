@@ -20,8 +20,8 @@ export default function Footer() {
         <div
           className="flex"
           style={{
-            paddingLeft: mobileSizeCalc(44, ratio),
-            paddingRight: mobileSizeCalc(44, ratio),
+            paddingLeft: mobileSizeCalc(33, ratio),
+            paddingRight: mobileSizeCalc(33, ratio),
           }}
         >
           <Link

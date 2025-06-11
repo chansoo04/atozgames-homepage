@@ -1,16 +1,18 @@
 "use client";
 import TopBar from "app/_components/TopBar";
 import Footer from "app/_components/Footer";
-import Link from "next/link";
 import Image from "next/image";
 import { setCookie, getCookies, getCookie } from "cookies-next";
 import { useSearchParams } from "next/navigation";
+import { mobileSizeCalc, desktopSizeCalc } from "app/_components/sizeCalculator";
+import useWindowSize from "app/_components/useWindowSize";
 
 import { auth, googleProvider, appleProvider } from "lib/firebaseClient";
 import { signInWithPopup } from "firebase/auth";
 
 export default function Page() {
   const searchParams = useSearchParams();
+  const { ratio } = useWindowSize();
 
   const handleGoogle = async () => {
     try {
@@ -90,55 +92,98 @@ export default function Page() {
     <main className="relative w-full">
       {/* 모바일(<640)에서만 보임 */}
       <section
-        className="flex min-h-[90vh] flex-col items-center pb-10 pt-[92px] desktop:hidden"
+        className="flex flex-col items-center desktop:hidden"
         style={{
           background: "linear-gradient(0deg, #F5F5F8 0%, #DCEFFF 100%)",
+          minHeight: mobileSizeCalc(783, ratio),
+          paddingBottom: mobileSizeCalc(40, ratio),
+          paddingTop: mobileSizeCalc(92, ratio),
         }}
       >
         <TopBar />
-        <h1 className="text-lg font-bold leading-relaxed text-gray-700">로그인</h1>
+        <h1
+          className="font-bold text-gray-700"
+          style={{
+            fontSize: mobileSizeCalc(18, ratio),
+            lineHeight: mobileSizeCalc(26, ratio),
+          }}
+        >
+          로그인
+        </h1>
 
-        <div className="w-full px-5">
-          <div className="mt-20 flex flex-col items-center gap-y-5">
+        <div
+          className="w-full"
+          style={{
+            paddingLeft: mobileSizeCalc(20, ratio),
+            paddingRight: mobileSizeCalc(20, ratio),
+          }}
+        >
+          <div
+            className="flex flex-col items-center"
+            style={{
+              marginTop: mobileSizeCalc(80, ratio),
+              rowGap: mobileSizeCalc(20, ratio),
+            }}
+          >
             <Image
               onClick={() =>
                 (window.location.href = `/login/atoz?redirect_uri=${searchParams.get("redirect_uri") ?? "/"}`)
               }
               src="/atoz_login.png"
-              width={400}
-              height={61}
+              width={320}
+              height={39}
               alt="아토즈 로그인"
               className="cursor-pointer"
+              style={{
+                width: mobileSizeCalc(320, ratio),
+                height: mobileSizeCalc(39, ratio),
+              }}
             />
             <Image
               onClick={() => handleGoogle()}
               className="cursor-pointer"
               src="/google_login.png"
-              width={400}
-              height={61}
+              width={320}
+              height={39}
               alt="구글 로그인"
+              style={{
+                width: mobileSizeCalc(320, ratio),
+                height: mobileSizeCalc(39, ratio),
+              }}
             />
             <Image
               onClick={() => handleApple()}
               className="cursor-pointer"
               src="/apple_login.png"
-              width={400}
-              height={61}
+              width={320}
+              height={39}
               alt="애플 로그인"
+              style={{
+                width: mobileSizeCalc(320, ratio),
+                height: mobileSizeCalc(39, ratio),
+              }}
             />
             <Image
               onClick={() => handleKakao()}
               src="/kakao_login.png"
-              width={400}
-              height={61}
+              width={320}
+              height={39}
               alt="카카오 로그인"
+              style={{
+                width: mobileSizeCalc(320, ratio),
+                height: mobileSizeCalc(39, ratio),
+              }}
             />
             <Image
               onClick={() => handleNaver()}
               src="/naver_login.png"
-              width={400}
-              height={61}
+              width={320}
+              height={39}
               alt="네이버 로그인"
+              style={{
+                width: mobileSizeCalc(320, ratio),
+                height: mobileSizeCalc(39, ratio),
+              }}
             />
           </div>
         </div>
@@ -148,8 +193,19 @@ export default function Page() {
       <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
         <TopBar />
 
-        <div className="desktop:flex desktop:flex-col desktop:items-center desktop:pt-60">
-          <h1 className="desktop:text-center desktop:text-5xl desktop:font-bold desktop:text-white">
+        <div
+          className="desktop:flex desktop:flex-col desktop:items-center"
+          style={{
+            paddingTop: desktopSizeCalc(240, ratio),
+          }}
+        >
+          <h1
+            className="desktop:text-center desktop:font-bold desktop:text-white"
+            style={{
+              fontSize: desktopSizeCalc(50, ratio),
+              lineHeight: desktopSizeCalc(50, ratio),
+            }}
+          >
             로그인
           </h1>
 
@@ -163,6 +219,10 @@ export default function Page() {
               height={61}
               alt="아토즈 로그인"
               className="desktop:cursor-pointer"
+              style={{
+                width: desktopSizeCalc(500, ratio),
+                height: desktopSizeCalc(61, ratio),
+              }}
             />
             <Image
               onClick={() => handleGoogle()}
@@ -171,6 +231,10 @@ export default function Page() {
               width={500}
               height={61}
               alt="구글 로그인"
+              style={{
+                width: desktopSizeCalc(500, ratio),
+                height: desktopSizeCalc(61, ratio),
+              }}
             />
             <Image
               onClick={() => handleApple()}
@@ -179,6 +243,10 @@ export default function Page() {
               width={500}
               height={61}
               alt="애플 로그인"
+              style={{
+                width: desktopSizeCalc(500, ratio),
+                height: desktopSizeCalc(61, ratio),
+              }}
             />
             <Image
               onClick={() => handleKakao()}
@@ -187,6 +255,10 @@ export default function Page() {
               width={500}
               height={61}
               alt="카카오 로그인"
+              style={{
+                width: desktopSizeCalc(500, ratio),
+                height: desktopSizeCalc(61, ratio),
+              }}
             />
             <Image
               onClick={() => handleNaver()}
@@ -195,6 +267,10 @@ export default function Page() {
               width={500}
               height={61}
               alt="네이버 로그인"
+              style={{
+                width: desktopSizeCalc(500, ratio),
+                height: desktopSizeCalc(61, ratio),
+              }}
             />
           </div>
         </div>

@@ -97,7 +97,7 @@ export default function Page() {
             setActiveMobileSection(Number(e.target.getAttribute("data-index")));
           }
         }),
-      { root, threshold: 0.3 },
+      { root, threshold: 0.5 },
     );
     secs.forEach((s) => io.observe(s));
     return () => secs.forEach((s) => io.unobserve(s));
@@ -269,308 +269,379 @@ export default function Page() {
 
         {/* 모바일 슬라이드 2 */}
         <section
-          className="mobile-section flex h-dvh snap-start items-center justify-center overflow-hidden"
+          className="mobile-section flex h-dvh snap-start justify-center overflow-hidden"
           data-index={1}
         >
           <div
-            className="mx-auto flex flex-col"
+            className="mx-auto flex flex-col items-center rounded-[20px] bg-[#161B38]"
             style={{
-              width: mobileSizeCalc(300, ratio),
-              height: mobileSizeCalc(726, ratio),
+              width: mobileSizeCalc(300, ratio, 360, 624),
+              height: mobileSizeCalc(440, ratio, 360, 624),
+              marginTop: mobileSizeCalc(50, ratio, 360, 624),
+              paddingTop: mobileSizeCalc(15, ratio, 360, 624),
+              paddingLeft: mobileSizeCalc(20, ratio, 360, 624),
+              paddingRight: mobileSizeCalc(20, ratio, 360, 624),
+              paddingBottom: mobileSizeCalc(20, ratio, 360, 624),
             }}
           >
-            <div
-              className="flex w-full flex-col items-center rounded-t-[20px] bg-[#161B38] py-4"
+            <Image
+              src="/advance_reservation_reservation_mobile.png"
+              width={233}
+              height={115}
               style={{
-                paddingLeft: mobileSizeCalc(20, ratio),
-                paddingRight: mobileSizeCalc(20, ratio),
-                paddingTop: mobileSizeCalc(16, ratio),
-                paddingBottom: mobileSizeCalc(19, ratio),
-                height: mobileSizeCalc(257, ratio),
+                width: mobileSizeCalc(233, ratio, 360, 624),
+                height: mobileSizeCalc(115, ratio, 360, 624),
+              }}
+              alt="아토즈포커 사전예약 사전등록"
+            />
+            <h3
+              className="font-normal text-white"
+              style={{
+                marginTop: mobileSizeCalc(9, ratio, 360, 624),
+                fontSize: mobileSizeCalc(10, ratio, 360, 624),
+                lineHeight: mobileSizeCalc(10, ratio, 360, 624),
+              }}
+            >
+              기간: 2025년 7월 12일(토) - 2025년 8월 11일(월) 23:59
+            </h3>
+            <h5
+              className="font-medium text-white"
+              style={{
+                marginTop: mobileSizeCalc(24, ratio, 360, 624),
+                fontSize: mobileSizeCalc(18, ratio, 360, 624),
+                lineHeight: mobileSizeCalc(18, ratio, 360, 624),
+              }}
+            >
+              사전등록 선물
+            </h5>
+            <div
+              className="flex w-full flex-col items-center rounded-[15px] bg-[#0C1027]"
+              style={{
+                marginTop: mobileSizeCalc(17, ratio, 360, 624),
+                paddingLeft: mobileSizeCalc(20, ratio, 360, 624),
+                paddingRight: mobileSizeCalc(20, ratio, 360, 624),
+                paddingBottom: mobileSizeCalc(17, ratio, 360, 624),
+                paddingTop: mobileSizeCalc(19, ratio, 360, 624),
               }}
             >
               <Image
-                src="/advance_reservation_reservation_mobile.png"
-                width={202}
-                height={71}
+                src="/advance_reservation_sclass_mobile.png"
+                alt="사전등록 선물 S-Class"
+                width={37.17}
+                height={72.21}
                 style={{
-                  width: mobileSizeCalc(202, ratio),
-                  height: mobileSizeCalc(71, ratio),
+                  width: mobileSizeCalc(37.17, ratio, 360, 624),
+                  height: mobileSizeCalc(72.21, ratio, 360, 624),
                 }}
-                alt="아토즈포커 사전예약 사전등록"
               />
-              <div
-                className="font-normal leading-none text-white"
+              <table
+                className="w-full"
                 style={{
-                  marginTop: mobileSizeCalc(13, ratio),
-                  fontSize: mobileSizeCalc(10, ratio),
+                  marginTop: mobileSizeCalc(11, ratio, 360, 624),
                 }}
               >
-                기간: 2025년 7월 12일(토) - 2025년 8월 11일(월) 23:59
-              </div>
-              <div
-                className="font-medium text-white"
-                style={{
-                  marginTop: mobileSizeCalc(13, ratio),
-                  fontSize: mobileSizeCalc(11, ratio),
-                  lineHeight: mobileSizeCalc(14, ratio),
-                }}
-              >
-                사전등록 선물
-              </div>
-              <div
-                className="flex w-full rounded-[15px] bg-[#0C1027]"
-                style={{
-                  marginTop: mobileSizeCalc(11, ratio),
-                  height: mobileSizeCalc(90, ratio),
-                  columnGap: mobileSizeCalc(17, ratio),
-                  paddingLeft: mobileSizeCalc(20, ratio),
-                  paddingRight: mobileSizeCalc(25, ratio),
-                  paddingTop: mobileSizeCalc(13, ratio),
-                  paddingBottom: mobileSizeCalc(13, ratio),
-                }}
-              >
-                <Image
-                  src="/advance_reservation_sclass.png"
-                  alt="사전등록 선물 S-Class"
-                  width={28.56}
-                  height={64}
-                  style={{
-                    width: mobileSizeCalc(28.56, ratio),
-                    height: mobileSizeCalc(64, ratio),
-                  }}
-                />
-                <table className="w-full">
-                  <tbody className="w-full">
-                    <tr
-                      className="flex items-center"
+                <tbody className="w-full">
+                  <tr
+                    className="flex"
+                    style={{
+                      paddingBottom: mobileSizeCalc(10, ratio, 360, 624),
+                    }}
+                  >
+                    <th
+                      className="text-left font-medium text-[#A0ABDC]"
                       style={{
-                        height: mobileSizeCalc(24, ratio),
+                        fontSize: mobileSizeCalc(10, ratio, 360, 624),
+                        lineHeight: mobileSizeCalc(12, ratio, 360, 624),
+                        width: mobileSizeCalc(55, ratio, 360, 624),
                       }}
                     >
-                      <th
-                        className="text-left font-medium text-[#A0ABDC]"
-                        style={{
-                          width: mobileSizeCalc(55, ratio),
-                          fontSize: mobileSizeCalc(10, ratio),
-                          lineHeight: mobileSizeCalc(12, ratio),
-                        }}
-                      >
-                        딜러비
-                      </th>
-                      <th
-                        className="text-left font-medium text-white"
-                        style={{
-                          fontSize: mobileSizeCalc(14, ratio),
-                          lineHeight: mobileSizeCalc(14, ratio),
-                        }}
-                      >
-                        5%→2%할인
-                      </th>
-                    </tr>
-                    <tr
-                      className="flex items-center border-y border-[#232741]"
+                      딜러비
+                    </th>
+                    <th
+                      className="font-medium text-white"
                       style={{
-                        height: mobileSizeCalc(24, ratio),
+                        fontSize: mobileSizeCalc(14, ratio, 360, 624),
+                        lineHeight: mobileSizeCalc(14, ratio, 360, 624),
                       }}
                     >
-                      <th
-                        className="text-left font-medium  text-[#A0ABDC]"
-                        style={{
-                          width: mobileSizeCalc(55, ratio),
-                          fontSize: mobileSizeCalc(10, ratio),
-                          lineHeight: mobileSizeCalc(12, ratio),
-                        }}
-                      >
-                        보유한도
-                      </th>
-                      <th
-                        className="text-left font-medium text-white"
-                        style={{
-                          fontSize: mobileSizeCalc(14, ratio),
-                          lineHeight: mobileSizeCalc(14, ratio),
-                        }}
-                      >
-                        10배 증가
-                      </th>
-                    </tr>
-                    <tr
-                      className="flex items-center"
+                      5%→2%할인
+                    </th>
+                  </tr>
+                  <tr
+                    className="flex border-y border-[#232741]"
+                    style={{
+                      paddingTop: mobileSizeCalc(10, ratio, 360, 624),
+                      paddingBottom: mobileSizeCalc(10, ratio, 360, 624),
+                    }}
+                  >
+                    <th
+                      className="text-left font-medium text-[#A0ABDC]"
                       style={{
-                        height: mobileSizeCalc(24, ratio),
+                        fontSize: mobileSizeCalc(10, ratio, 360, 624),
+                        lineHeight: mobileSizeCalc(12, ratio, 360, 624),
+                        width: mobileSizeCalc(55, ratio, 360, 624),
                       }}
                     >
-                      <th
-                        className="text-left font-medium text-[#A0ABDC]"
-                        style={{
-                          width: mobileSizeCalc(55, ratio),
-                          fontSize: mobileSizeCalc(10, ratio),
-                          lineHeight: mobileSizeCalc(12, ratio),
-                        }}
-                      >
-                        전용상점
-                      </th>
-                      <th
-                        className="text-left font-medium text-white"
-                        style={{
-                          fontSize: mobileSizeCalc(14, ratio),
-                          lineHeight: mobileSizeCalc(14, ratio),
-                        }}
-                      >
-                        S클래스 전용 상점
-                      </th>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                      보유한도
+                    </th>
+                    <th
+                      className="font-medium text-white"
+                      style={{
+                        fontSize: mobileSizeCalc(14, ratio, 360, 624),
+                        lineHeight: mobileSizeCalc(14, ratio, 360, 624),
+                      }}
+                    >
+                      10배 증가
+                    </th>
+                  </tr>
+                  <tr
+                    className="flex"
+                    style={{
+                      paddingTop: mobileSizeCalc(10, ratio, 360, 624),
+                      paddingBottom: mobileSizeCalc(9, ratio, 360, 624),
+                    }}
+                  >
+                    <th
+                      className="text-left font-medium text-[#A0ABDC]"
+                      style={{
+                        fontSize: mobileSizeCalc(10, ratio, 360, 624),
+                        lineHeight: mobileSizeCalc(12, ratio, 360, 624),
+                        width: mobileSizeCalc(55, ratio, 360, 624),
+                      }}
+                    >
+                      전용상점
+                    </th>
+                    <th
+                      className="font-medium text-white"
+                      style={{
+                        fontSize: mobileSizeCalc(14, ratio, 360, 624),
+                        lineHeight: mobileSizeCalc(14, ratio, 360, 624),
+                      }}
+                    >
+                      S클래스 전용 상점
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <form
-              onSubmit={handleSubmit}
-              className="flex w-full flex-col rounded-b-[20px] bg-[#F3F3F3]"
+          </div>
+          {/* 모바일 1페이지만 스크롤 아이콘 */}
+          {activeMobileSection === 1 && (
+            <Image
+              src="/advance_reservation_mouse_scroll.png"
+              alt="scroll"
+              width={63}
+              height={81}
+              className="absolute"
               style={{
-                paddingLeft: mobileSizeCalc(20, ratio),
-                paddingRight: mobileSizeCalc(20, ratio),
-                paddingTop: mobileSizeCalc(13, ratio),
-                paddingBottom: mobileSizeCalc(19, ratio),
+                width: mobileSizeCalc(63, ratio),
+                height: mobileSizeCalc(81, ratio),
+                bottom: mobileSizeCalc(23, ratio),
+              }}
+              unoptimized
+            />
+          )}
+        </section>
+
+        {/* 모바일 슬라이드 3 */}
+        <section
+          className="mobile-section flex h-dvh snap-start items-center justify-center overflow-hidden"
+          data-index={2}
+        >
+          <form
+            onSubmit={handleSubmit}
+            className="mx-auto flex flex-col rounded-[20px] bg-[#F3F3F3]"
+            style={{
+              width: mobileSizeCalc(300, ratio, 360, 624),
+              height: mobileSizeCalc(524, ratio, 360, 624),
+              paddingTop: mobileSizeCalc(25, ratio, 360, 624),
+              paddingLeft: mobileSizeCalc(20, ratio, 360, 624),
+              paddingRight: mobileSizeCalc(20, ratio, 360, 624),
+              paddingBottom: mobileSizeCalc(21, ratio, 360, 624),
+            }}
+          >
+            <div
+              className="flex items-center"
+              style={{
+                columnGap: mobileSizeCalc(29, ratio, 360, 624),
+                paddingLeft: mobileSizeCalc(10, ratio, 360, 624),
               }}
             >
-              <div
-                className="flex"
-                style={{
-                  paddingLeft: mobileSizeCalc(10, ratio),
-                  columnGap: mobileSizeCalc(29, ratio),
-                }}
+              <label
+                className="flex items-center"
+                style={{ columnGap: mobileSizeCalc(6, ratio, 360, 624) }}
               >
-                <label className="flex items-center gap-x-1.5">
-                  <input
-                    type="radio"
-                    name="store"
-                    value="google"
-                    style={{
-                      // 기본 외형 제거
-                      appearance: "none",
-                      WebkitAppearance: "none",
-                      MozAppearance: "none",
-                      // 공통 크기와 테두리
-                      width: mobileSizeCalc(20, ratio),
-                      height: mobileSizeCalc(20, ratio),
-                      borderRadius: "50%",
-                      border: "1px solid black",
-                      margin: 0,
-                      cursor: "pointer",
-                      outline: "none",
-                      background: store === "google" ? "#1C4154" : "white",
-                      boxShadow: store === "google" ? "inset 0 0 0 4px #FFFFFF" : "none",
-                      transition: "background .15s ease",
-                    }}
-                    checked={store === "google"}
-                    onChange={(e) => setStore(e.target.value)}
-                  />
-                  <span
-                    className="font-normal leading-none text-black"
-                    style={{
-                      fontSize: mobileSizeCalc(14, ratio),
-                    }}
-                  >
-                    Google Play
-                  </span>
-                </label>
-                <label className="flex items-center gap-x-1.5">
-                  <input
-                    type="radio"
-                    name="store"
-                    value="ios"
-                    style={{
-                      // 기본 외형 제거
-                      appearance: "none",
-                      WebkitAppearance: "none",
-                      MozAppearance: "none",
-                      // 공통 크기와 테두리
-                      width: mobileSizeCalc(20, ratio),
-                      height: mobileSizeCalc(20, ratio),
-                      borderRadius: "50%",
-                      border: "1px solid black",
-                      margin: 0,
-                      cursor: "pointer",
-                      outline: "none",
-                      background: store === "ios" ? "#1C4154" : "white",
-                      boxShadow: store === "ios" ? "inset 0 0 0 4px #FFFFFF" : "none",
-                      transition: "background .15s ease",
-                    }}
-                    checked={store === "ios"}
-                    onChange={(e) => setStore(e.target.value)}
-                  />
-                  <span
-                    className="font-normal leading-none text-black"
-                    style={{
-                      fontSize: mobileSizeCalc(14, ratio),
-                    }}
-                  >
-                    App Store
-                  </span>
-                </label>
-              </div>
-              <div
-                className="w-full rounded-[10px] border-2 border-[#AAAAAA]"
-                style={{
-                  marginTop: mobileSizeCalc(10, ratio),
-                }}
-              >
-                <label
-                  className="flex items-center border-b-2 border-[#AAAAAA] py-3.5"
+                <input
+                  type="radio"
+                  name="store"
+                  value="google"
                   style={{
-                    paddingLeft: mobileSizeCalc(13, ratio),
-                    paddingTop: mobileSizeCalc(11, ratio),
-                    paddingBottom: mobileSizeCalc(10, ratio),
+                    // 기본 외형 제거
+                    appearance: "none",
+                    WebkitAppearance: "none",
+                    MozAppearance: "none",
+                    // 공통 크기와 테두리
+                    width: mobileSizeCalc(20, ratio, 360, 624),
+                    height: mobileSizeCalc(20, ratio, 360, 624),
+                    borderRadius: "50%",
+                    border: "1px solid black",
+                    margin: 0,
+                    cursor: "pointer",
+                    outline: "none",
+                    background: store === "google" ? "#1C4154" : "#F3F3F3",
+                    boxShadow: store === "google" ? "inset 0 0 0 3px #F3F3F3" : "none",
+                    transition: "background .15s ease",
+                  }}
+                  checked={store === "google"}
+                  onChange={(e) => setStore(e.target.value)}
+                />
+                <span
+                  className="font-normal text-black"
+                  style={{
+                    fontSize: mobileSizeCalc(14, ratio, 360, 624),
+                    lineHeight: mobileSizeCalc(14, ratio, 360, 624),
                   }}
                 >
+                  Google Play
+                </span>
+              </label>
+              <label
+                className="flex items-center"
+                style={{ columnGap: mobileSizeCalc(6, ratio, 360, 624) }}
+              >
+                <input
+                  type="radio"
+                  name="store"
+                  value="ios"
+                  style={{
+                    // 기본 외형 제거
+                    appearance: "none",
+                    WebkitAppearance: "none",
+                    MozAppearance: "none",
+                    // 공통 크기와 테두리
+                    width: mobileSizeCalc(20, ratio, 360, 624),
+                    height: mobileSizeCalc(20, ratio, 360, 624),
+                    borderRadius: "50%",
+                    border: "1px solid black",
+                    margin: 0,
+                    cursor: "pointer",
+                    outline: "none",
+                    background: store === "ios" ? "#1C4154" : "#F3F3F3",
+                    boxShadow: store === "ios" ? "inset 0 0 0 3px #F3F3F3" : "none",
+                    transition: "background .15s ease",
+                  }}
+                  checked={store === "ios"}
+                  onChange={(e) => setStore(e.target.value)}
+                />
+                <span
+                  className="font-normal text-black"
+                  style={{
+                    fontSize: mobileSizeCalc(14, ratio, 360, 624),
+                    lineHeight: mobileSizeCalc(14, ratio, 360, 624),
+                  }}
+                >
+                  App Store
+                </span>
+              </label>
+            </div>
+            <div
+              className="w-full rounded-[10px] border border-[#AAAAAA]"
+              style={{
+                marginTop: mobileSizeCalc(14, ratio, 360, 624),
+              }}
+            >
+              <label
+                className="flex w-full items-center border-b border-[#AAAAAA]"
+                style={{
+                  paddingTop: mobileSizeCalc(17, ratio, 360, 624),
+                  paddingBottom: mobileSizeCalc(15, ratio, 360, 624),
+                  paddingLeft: mobileSizeCalc(13, ratio, 360, 624),
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={allChecked}
+                  onChange={(e) => toggleAll(e.target.checked)}
+                  style={{
+                    // 기본 외형 제거
+                    appearance: "none",
+                    WebkitAppearance: "none",
+                    MozAppearance: "none",
+                    // 공통 크기와 테두리
+                    width: mobileSizeCalc(20, ratio, 360, 624),
+                    height: mobileSizeCalc(20, ratio, 360, 624),
+                    borderRadius: "5px",
+                    border: allChecked ? "1px solid #1C4154" : "1px solid black",
+                    cursor: "pointer",
+                    outline: "none",
+                    transition: "background .15s",
+                    background: allChecked
+                      ? `#1C4154 url("${tickSvg}") no-repeat center/10px`
+                      : "#F3F3F3",
+                    boxShadow: "none",
+                  }}
+                />
+                <span
+                  className="font-semibold text-black"
+                  style={{
+                    paddingLeft: mobileSizeCalc(11, ratio, 360, 624),
+                    fontSize: mobileSizeCalc(14, ratio, 360, 624),
+                  }}
+                >
+                  전체동의
+                </span>
+              </label>
+              <div
+                className="flex flex-col"
+                style={{
+                  paddingTop: mobileSizeCalc(17, ratio, 360, 624),
+                  paddingBottom: mobileSizeCalc(17, ratio, 360, 624),
+                  paddingLeft: mobileSizeCalc(20, ratio, 360, 624),
+                  rowGap: mobileSizeCalc(15, ratio, 360, 624),
+                }}
+              >
+                <label className="flex items-center">
                   <input
                     type="checkbox"
-                    checked={allChecked}
-                    onChange={(e) => toggleAll(e.target.checked)}
+                    name="age"
+                    checked={checkedList.includes("age")}
+                    onChange={(e) => toggleOne(e.target.name)}
                     style={{
                       // 기본 외형 제거
                       appearance: "none",
                       WebkitAppearance: "none",
                       MozAppearance: "none",
                       // 공통 크기와 테두리
-                      width: mobileSizeCalc(20, ratio),
-                      height: mobileSizeCalc(20, ratio),
+                      width: mobileSizeCalc(20, ratio, 360, 624),
+                      height: mobileSizeCalc(20, ratio, 360, 624),
                       borderRadius: "5px",
-                      border: allChecked ? "1px solid #1C4154" : "1px solid black",
+                      border: checkedList.includes("age") ? "1px solid #1C4154" : "1px solid black",
                       cursor: "pointer",
                       outline: "none",
                       transition: "background .15s",
-                      background: allChecked
-                        ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
-                        : "#FFFFFF",
+                      background: checkedList.includes("age")
+                        ? `#1C4154 url("${tickSvg}") no-repeat center/10px`
+                        : "#F3F3F3",
                       boxShadow: "none",
                     }}
                   />
                   <span
-                    className="font-semibold leading-none text-black"
+                    className="font-normal text-black"
                     style={{
-                      paddingLeft: mobileSizeCalc(11, ratio),
-                      fontSize: mobileSizeCalc(14, ratio),
+                      paddingLeft: mobileSizeCalc(9, ratio, 360, 624),
+                      fontSize: mobileSizeCalc(13, ratio, 360, 624),
+                      lineHeight: mobileSizeCalc(13, ratio, 360, 624),
                     }}
                   >
-                    전체동의
+                    만 18세 이상
                   </span>
                 </label>
-                <div
-                  className="flex flex-col"
-                  style={{
-                    paddingLeft: mobileSizeCalc(24, ratio),
-                    paddingTop: mobileSizeCalc(10, ratio),
-                    paddingBottom: mobileSizeCalc(10, ratio),
-                    rowGap: mobileSizeCalc(8, ratio),
-                  }}
-                >
+                <div className="flex items-center">
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      name="age"
-                      checked={checkedList.includes("age")}
+                      name="privacy"
+                      checked={checkedList.includes("privacy")}
                       onChange={(e) => toggleOne(e.target.name)}
                       style={{
                         // 기본 외형 제거
@@ -578,272 +649,240 @@ export default function Page() {
                         WebkitAppearance: "none",
                         MozAppearance: "none",
                         // 공통 크기와 테두리
-                        width: mobileSizeCalc(20, ratio),
-                        height: mobileSizeCalc(20, ratio),
+                        width: mobileSizeCalc(20, ratio, 360, 624),
+                        height: mobileSizeCalc(20, ratio, 360, 624),
                         borderRadius: "5px",
-                        border: checkedList.includes("age")
+                        border: checkedList.includes("privacy")
                           ? "1px solid #1C4154"
                           : "1px solid black",
                         cursor: "pointer",
                         outline: "none",
                         transition: "background .15s",
-                        background: checkedList.includes("age")
-                          ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
-                          : "#FFFFFF",
+                        background: checkedList.includes("privacy")
+                          ? `#1C4154 url("${tickSvg}") no-repeat center/10px`
+                          : "#F3F3F3",
                         boxShadow: "none",
                       }}
                     />
                     <span
                       className="font-normal leading-none text-black"
                       style={{
-                        paddingLeft: mobileSizeCalc(9, ratio),
-                        fontSize: mobileSizeCalc(13, ratio),
+                        paddingLeft: mobileSizeCalc(9, ratio, 360, 624),
+                        fontSize: mobileSizeCalc(13, ratio, 360, 624),
+                        lineHeight: mobileSizeCalc(13, ratio, 360, 624),
                       }}
                     >
-                      만 18세 이상
+                      개인정보 수집 및 이용 동의
                     </span>
                   </label>
-                  <div className="flex items-center">
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        name="privacy"
-                        checked={checkedList.includes("privacy")}
-                        onChange={(e) => toggleOne(e.target.name)}
-                        style={{
-                          // 기본 외형 제거
-                          appearance: "none",
-                          WebkitAppearance: "none",
-                          MozAppearance: "none",
-                          // 공통 크기와 테두리
-                          width: mobileSizeCalc(20, ratio),
-                          height: mobileSizeCalc(20, ratio),
-                          borderRadius: "5px",
-                          border: checkedList.includes("privacy")
-                            ? "1px solid #1C4154"
-                            : "1px solid black",
-                          cursor: "pointer",
-                          outline: "none",
-                          transition: "background .15s",
-                          background: checkedList.includes("privacy")
-                            ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
-                            : "#FFFFFF",
-                          boxShadow: "none",
-                        }}
-                      />
-                      <span
-                        className="font-normal leading-none text-black"
-                        style={{
-                          paddingLeft: mobileSizeCalc(9, ratio),
-                          fontSize: mobileSizeCalc(13, ratio),
-                        }}
-                      >
-                        개인정보 수집 및 이용 동의
-                      </span>
-                    </label>
-                    <span
-                      className="rounded-full bg-[#1C4154] font-normal text-white "
+                  <span
+                    className="rounded-full bg-[#1C4154] font-normal text-white "
+                    style={{
+                      marginLeft: mobileSizeCalc(9, ratio, 360, 624),
+                      paddingLeft: mobileSizeCalc(8, ratio, 360, 624),
+                      paddingRight: mobileSizeCalc(8, ratio, 360, 624),
+                      paddingTop: mobileSizeCalc(3, ratio, 360, 624),
+                      paddingBottom: mobileSizeCalc(3, ratio, 360, 624),
+                      fontSize: mobileSizeCalc(11, ratio, 360, 624),
+                      lineHeight: mobileSizeCalc(12, ratio, 360, 624),
+                    }}
+                    onClick={() => alert("개발 예정")}
+                  >
+                    자세히
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="alarm"
+                      checked={checkedList.includes("alarm")}
+                      onChange={(e) => toggleOne(e.target.name)}
                       style={{
-                        marginLeft: mobileSizeCalc(9, ratio),
-                        paddingLeft: mobileSizeCalc(8, ratio),
-                        paddingRight: mobileSizeCalc(8, ratio),
-                        paddingTop: mobileSizeCalc(3, ratio),
-                        paddingBottom: mobileSizeCalc(3, ratio),
-                        fontSize: mobileSizeCalc(11, ratio),
-                        lineHeight: mobileSizeCalc(12, ratio),
+                        // 기본 외형 제거
+                        appearance: "none",
+                        WebkitAppearance: "none",
+                        MozAppearance: "none",
+                        // 공통 크기와 테두리
+                        width: mobileSizeCalc(20, ratio, 360, 624),
+                        height: mobileSizeCalc(20, ratio, 360, 624),
+                        borderRadius: "5px",
+                        border: checkedList.includes("alarm")
+                          ? "1px solid #1C4154"
+                          : "1px solid black",
+                        cursor: "pointer",
+                        outline: "none",
+                        transition: "background .15s",
+                        background: checkedList.includes("alarm")
+                          ? `#1C4154 url("${tickSvg}") no-repeat center/10px`
+                          : "#F3F3F3",
+                        boxShadow: "none",
                       }}
-                      onClick={() => alert("개발 예정")}
-                    >
-                      자세히
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        name="alarm"
-                        checked={checkedList.includes("alarm")}
-                        onChange={(e) => toggleOne(e.target.name)}
-                        style={{
-                          // 기본 외형 제거
-                          appearance: "none",
-                          WebkitAppearance: "none",
-                          MozAppearance: "none",
-                          // 공통 크기와 테두리
-                          width: mobileSizeCalc(20, ratio),
-                          height: mobileSizeCalc(20, ratio),
-                          borderRadius: "5px",
-                          border: checkedList.includes("alarm")
-                            ? "1px solid #1C4154"
-                            : "1px solid black",
-                          cursor: "pointer",
-                          outline: "none",
-                          transition: "background .15s",
-                          background: checkedList.includes("alarm")
-                            ? `#1C4154 url("${tickSvg}") no-repeat center/12px`
-                            : "#FFFFFF",
-                          boxShadow: "none",
-                        }}
-                      />
-                      <span
-                        className="font-normal leading-none text-black"
-                        style={{
-                          paddingLeft: mobileSizeCalc(9, ratio),
-                          fontSize: mobileSizeCalc(13, ratio),
-                        }}
-                      >
-                        게임 서비스 소식 받기
-                      </span>
-                    </label>
+                    />
                     <span
-                      className="rounded-full bg-[#1C4154] font-normal text-white "
+                      className="font-normal text-black"
                       style={{
-                        marginLeft: mobileSizeCalc(9, ratio),
-                        paddingLeft: mobileSizeCalc(8, ratio),
-                        paddingRight: mobileSizeCalc(8, ratio),
-                        paddingTop: mobileSizeCalc(3, ratio),
-                        paddingBottom: mobileSizeCalc(3, ratio),
-                        fontSize: mobileSizeCalc(11, ratio),
-                        lineHeight: mobileSizeCalc(12, ratio),
+                        paddingLeft: mobileSizeCalc(9, ratio, 360, 624),
+                        fontSize: mobileSizeCalc(13, ratio, 360, 624),
+                        lineHeight: mobileSizeCalc(13, ratio, 360, 624),
                       }}
-                      onClick={() => alert("개발 예정")}
                     >
-                      자세히
+                      게임 서비스 소식 받기
                     </span>
-                  </div>
+                  </label>
+                  <span
+                    className="rounded-full bg-[#1C4154] font-normal text-white "
+                    style={{
+                      marginLeft: mobileSizeCalc(9, ratio, 360, 624),
+                      paddingLeft: mobileSizeCalc(8, ratio, 360, 624),
+                      paddingRight: mobileSizeCalc(8, ratio, 360, 624),
+                      paddingTop: mobileSizeCalc(3, ratio, 360, 624),
+                      paddingBottom: mobileSizeCalc(3, ratio, 360, 624),
+                      fontSize: mobileSizeCalc(11, ratio, 360, 624),
+                      lineHeight: mobileSizeCalc(12, ratio, 360, 624),
+                    }}
+                    onClick={() => alert("개발 예정")}
+                  >
+                    자세히
+                  </span>
                 </div>
               </div>
+            </div>
+            <div
+              className="flex w-full items-center rounded-[10px] border border-[#AAAAAA] bg-white"
+              style={{
+                marginTop: mobileSizeCalc(20, ratio, 360, 624),
+                paddingLeft: mobileSizeCalc(15, ratio, 360, 624),
+                paddingTop: mobileSizeCalc(16, ratio, 360, 624),
+                paddingBottom: mobileSizeCalc(15, ratio, 360, 624),
+              }}
+            >
               <div
-                className="flex w-full items-center rounded-[10px] border-2 border-[#AAAAAA] bg-white"
+                className="font-semibold text-[#1F1F1F]"
                 style={{
-                  marginTop: mobileSizeCalc(10, ratio),
-                  height: mobileSizeCalc(49, ratio),
-                  paddingLeft: mobileSizeCalc(15, ratio),
-                  paddingTop: mobileSizeCalc(16, ratio),
-                  paddingBottom: mobileSizeCalc(14, ratio),
+                  fontSize: mobileSizeCalc(18, ratio, 360, 624),
+                  lineHeight: mobileSizeCalc(18, ratio, 360, 624),
                 }}
               >
-                <div
-                  className="font-semibold leading-none text-[#1F1F1F]"
-                  style={{
-                    fontSize: mobileSizeCalc(18, ratio),
-                  }}
-                >
-                  010&nbsp;-&nbsp;
-                </div>
-                <input
-                  type="number"
-                  placeholder="1234"
-                  value={frontPhoneNumber}
-                  ref={mobileFrontPhoneRef}
-                  onChange={(e) => {
-                    if (e.target.value.length < 5) {
-                      setFrontPhoneNumber(e.target.value);
-                    }
-                    if (e.target.value.length === 4) {
-                      console.log("오니???");
-                      setTimeout(() => mobileBackPhoneRef?.current?.focus(), 1);
-                    }
-                  }}
-                  className="m-0 border-none p-0 font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
-                  style={{
-                    fontSize: mobileSizeCalc(18, ratio),
-                    width: mobileSizeCalc(46, ratio),
-                  }}
-                />
-                <div
-                  className="font-semibold leading-none text-[#1F1F1F]"
-                  style={{
-                    fontSize: mobileSizeCalc(18, ratio),
-                  }}
-                >
-                  &nbsp;-&nbsp;
-                </div>
-                <input
-                  type="number"
-                  placeholder="5678"
-                  value={backPhoneNumber}
-                  ref={mobileBackPhoneRef}
-                  onChange={(e) => {
-                    if (e.target.value.length < 5) {
-                      setBackPhoneNumber(e.target.value);
-                    }
-                    if (e.target.value.length === 0) {
-                      mobileFrontPhoneRef.current?.focus();
-                    }
-                  }}
-                  className="m-0 border-none p-0 font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
-                  style={{
-                    fontSize: mobileSizeCalc(18, ratio),
-                    width: mobileSizeCalc(46, ratio),
-                  }}
-                />
+                010&nbsp;-&nbsp;
               </div>
-              <button
-                disabled={
-                  !allChecked || store === "" || frontPhoneNumber === "" || backPhoneNumber === ""
-                }
-                type="submit"
-                className="w-full rounded-[10px] bg-[#1C4154] font-semibold leading-none text-white disabled:bg-gray-400"
-                style={{
-                  marginTop: mobileSizeCalc(16, ratio),
-                  height: mobileSizeCalc(60, ratio),
-                  fontSize: mobileSizeCalc(22, ratio),
+              <input
+                type="number"
+                placeholder="1234"
+                value={frontPhoneNumber}
+                ref={mobileFrontPhoneRef}
+                onChange={(e) => {
+                  if (e.target.value.length < 5) {
+                    setFrontPhoneNumber(e.target.value);
+                  }
+                  if (e.target.value.length === 4) {
+                    setTimeout(() => mobileBackPhoneRef?.current?.focus(), 1);
+                  }
                 }}
-              >
-                사전등록하기
-              </button>
+                className={`m-0 border-none p-0 font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0`}
+                style={{
+                  fontSize: mobileSizeCalc(18, ratio, 360, 624),
+                  lineHeight: mobileSizeCalc(18, ratio, 360, 624),
+                  width: mobileSizeCalc(46, ratio, 360, 624),
+                  height: mobileSizeCalc(18, ratio, 360, 624),
+                }}
+              />
               <div
-                className="flex justify-between"
+                className="font-semibold text-[#1F1F1F]"
                 style={{
-                  marginTop: mobileSizeCalc(16, ratio),
+                  fontSize: mobileSizeCalc(18, ratio, 360, 624),
+                  lineHeight: mobileSizeCalc(18, ratio, 360, 624),
                 }}
               >
-                <Image
-                  src="/advance_reservation_apple_mobile.png"
-                  alt="앱스토어 사전예약"
-                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
-                  quality={100}
-                  unoptimized
-                  width={73}
-                  height={118}
-                  style={{
-                    width: mobileSizeCalc(73, ratio),
-                    height: mobileSizeCalc(118, ratio),
-                  }}
-                  onClick={() => alert("액션 머임?")}
-                />
-                <Image
-                  src="/advance_reservation_google_mobile.png"
-                  alt="구글 플레이스토어 사전예약"
-                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
-                  quality={100}
-                  unoptimized
-                  width={73}
-                  height={118}
-                  style={{
-                    width: mobileSizeCalc(73, ratio),
-                    height: mobileSizeCalc(118, ratio),
-                  }}
-                  onClick={() => alert("액션 머임?")}
-                />
-                <Image
-                  src="/advance_reservation_onestore_mobile.png"
-                  alt="원스토어 사전예약"
-                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
-                  quality={100}
-                  unoptimized
-                  width={73}
-                  height={118}
-                  style={{
-                    width: mobileSizeCalc(73, ratio),
-                    height: mobileSizeCalc(118, ratio),
-                  }}
-                  onClick={() => alert("액션 머임?")}
-                />
+                &nbsp;-&nbsp;
               </div>
-            </form>
-          </div>
+              <input
+                type="number"
+                placeholder="5678"
+                value={backPhoneNumber}
+                ref={mobileBackPhoneRef}
+                onChange={(e) => {
+                  if (e.target.value.length < 5) {
+                    setBackPhoneNumber(e.target.value);
+                  }
+                  if (e.target.value.length === 0) {
+                    mobileFrontPhoneRef.current?.focus();
+                  }
+                }}
+                className="m-0 border-none p-0 font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
+                style={{
+                  fontSize: mobileSizeCalc(18, ratio, 360, 624),
+                  lineHeight: mobileSizeCalc(18, ratio, 360, 624),
+                  width: mobileSizeCalc(46, ratio, 360, 624),
+                  height: mobileSizeCalc(18, ratio, 360, 624),
+                }}
+              />
+            </div>
+            <button
+              disabled={
+                !allChecked || store === "" || frontPhoneNumber === "" || backPhoneNumber === ""
+              }
+              type="submit"
+              className="w-full rounded-[10px] bg-[#1C4154] font-semibold text-white disabled:bg-gray-400"
+              style={{
+                marginTop: mobileSizeCalc(20, ratio, 360, 624),
+                height: mobileSizeCalc(54, ratio, 360, 624),
+                fontSize: mobileSizeCalc(22, ratio, 360, 624),
+                lineHeight: mobileSizeCalc(22, ratio, 360, 624),
+              }}
+            >
+              사전등록하기
+            </button>
+            <div
+              className="flex justify-between"
+              style={{
+                marginTop: mobileSizeCalc(20, ratio, 360, 624),
+              }}
+            >
+              <Image
+                src="/advance_reservation_apple_mobile.png"
+                alt="앱스토어 사전예약"
+                className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                quality={100}
+                unoptimized
+                width={73}
+                height={104}
+                style={{
+                  width: mobileSizeCalc(73, ratio, 360, 624),
+                  height: mobileSizeCalc(104, ratio, 360, 624),
+                }}
+                onClick={() => alert("액션 머임?")}
+              />
+              <Image
+                src="/advance_reservation_google_mobile.png"
+                alt="구글 플레이스토어 사전예약"
+                className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                quality={100}
+                unoptimized
+                width={73}
+                height={104}
+                style={{
+                  width: mobileSizeCalc(73, ratio, 360, 624),
+                  height: mobileSizeCalc(104, ratio, 360, 624),
+                }}
+                onClick={() => alert("액션 머임?")}
+              />
+              <Image
+                src="/advance_reservation_onestore_mobile.png"
+                alt="원스토어 사전예약"
+                className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                quality={100}
+                unoptimized
+                width={73}
+                height={104}
+                style={{
+                  width: mobileSizeCalc(73, ratio, 360, 624),
+                  height: mobileSizeCalc(104, ratio, 360, 624),
+                }}
+                onClick={() => alert("액션 머임?")}
+              />
+            </div>
+          </form>
         </section>
       </div>
 

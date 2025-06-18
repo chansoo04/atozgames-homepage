@@ -767,12 +767,17 @@ export default function Page() {
                 010&nbsp;-&nbsp;
               </div>
               <input
-                type="number"
+                type="text"
                 placeholder="1234"
                 value={frontPhoneNumber}
                 ref={mobileFrontPhoneRef}
+                inputMode="numeric"
+                pattern="\d{4}"
+                maxLength={4}
                 onChange={(e) => {
-                  if (e.target.value.length < 5) {
+                  const isValid = /^\d{0,4}$/.test(e.target.value);
+
+                  if (e.target.value.length < 5 && isValid) {
                     setFrontPhoneNumber(e.target.value);
                   }
                   if (e.target.value.length === 4) {
@@ -797,12 +802,17 @@ export default function Page() {
                 &nbsp;-&nbsp;
               </div>
               <input
-                type="number"
+                type="text"
                 placeholder="5678"
                 value={backPhoneNumber}
                 ref={mobileBackPhoneRef}
+                inputMode="numeric"
+                pattern="\d{4}"
+                maxLength={4}
                 onChange={(e) => {
-                  if (e.target.value.length < 5) {
+                  const isValid = /^\d{0,4}$/.test(e.target.value);
+
+                  if (e.target.value.length < 5 && isValid) {
                     setBackPhoneNumber(e.target.value);
                   }
                   if (e.target.value.length === 0) {
@@ -1193,12 +1203,17 @@ export default function Page() {
               <div className="mt-5 flex h-[58px] w-full items-center rounded-[10px] border-2 border-[#AAAAAA] bg-white px-5 py-4">
                 <div className="text-2xl font-semibold text-[#1F1F1F]">010&nbsp;-&nbsp;</div>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="1234"
                   value={frontPhoneNumber}
                   ref={desktopFrontPhoneRef}
+                  inputMode="numeric"
+                  pattern="\d{4}"
+                  maxLength={4}
                   onChange={(e) => {
-                    if (e.target.value.length < 5) {
+                    const isValid = /^\d{0,4}$/.test(e.target.value);
+
+                    if (e.target.value.length < 5 && isValid) {
                       setFrontPhoneNumber(e.target.value);
                     }
                     if (e.target.value.length === 4) {
@@ -1211,12 +1226,17 @@ export default function Page() {
                   &nbsp;-&nbsp;
                 </div>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="5678"
                   value={backPhoneNumber}
                   ref={desktopBackPhoneRef}
+                  inputMode="numeric"
+                  pattern="\d{4}"
+                  maxLength={4}
                   onChange={(e) => {
-                    if (e.target.value.length < 5) {
+                    const isValid = /^\d{0,4}$/.test(e.target.value);
+
+                    if (e.target.value.length < 5 && isValid) {
                       setBackPhoneNumber(e.target.value);
                     }
                     if (e.target.value.length === 0) {

@@ -138,6 +138,8 @@ export default function Page() {
                 width: mobileSizeCalc(320, ratio),
                 height: mobileSizeCalc(39, ratio),
               }}
+              unoptimized
+              quality={100}
             />
             <Image
               onClick={() => handleGoogle()}
@@ -150,6 +152,8 @@ export default function Page() {
                 width: mobileSizeCalc(320, ratio),
                 height: mobileSizeCalc(39, ratio),
               }}
+              unoptimized
+              quality={100}
             />
             <Image
               onClick={() => handleApple()}
@@ -162,6 +166,8 @@ export default function Page() {
                 width: mobileSizeCalc(320, ratio),
                 height: mobileSizeCalc(39, ratio),
               }}
+              unoptimized
+              quality={100}
             />
             <Image
               onClick={() => handleKakao()}
@@ -173,6 +179,8 @@ export default function Page() {
                 width: mobileSizeCalc(320, ratio),
                 height: mobileSizeCalc(39, ratio),
               }}
+              unoptimized
+              quality={100}
             />
             <Image
               onClick={() => handleNaver()}
@@ -184,13 +192,15 @@ export default function Page() {
                 width: mobileSizeCalc(320, ratio),
                 height: mobileSizeCalc(39, ratio),
               }}
+              unoptimized
+              quality={100}
             />
           </div>
         </div>
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
+      <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:bg-[url('/bg_desktop2.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
         <TopBar />
 
         <div
@@ -223,6 +233,8 @@ export default function Page() {
                 width: desktopSizeCalc(500, ratio),
                 height: desktopSizeCalc(61, ratio),
               }}
+              unoptimized
+              quality={100}
             />
             <Image
               onClick={() => handleGoogle()}
@@ -235,6 +247,8 @@ export default function Page() {
                 width: desktopSizeCalc(500, ratio),
                 height: desktopSizeCalc(61, ratio),
               }}
+              unoptimized
+              quality={100}
             />
             <Image
               onClick={() => handleApple()}
@@ -247,6 +261,8 @@ export default function Page() {
                 width: desktopSizeCalc(500, ratio),
                 height: desktopSizeCalc(61, ratio),
               }}
+              unoptimized
+              quality={100}
             />
             <Image
               onClick={() => handleKakao()}
@@ -259,6 +275,8 @@ export default function Page() {
                 width: desktopSizeCalc(500, ratio),
                 height: desktopSizeCalc(61, ratio),
               }}
+              unoptimized
+              quality={100}
             />
             <Image
               onClick={() => handleNaver()}
@@ -271,6 +289,8 @@ export default function Page() {
                 width: desktopSizeCalc(500, ratio),
                 height: desktopSizeCalc(61, ratio),
               }}
+              unoptimized
+              quality={100}
             />
           </div>
         </div>

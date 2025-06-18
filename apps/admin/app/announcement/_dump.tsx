@@ -17,7 +17,7 @@ export default async function Page() {
   const announcements: any = await getPageData();
 
   return (
-    <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop1.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
+    <main className="w-full desktop:flex desktop:min-h-screen desktop:w-full desktop:flex-col desktop:bg-[url(/bg_desktop2.png)] desktop:bg-cover desktop:bg-center desktop:bg-no-repeat">
       <TopBar />
 
       {/* 모바일(<640)에서만 보임 */}

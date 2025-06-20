@@ -30,16 +30,17 @@ export const mobileSizeCalc = (
 
 // 기준 비율: 1920 * 1080
 export const desktopSizeCalc = (크기: number, ratio: number, 기준비율?: number) => {
-  if (기준비율 === undefined || 기준비율 === null) {
-    기준비율 = 0.56;
-  }
-
-  if (ratio < 기준비율) {
-    const 새로운크기 = Math.round((크기 / 1080) * 10000) / 100;
-    return `${새로운크기}dvh`;
-  }
-  if (ratio >= 기준비율) {
-    const 새로운크기 = Math.round((크기 / 1920) * 10000) / 100;
-    return `${새로운크기}dvw`;
-  }
+  return `${크기}px`;
+  // if (기준비율 === undefined || 기준비율 === null) {
+  //   기준비율 = 0.56;
+  // }
+  //
+  // if (ratio < 기준비율) {
+  //   const 새로운크기 = Math.round((크기 / 1080) * 10000) / 100;
+  //   return `${새로운크기}dvh`;
+  // }
+  // if (ratio >= 기준비율) {
+  //   const 새로운크기 = Math.round((크기 / 1920) * 10000) / 100;
+  //   return `${새로운크기}dvw`;
+  // }
 };

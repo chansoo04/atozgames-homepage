@@ -85,7 +85,7 @@ export default function Footer() {
 
       {/* 데스크탑(≥1024)에서만 보임 */}
       <footer
-        className="hidden desktop:flex desktop:w-full desktop:flex-col desktop:bg-[#16172D]"
+        className="hidden desktop:flex desktop:w-full desktop:min-w-[1280px] desktop:flex-col desktop:bg-[#16172D]"
         style={{
           paddingBottom: desktopSizeCalc(40, ratio),
           paddingTop: desktopSizeCalc(30, ratio),

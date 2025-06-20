@@ -899,7 +899,7 @@ export default function Page() {
       {/* ───── 데스크탑 전용 ───── */}
       <div
         id="desktop-scroll"
-        className="hidden h-screen snap-y snap-mandatory overflow-y-scroll bg-cover bg-fixed bg-top transition-[background-image] duration-1000 ease-in-out desktop:block"
+        className="hidden h-screen snap-y snap-mandatory overflow-y-scroll bg-cover bg-fixed bg-top transition-[background-image] duration-1000 ease-in-out desktop:block desktop:min-w-[1280px]"
         style={{ backgroundImage: `url(${desktopBg})` }}
       >
         {/* 인디케이터 */}

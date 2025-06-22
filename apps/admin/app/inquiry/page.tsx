@@ -540,7 +540,7 @@ export default function Page() {
         </section>
 
         {/* 데스크탑(≥1024)에서만 보임 */}
-        <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:min-w-[1280px] desktop:bg-[url('/bg_desktop2.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
+        <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:min-w-[1280px] desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
           <TopBar />
 
           <div

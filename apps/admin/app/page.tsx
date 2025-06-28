@@ -34,7 +34,7 @@ export default function Page() {
   const mobileFrontPhoneRef = useRef<HTMLInputElement>(null);
   const desktopBackPhoneRef = useRef<HTMLInputElement>(null);
   const desktopFrontPhoneRef = useRef<HTMLInputElement>(null);
-  const { ratio } = useWindowSize();
+  const { ratio, width, height } = useWindowSize();
 
   const toggleAll = (flag: boolean) => {
     setCheckedList(flag ? agreementItems : []);
@@ -903,7 +903,7 @@ export default function Page() {
         style={{ backgroundImage: `url(${desktopBg})` }}
       >
         {/* 인디케이터 */}
-        <Indicator />
+        {width > 1580 ? <Indicator /> : null}
 
         {/* 슬라이드 1 */}
         <section
@@ -937,7 +937,7 @@ export default function Page() {
             사전등록
           </button>
           {/* 마우스 스크롤 이미지는 1페이지에서만 표시 */}
-          {activeDesktopSection === 0 && (
+          {activeDesktopSection === 0 && height > 870 ? (
             <Image
               unoptimized
               src="/advance_reservation_mouse_scroll.png"
@@ -946,7 +946,7 @@ export default function Page() {
               height={81}
               className="absolute bottom-12"
             />
-          )}
+          ) : null}
         </section>
 
         {/* 슬라이드 2 */}

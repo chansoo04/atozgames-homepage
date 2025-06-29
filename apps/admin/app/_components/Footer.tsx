@@ -19,10 +19,12 @@ export default function Footer() {
       >
         <div
           className="flex"
-          style={{
-            paddingLeft: mobileSizeCalc(33, ratio),
-            paddingRight: mobileSizeCalc(33, ratio),
-          }}
+          style={
+            {
+              // paddingLeft: mobileSizeCalc(33, ratio),
+              // paddingRight: mobileSizeCalc(33, ratio),
+            }
+          }
         >
           <Link
             className="border-r border-gray-300 font-medium text-gray-500"
@@ -49,7 +51,7 @@ export default function Footer() {
             개인정보 처리방침
           </Link>
           <Link
-            className="font-medium text-gray-500"
+            className="border-r border-gray-300 font-medium text-gray-500"
             href="/operating-policy"
             style={{
               paddingLeft: mobileSizeCalc(16, ratio),
@@ -59,6 +61,18 @@ export default function Footer() {
             }}
           >
             운영정책
+          </Link>
+          <Link
+            className="font-medium text-serve-light"
+            href="/youth"
+            style={{
+              paddingLeft: mobileSizeCalc(16, ratio),
+              paddingRight: mobileSizeCalc(16, ratio),
+              fontSize: mobileSizeCalc(10, ratio),
+              lineHeight: mobileSizeCalc(15, ratio),
+            }}
+          >
+            청소년 보호정책
           </Link>
         </div>
         <Image
@@ -135,7 +149,7 @@ export default function Footer() {
               </Link>
               <Link
                 href="/operating-policy"
-                className="desktop:text-center desktop:font-semibold desktop:text-gray-400"
+                className="desktop:border-r desktop:border-gray-600 desktop:text-center desktop:font-semibold desktop:text-gray-400"
                 style={{
                   paddingLeft: desktopSizeCalc(16, ratio),
                   paddingRight: desktopSizeCalc(16, ratio),
@@ -144,6 +158,18 @@ export default function Footer() {
                 }}
               >
                 운영정책
+              </Link>
+              <Link
+                href="/youth"
+                className="desktop:text-center desktop:font-semibold desktop:text-gray-400"
+                style={{
+                  paddingLeft: desktopSizeCalc(16, ratio),
+                  paddingRight: desktopSizeCalc(16, ratio),
+                  fontSize: desktopSizeCalc(16, ratio),
+                  lineHeight: desktopSizeCalc(26, ratio),
+                }}
+              >
+                청소년 보호정책
               </Link>
             </div>
           </div>

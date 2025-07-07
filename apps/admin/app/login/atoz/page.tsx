@@ -54,7 +54,7 @@ export default function Page() {
   };
 
   return (
-    <main className="relative w-full">
+    <main className="relative w-full desktop:bg-black">
       {/* 모바일(<640)에서만 보임 */}
       <section
         className="flex flex-col items-center desktop:hidden"
@@ -149,7 +149,7 @@ export default function Page() {
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="relative hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:min-w-[1280px] desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
+      <section className="relative mx-auto hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:min-w-[1920px] desktop:max-w-[1920px] desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
         <TopBar />
 
         <div

@@ -131,7 +131,12 @@ export default function Page() {
   const Indicator = () => {
     const items = ["메인", "사전등록"];
     return (
-      <div className="fixed right-[30px] top-1/2 z-50 flex -translate-y-1/2 flex-col items-end gap-y-[18px] desktop:flex">
+      <div
+        className="fixed top-1/2 z-50 flex -translate-y-1/2 flex-col items-end gap-y-[18px] desktop:flex"
+        style={{
+          right: `${width >= 1920 ? Math.round(30 + (width - 1920) / 2) : "30"}px`,
+        }}
+      >
         {items.map((label, i) => {
           const isActive = i === activeDesktopSection;
           return (
@@ -188,7 +193,7 @@ export default function Page() {
   };
 
   return (
-    <main className="relative w-full">
+    <main className="relative w-full desktop:bg-black">
       {/* ───── 모바일 전용 ───── */}
       <div
         id="mobile-scroll"
@@ -899,11 +904,11 @@ export default function Page() {
       {/* ───── 데스크탑 전용 ───── */}
       <div
         id="desktop-scroll"
-        className="hidden h-screen snap-y snap-mandatory overflow-y-scroll bg-cover bg-fixed bg-top transition-[background-image] duration-1000 ease-in-out desktop:block desktop:min-w-[1280px]"
+        className="mx-auto hidden h-screen snap-y snap-mandatory overflow-y-scroll bg-cover bg-fixed bg-top transition-[background-image] duration-1000 ease-in-out desktop:block desktop:min-w-[1920px] desktop:max-w-[1920px]"
         style={{ backgroundImage: `url(${desktopBg})` }}
       >
         {/* 인디케이터 */}
-        {width > 1580 ? <Indicator /> : null}
+        {width > 1800 ? <Indicator /> : null}
 
         {/* 슬라이드 1 */}
         <section

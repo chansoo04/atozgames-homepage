@@ -8,7 +8,7 @@ export default function ClientPage() {
   const { ratio } = useWindowSize();
 
   return (
-    <main className="relative w-full">
+    <main className="relative w-full desktop:bg-black">
       {/* 모바일(<640)에서만 보임 */}
       <section
         className="flex flex-col items-center desktop:hidden"
@@ -367,20 +367,20 @@ export default function ClientPage() {
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="relative hidden desktop:block desktop:aspect-[1920/2095] desktop:w-full desktop:min-w-[1280px] desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
+      <section className="relative hidden desktop:mx-auto desktop:block desktop:aspect-[1920/2095] desktop:w-full desktop:min-w-[1920px] desktop:max-w-[1920px] desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
         <TopBar />
 
         <div
           className="desktop:flex desktop:flex-col desktop:items-center"
           style={{
-            paddingTop: desktopSizeCalc(240, ratio),
+            paddingTop: desktopSizeCalc(238, ratio),
           }}
         >
           <h1
             className="desktop:text-center desktop:font-bold desktop:text-white"
             style={{
               fontSize: desktopSizeCalc(50, ratio),
-              lineHeight: desktopSizeCalc(50, ratio),
+              lineHeight: desktopSizeCalc(60, ratio),
             }}
           >
             RNG 인증 및 공정성
@@ -390,7 +390,7 @@ export default function ClientPage() {
             className="desktop:flex desktop:rounded-[30px] desktop:bg-[#16172D]/70"
             style={{
               width: desktopSizeCalc(1200, ratio),
-              marginTop: desktopSizeCalc(80, ratio),
+              marginTop: desktopSizeCalc(142, ratio),
               columnGap: desktopSizeCalc(50, ratio),
               padding: desktopSizeCalc(70, ratio),
             }}

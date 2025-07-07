@@ -11,7 +11,7 @@ import { useState, useEffect, FormEvent, useRef } from "react";
 import Image from "next/image";
 import csr from "lib/fetcher/csr";
 import useWindowSize from "app/_components/useWindowSize";
-import { mobileSizeCalc } from "app/_components/sizeCalculator";
+import { paginationMobileSizeCalc } from "app/_components/sizeCalculator";
 
 const agreementItems = ["age", "privacy", "alarm"];
 // 원래 버전 + 데스크탑 인디케이터(클릭 스크롤 지원) + 마우스 스크롤 이미지 1페이지만 노출
@@ -206,18 +206,18 @@ export default function Page() {
             width={150}
             height={85}
             style={{
-              marginTop: mobileSizeCalc(102, ratio),
-              width: mobileSizeCalc(150, ratio),
-              height: mobileSizeCalc(85, ratio),
+              marginTop: paginationMobileSizeCalc(102, ratio),
+              width: paginationMobileSizeCalc(150, ratio),
+              height: paginationMobileSizeCalc(85, ratio),
             }}
             unoptimized
           />
           <h1
             className="whitespace-pre-line text-center font-gmarket font-light text-white"
             style={{
-              marginTop: mobileSizeCalc(27, ratio),
-              fontSize: mobileSizeCalc(30, ratio),
-              lineHeight: mobileSizeCalc(40, ratio),
+              marginTop: paginationMobileSizeCalc(27, ratio),
+              fontSize: paginationMobileSizeCalc(30, ratio),
+              lineHeight: paginationMobileSizeCalc(40, ratio),
             }}
           >
             빠른 속도감과 100%{"\n"}공정한 카드 분배,{"\n"}아토즈포커
@@ -228,9 +228,9 @@ export default function Page() {
             width={100}
             height={100}
             style={{
-              width: mobileSizeCalc(100, ratio),
-              height: mobileSizeCalc(100, ratio),
-              marginTop: mobileSizeCalc(43, ratio),
+              width: paginationMobileSizeCalc(100, ratio),
+              height: paginationMobileSizeCalc(100, ratio),
+              marginTop: paginationMobileSizeCalc(43, ratio),
             }}
             onClick={() => alert("영상 재생 필요")}
           />
@@ -240,10 +240,10 @@ export default function Page() {
               className="rounded-lg bg-[#1C4154] font-semibold text-white"
               onClick={() => scrollToMobileSection(1)}
               style={{
-                marginTop: mobileSizeCalc(69, ratio),
-                height: mobileSizeCalc(64, ratio),
-                width: mobileSizeCalc(250, ratio),
-                fontSize: mobileSizeCalc(22, ratio),
+                marginTop: paginationMobileSizeCalc(69, ratio),
+                height: paginationMobileSizeCalc(64, ratio),
+                width: paginationMobileSizeCalc(250, ratio),
+                fontSize: paginationMobileSizeCalc(22, ratio),
               }}
             >
               사전등록
@@ -258,9 +258,9 @@ export default function Page() {
               height={81}
               className="absolute"
               style={{
-                width: mobileSizeCalc(63, ratio),
-                height: mobileSizeCalc(81, ratio),
-                bottom: mobileSizeCalc(23, ratio),
+                width: paginationMobileSizeCalc(63, ratio),
+                height: paginationMobileSizeCalc(81, ratio),
+                bottom: paginationMobileSizeCalc(23, ratio),
               }}
               unoptimized
             />
@@ -275,13 +275,13 @@ export default function Page() {
           <div
             className="mx-auto flex flex-col items-center rounded-[20px] bg-[#161B38]"
             style={{
-              width: mobileSizeCalc(300, ratio, 360, 624),
-              height: mobileSizeCalc(440, ratio, 360, 624),
-              marginTop: mobileSizeCalc(50, ratio, 360, 624),
-              paddingTop: mobileSizeCalc(15, ratio, 360, 624),
-              paddingLeft: mobileSizeCalc(20, ratio, 360, 624),
-              paddingRight: mobileSizeCalc(20, ratio, 360, 624),
-              paddingBottom: mobileSizeCalc(20, ratio, 360, 624),
+              width: paginationMobileSizeCalc(300, ratio, 360, 624),
+              height: paginationMobileSizeCalc(440, ratio, 360, 624),
+              marginTop: paginationMobileSizeCalc(50, ratio, 360, 624),
+              paddingTop: paginationMobileSizeCalc(15, ratio, 360, 624),
+              paddingLeft: paginationMobileSizeCalc(20, ratio, 360, 624),
+              paddingRight: paginationMobileSizeCalc(20, ratio, 360, 624),
+              paddingBottom: paginationMobileSizeCalc(20, ratio, 360, 624),
             }}
           >
             <Image
@@ -289,17 +289,17 @@ export default function Page() {
               width={233}
               height={115}
               style={{
-                width: mobileSizeCalc(233, ratio, 360, 624),
-                height: mobileSizeCalc(115, ratio, 360, 624),
+                width: paginationMobileSizeCalc(233, ratio, 360, 624),
+                height: paginationMobileSizeCalc(115, ratio, 360, 624),
               }}
               alt="아토즈포커 사전예약 사전등록"
             />
             <h3
               className="font-normal text-white"
               style={{
-                marginTop: mobileSizeCalc(9, ratio, 360, 624),
-                fontSize: mobileSizeCalc(10, ratio, 360, 624),
-                lineHeight: mobileSizeCalc(10, ratio, 360, 624),
+                marginTop: paginationMobileSizeCalc(9, ratio, 360, 624),
+                fontSize: paginationMobileSizeCalc(10, ratio, 360, 624),
+                lineHeight: paginationMobileSizeCalc(10, ratio, 360, 624),
               }}
             >
               기간: 2025년 7월 12일(토) - 2025년 8월 11일(월) 23:59
@@ -307,9 +307,9 @@ export default function Page() {
             <h5
               className="font-medium text-white"
               style={{
-                marginTop: mobileSizeCalc(24, ratio, 360, 624),
-                fontSize: mobileSizeCalc(18, ratio, 360, 624),
-                lineHeight: mobileSizeCalc(18, ratio, 360, 624),
+                marginTop: paginationMobileSizeCalc(24, ratio, 360, 624),
+                fontSize: paginationMobileSizeCalc(18, ratio, 360, 624),
+                lineHeight: paginationMobileSizeCalc(18, ratio, 360, 624),
               }}
             >
               사전등록 선물
@@ -317,11 +317,11 @@ export default function Page() {
             <div
               className="flex w-full flex-col items-center rounded-[15px] bg-[#0C1027]"
               style={{
-                marginTop: mobileSizeCalc(17, ratio, 360, 624),
-                paddingLeft: mobileSizeCalc(20, ratio, 360, 624),
-                paddingRight: mobileSizeCalc(20, ratio, 360, 624),
-                paddingBottom: mobileSizeCalc(17, ratio, 360, 624),
-                paddingTop: mobileSizeCalc(19, ratio, 360, 624),
+                marginTop: paginationMobileSizeCalc(17, ratio, 360, 624),
+                paddingLeft: paginationMobileSizeCalc(20, ratio, 360, 624),
+                paddingRight: paginationMobileSizeCalc(20, ratio, 360, 624),
+                paddingBottom: paginationMobileSizeCalc(17, ratio, 360, 624),
+                paddingTop: paginationMobileSizeCalc(19, ratio, 360, 624),
               }}
             >
               <Image
@@ -330,29 +330,29 @@ export default function Page() {
                 width={37.17}
                 height={72.21}
                 style={{
-                  width: mobileSizeCalc(37.17, ratio, 360, 624),
-                  height: mobileSizeCalc(72.21, ratio, 360, 624),
+                  width: paginationMobileSizeCalc(37.17, ratio, 360, 624),
+                  height: paginationMobileSizeCalc(72.21, ratio, 360, 624),
                 }}
               />
               <table
                 className="w-full"
                 style={{
-                  marginTop: mobileSizeCalc(11, ratio, 360, 624),
+                  marginTop: paginationMobileSizeCalc(11, ratio, 360, 624),
                 }}
               >
                 <tbody className="w-full">
                   <tr
                     className="flex"
                     style={{
-                      paddingBottom: mobileSizeCalc(10, ratio, 360, 624),
+                      paddingBottom: paginationMobileSizeCalc(10, ratio, 360, 624),
                     }}
                   >
                     <th
                       className="text-left font-medium text-[#A0ABDC]"
                       style={{
-                        fontSize: mobileSizeCalc(10, ratio, 360, 624),
-                        lineHeight: mobileSizeCalc(12, ratio, 360, 624),
-                        width: mobileSizeCalc(55, ratio, 360, 624),
+                        fontSize: paginationMobileSizeCalc(10, ratio, 360, 624),
+                        lineHeight: paginationMobileSizeCalc(12, ratio, 360, 624),
+                        width: paginationMobileSizeCalc(55, ratio, 360, 624),
                       }}
                     >
                       딜러비
@@ -360,8 +360,8 @@ export default function Page() {
                     <th
                       className="font-medium text-white"
                       style={{
-                        fontSize: mobileSizeCalc(14, ratio, 360, 624),
-                        lineHeight: mobileSizeCalc(14, ratio, 360, 624),
+                        fontSize: paginationMobileSizeCalc(14, ratio, 360, 624),
+                        lineHeight: paginationMobileSizeCalc(14, ratio, 360, 624),
                       }}
                     >
                       5%→2%할인
@@ -370,16 +370,16 @@ export default function Page() {
                   <tr
                     className="flex border-y border-[#232741]"
                     style={{
-                      paddingTop: mobileSizeCalc(10, ratio, 360, 624),
-                      paddingBottom: mobileSizeCalc(10, ratio, 360, 624),
+                      paddingTop: paginationMobileSizeCalc(10, ratio, 360, 624),
+                      paddingBottom: paginationMobileSizeCalc(10, ratio, 360, 624),
                     }}
                   >
                     <th
                       className="text-left font-medium text-[#A0ABDC]"
                       style={{
-                        fontSize: mobileSizeCalc(10, ratio, 360, 624),
-                        lineHeight: mobileSizeCalc(12, ratio, 360, 624),
-                        width: mobileSizeCalc(55, ratio, 360, 624),
+                        fontSize: paginationMobileSizeCalc(10, ratio, 360, 624),
+                        lineHeight: paginationMobileSizeCalc(12, ratio, 360, 624),
+                        width: paginationMobileSizeCalc(55, ratio, 360, 624),
                       }}
                     >
                       보유한도
@@ -387,8 +387,8 @@ export default function Page() {
                     <th
                       className="font-medium text-white"
                       style={{
-                        fontSize: mobileSizeCalc(14, ratio, 360, 624),
-                        lineHeight: mobileSizeCalc(14, ratio, 360, 624),
+                        fontSize: paginationMobileSizeCalc(14, ratio, 360, 624),
+                        lineHeight: paginationMobileSizeCalc(14, ratio, 360, 624),
                       }}
                     >
                       10배 증가
@@ -397,16 +397,16 @@ export default function Page() {
                   <tr
                     className="flex"
                     style={{
-                      paddingTop: mobileSizeCalc(10, ratio, 360, 624),
-                      paddingBottom: mobileSizeCalc(9, ratio, 360, 624),
+                      paddingTop: paginationMobileSizeCalc(10, ratio, 360, 624),
+                      paddingBottom: paginationMobileSizeCalc(9, ratio, 360, 624),
                     }}
                   >
                     <th
                       className="text-left font-medium text-[#A0ABDC]"
                       style={{
-                        fontSize: mobileSizeCalc(10, ratio, 360, 624),
-                        lineHeight: mobileSizeCalc(12, ratio, 360, 624),
-                        width: mobileSizeCalc(55, ratio, 360, 624),
+                        fontSize: paginationMobileSizeCalc(10, ratio, 360, 624),
+                        lineHeight: paginationMobileSizeCalc(12, ratio, 360, 624),
+                        width: paginationMobileSizeCalc(55, ratio, 360, 624),
                       }}
                     >
                       전용상점
@@ -414,8 +414,8 @@ export default function Page() {
                     <th
                       className="font-medium text-white"
                       style={{
-                        fontSize: mobileSizeCalc(14, ratio, 360, 624),
-                        lineHeight: mobileSizeCalc(14, ratio, 360, 624),
+                        fontSize: paginationMobileSizeCalc(14, ratio, 360, 624),
+                        lineHeight: paginationMobileSizeCalc(14, ratio, 360, 624),
                       }}
                     >
                       S클래스 전용 상점
@@ -434,9 +434,9 @@ export default function Page() {
               height={81}
               className="absolute"
               style={{
-                width: mobileSizeCalc(63, ratio),
-                height: mobileSizeCalc(81, ratio),
-                bottom: mobileSizeCalc(23, ratio),
+                width: paginationMobileSizeCalc(63, ratio),
+                height: paginationMobileSizeCalc(81, ratio),
+                bottom: paginationMobileSizeCalc(23, ratio),
               }}
               unoptimized
             />
@@ -452,24 +452,24 @@ export default function Page() {
             onSubmit={handleSubmit}
             className="mx-auto flex flex-col rounded-[20px] bg-[#F3F3F3]"
             style={{
-              width: mobileSizeCalc(300, ratio, 360, 624),
-              height: mobileSizeCalc(524, ratio, 360, 624),
-              paddingTop: mobileSizeCalc(25, ratio, 360, 624),
-              paddingLeft: mobileSizeCalc(20, ratio, 360, 624),
-              paddingRight: mobileSizeCalc(20, ratio, 360, 624),
-              paddingBottom: mobileSizeCalc(21, ratio, 360, 624),
+              width: paginationMobileSizeCalc(300, ratio, 360, 624),
+              height: paginationMobileSizeCalc(524, ratio, 360, 624),
+              paddingTop: paginationMobileSizeCalc(25, ratio, 360, 624),
+              paddingLeft: paginationMobileSizeCalc(20, ratio, 360, 624),
+              paddingRight: paginationMobileSizeCalc(20, ratio, 360, 624),
+              paddingBottom: paginationMobileSizeCalc(21, ratio, 360, 624),
             }}
           >
             <div
               className="flex items-center"
               style={{
-                columnGap: mobileSizeCalc(29, ratio, 360, 624),
-                paddingLeft: mobileSizeCalc(10, ratio, 360, 624),
+                columnGap: paginationMobileSizeCalc(29, ratio, 360, 624),
+                paddingLeft: paginationMobileSizeCalc(10, ratio, 360, 624),
               }}
             >
               <label
                 className="flex items-center"
-                style={{ columnGap: mobileSizeCalc(6, ratio, 360, 624) }}
+                style={{ columnGap: paginationMobileSizeCalc(6, ratio, 360, 624) }}
               >
                 <input
                   type="radio"
@@ -481,8 +481,8 @@ export default function Page() {
                     WebkitAppearance: "none",
                     MozAppearance: "none",
                     // 공통 크기와 테두리
-                    width: mobileSizeCalc(20, ratio, 360, 624),
-                    height: mobileSizeCalc(20, ratio, 360, 624),
+                    width: paginationMobileSizeCalc(20, ratio, 360, 624),
+                    height: paginationMobileSizeCalc(20, ratio, 360, 624),
                     borderRadius: "50%",
                     border: "1px solid black",
                     margin: 0,
@@ -498,8 +498,8 @@ export default function Page() {
                 <span
                   className="font-normal text-black"
                   style={{
-                    fontSize: mobileSizeCalc(14, ratio, 360, 624),
-                    lineHeight: mobileSizeCalc(14, ratio, 360, 624),
+                    fontSize: paginationMobileSizeCalc(14, ratio, 360, 624),
+                    lineHeight: paginationMobileSizeCalc(14, ratio, 360, 624),
                   }}
                 >
                   Google Play
@@ -507,7 +507,7 @@ export default function Page() {
               </label>
               <label
                 className="flex items-center"
-                style={{ columnGap: mobileSizeCalc(6, ratio, 360, 624) }}
+                style={{ columnGap: paginationMobileSizeCalc(6, ratio, 360, 624) }}
               >
                 <input
                   type="radio"
@@ -519,8 +519,8 @@ export default function Page() {
                     WebkitAppearance: "none",
                     MozAppearance: "none",
                     // 공통 크기와 테두리
-                    width: mobileSizeCalc(20, ratio, 360, 624),
-                    height: mobileSizeCalc(20, ratio, 360, 624),
+                    width: paginationMobileSizeCalc(20, ratio, 360, 624),
+                    height: paginationMobileSizeCalc(20, ratio, 360, 624),
                     borderRadius: "50%",
                     border: "1px solid black",
                     margin: 0,
@@ -536,8 +536,8 @@ export default function Page() {
                 <span
                   className="font-normal text-black"
                   style={{
-                    fontSize: mobileSizeCalc(14, ratio, 360, 624),
-                    lineHeight: mobileSizeCalc(14, ratio, 360, 624),
+                    fontSize: paginationMobileSizeCalc(14, ratio, 360, 624),
+                    lineHeight: paginationMobileSizeCalc(14, ratio, 360, 624),
                   }}
                 >
                   App Store
@@ -547,15 +547,15 @@ export default function Page() {
             <div
               className="w-full rounded-[10px] border border-[#AAAAAA]"
               style={{
-                marginTop: mobileSizeCalc(14, ratio, 360, 624),
+                marginTop: paginationMobileSizeCalc(14, ratio, 360, 624),
               }}
             >
               <label
                 className="flex w-full items-center border-b border-[#AAAAAA]"
                 style={{
-                  paddingTop: mobileSizeCalc(17, ratio, 360, 624),
-                  paddingBottom: mobileSizeCalc(15, ratio, 360, 624),
-                  paddingLeft: mobileSizeCalc(13, ratio, 360, 624),
+                  paddingTop: paginationMobileSizeCalc(17, ratio, 360, 624),
+                  paddingBottom: paginationMobileSizeCalc(15, ratio, 360, 624),
+                  paddingLeft: paginationMobileSizeCalc(13, ratio, 360, 624),
                 }}
               >
                 <input
@@ -568,8 +568,8 @@ export default function Page() {
                     WebkitAppearance: "none",
                     MozAppearance: "none",
                     // 공통 크기와 테두리
-                    width: mobileSizeCalc(20, ratio, 360, 624),
-                    height: mobileSizeCalc(20, ratio, 360, 624),
+                    width: paginationMobileSizeCalc(20, ratio, 360, 624),
+                    height: paginationMobileSizeCalc(20, ratio, 360, 624),
                     borderRadius: "5px",
                     border: allChecked ? "1px solid #1C4154" : "1px solid black",
                     cursor: "pointer",
@@ -584,8 +584,8 @@ export default function Page() {
                 <span
                   className="font-semibold text-black"
                   style={{
-                    paddingLeft: mobileSizeCalc(11, ratio, 360, 624),
-                    fontSize: mobileSizeCalc(14, ratio, 360, 624),
+                    paddingLeft: paginationMobileSizeCalc(11, ratio, 360, 624),
+                    fontSize: paginationMobileSizeCalc(14, ratio, 360, 624),
                   }}
                 >
                   전체동의
@@ -594,10 +594,10 @@ export default function Page() {
               <div
                 className="flex flex-col"
                 style={{
-                  paddingTop: mobileSizeCalc(17, ratio, 360, 624),
-                  paddingBottom: mobileSizeCalc(17, ratio, 360, 624),
-                  paddingLeft: mobileSizeCalc(20, ratio, 360, 624),
-                  rowGap: mobileSizeCalc(15, ratio, 360, 624),
+                  paddingTop: paginationMobileSizeCalc(17, ratio, 360, 624),
+                  paddingBottom: paginationMobileSizeCalc(17, ratio, 360, 624),
+                  paddingLeft: paginationMobileSizeCalc(20, ratio, 360, 624),
+                  rowGap: paginationMobileSizeCalc(15, ratio, 360, 624),
                 }}
               >
                 <label className="flex items-center">
@@ -612,8 +612,8 @@ export default function Page() {
                       WebkitAppearance: "none",
                       MozAppearance: "none",
                       // 공통 크기와 테두리
-                      width: mobileSizeCalc(20, ratio, 360, 624),
-                      height: mobileSizeCalc(20, ratio, 360, 624),
+                      width: paginationMobileSizeCalc(20, ratio, 360, 624),
+                      height: paginationMobileSizeCalc(20, ratio, 360, 624),
                       borderRadius: "5px",
                       border: checkedList.includes("age") ? "1px solid #1C4154" : "1px solid black",
                       cursor: "pointer",
@@ -628,9 +628,9 @@ export default function Page() {
                   <span
                     className="font-normal text-black"
                     style={{
-                      paddingLeft: mobileSizeCalc(9, ratio, 360, 624),
-                      fontSize: mobileSizeCalc(13, ratio, 360, 624),
-                      lineHeight: mobileSizeCalc(13, ratio, 360, 624),
+                      paddingLeft: paginationMobileSizeCalc(9, ratio, 360, 624),
+                      fontSize: paginationMobileSizeCalc(13, ratio, 360, 624),
+                      lineHeight: paginationMobileSizeCalc(13, ratio, 360, 624),
                     }}
                   >
                     만 18세 이상
@@ -649,8 +649,8 @@ export default function Page() {
                         WebkitAppearance: "none",
                         MozAppearance: "none",
                         // 공통 크기와 테두리
-                        width: mobileSizeCalc(20, ratio, 360, 624),
-                        height: mobileSizeCalc(20, ratio, 360, 624),
+                        width: paginationMobileSizeCalc(20, ratio, 360, 624),
+                        height: paginationMobileSizeCalc(20, ratio, 360, 624),
                         borderRadius: "5px",
                         border: checkedList.includes("privacy")
                           ? "1px solid #1C4154"
@@ -667,9 +667,9 @@ export default function Page() {
                     <span
                       className="font-normal leading-none text-black"
                       style={{
-                        paddingLeft: mobileSizeCalc(9, ratio, 360, 624),
-                        fontSize: mobileSizeCalc(13, ratio, 360, 624),
-                        lineHeight: mobileSizeCalc(13, ratio, 360, 624),
+                        paddingLeft: paginationMobileSizeCalc(9, ratio, 360, 624),
+                        fontSize: paginationMobileSizeCalc(13, ratio, 360, 624),
+                        lineHeight: paginationMobileSizeCalc(13, ratio, 360, 624),
                       }}
                     >
                       개인정보 수집 및 이용 동의
@@ -678,13 +678,13 @@ export default function Page() {
                   <span
                     className="rounded-full bg-[#1C4154] font-normal text-white "
                     style={{
-                      marginLeft: mobileSizeCalc(9, ratio, 360, 624),
-                      paddingLeft: mobileSizeCalc(8, ratio, 360, 624),
-                      paddingRight: mobileSizeCalc(8, ratio, 360, 624),
-                      paddingTop: mobileSizeCalc(3, ratio, 360, 624),
-                      paddingBottom: mobileSizeCalc(3, ratio, 360, 624),
-                      fontSize: mobileSizeCalc(11, ratio, 360, 624),
-                      lineHeight: mobileSizeCalc(12, ratio, 360, 624),
+                      marginLeft: paginationMobileSizeCalc(9, ratio, 360, 624),
+                      paddingLeft: paginationMobileSizeCalc(8, ratio, 360, 624),
+                      paddingRight: paginationMobileSizeCalc(8, ratio, 360, 624),
+                      paddingTop: paginationMobileSizeCalc(3, ratio, 360, 624),
+                      paddingBottom: paginationMobileSizeCalc(3, ratio, 360, 624),
+                      fontSize: paginationMobileSizeCalc(11, ratio, 360, 624),
+                      lineHeight: paginationMobileSizeCalc(12, ratio, 360, 624),
                     }}
                     onClick={() => alert("개발 예정")}
                   >
@@ -704,8 +704,8 @@ export default function Page() {
                         WebkitAppearance: "none",
                         MozAppearance: "none",
                         // 공통 크기와 테두리
-                        width: mobileSizeCalc(20, ratio, 360, 624),
-                        height: mobileSizeCalc(20, ratio, 360, 624),
+                        width: paginationMobileSizeCalc(20, ratio, 360, 624),
+                        height: paginationMobileSizeCalc(20, ratio, 360, 624),
                         borderRadius: "5px",
                         border: checkedList.includes("alarm")
                           ? "1px solid #1C4154"
@@ -722,9 +722,9 @@ export default function Page() {
                     <span
                       className="font-normal text-black"
                       style={{
-                        paddingLeft: mobileSizeCalc(9, ratio, 360, 624),
-                        fontSize: mobileSizeCalc(13, ratio, 360, 624),
-                        lineHeight: mobileSizeCalc(13, ratio, 360, 624),
+                        paddingLeft: paginationMobileSizeCalc(9, ratio, 360, 624),
+                        fontSize: paginationMobileSizeCalc(13, ratio, 360, 624),
+                        lineHeight: paginationMobileSizeCalc(13, ratio, 360, 624),
                       }}
                     >
                       게임 서비스 소식 받기
@@ -733,13 +733,13 @@ export default function Page() {
                   <span
                     className="rounded-full bg-[#1C4154] font-normal text-white "
                     style={{
-                      marginLeft: mobileSizeCalc(9, ratio, 360, 624),
-                      paddingLeft: mobileSizeCalc(8, ratio, 360, 624),
-                      paddingRight: mobileSizeCalc(8, ratio, 360, 624),
-                      paddingTop: mobileSizeCalc(3, ratio, 360, 624),
-                      paddingBottom: mobileSizeCalc(3, ratio, 360, 624),
-                      fontSize: mobileSizeCalc(11, ratio, 360, 624),
-                      lineHeight: mobileSizeCalc(12, ratio, 360, 624),
+                      marginLeft: paginationMobileSizeCalc(9, ratio, 360, 624),
+                      paddingLeft: paginationMobileSizeCalc(8, ratio, 360, 624),
+                      paddingRight: paginationMobileSizeCalc(8, ratio, 360, 624),
+                      paddingTop: paginationMobileSizeCalc(3, ratio, 360, 624),
+                      paddingBottom: paginationMobileSizeCalc(3, ratio, 360, 624),
+                      fontSize: paginationMobileSizeCalc(11, ratio, 360, 624),
+                      lineHeight: paginationMobileSizeCalc(12, ratio, 360, 624),
                     }}
                     onClick={() => alert("개발 예정")}
                   >
@@ -751,17 +751,17 @@ export default function Page() {
             <div
               className="flex w-full items-center rounded-[10px] border border-[#AAAAAA] bg-white"
               style={{
-                marginTop: mobileSizeCalc(20, ratio, 360, 624),
-                paddingLeft: mobileSizeCalc(15, ratio, 360, 624),
-                paddingTop: mobileSizeCalc(16, ratio, 360, 624),
-                paddingBottom: mobileSizeCalc(15, ratio, 360, 624),
+                marginTop: paginationMobileSizeCalc(20, ratio, 360, 624),
+                paddingLeft: paginationMobileSizeCalc(15, ratio, 360, 624),
+                paddingTop: paginationMobileSizeCalc(16, ratio, 360, 624),
+                paddingBottom: paginationMobileSizeCalc(15, ratio, 360, 624),
               }}
             >
               <div
                 className="font-semibold text-[#1F1F1F]"
                 style={{
-                  fontSize: mobileSizeCalc(18, ratio, 360, 624),
-                  lineHeight: mobileSizeCalc(18, ratio, 360, 624),
+                  fontSize: paginationMobileSizeCalc(18, ratio, 360, 624),
+                  lineHeight: paginationMobileSizeCalc(18, ratio, 360, 624),
                 }}
               >
                 010&nbsp;-&nbsp;
@@ -786,17 +786,17 @@ export default function Page() {
                 }}
                 className={`m-0 border-none p-0 font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0`}
                 style={{
-                  fontSize: mobileSizeCalc(18, ratio, 360, 624),
-                  lineHeight: mobileSizeCalc(18, ratio, 360, 624),
-                  width: mobileSizeCalc(46, ratio, 360, 624),
-                  height: mobileSizeCalc(18, ratio, 360, 624),
+                  fontSize: paginationMobileSizeCalc(18, ratio, 360, 624),
+                  lineHeight: paginationMobileSizeCalc(18, ratio, 360, 624),
+                  width: paginationMobileSizeCalc(46, ratio, 360, 624),
+                  height: paginationMobileSizeCalc(18, ratio, 360, 624),
                 }}
               />
               <div
                 className="font-semibold text-[#1F1F1F]"
                 style={{
-                  fontSize: mobileSizeCalc(18, ratio, 360, 624),
-                  lineHeight: mobileSizeCalc(18, ratio, 360, 624),
+                  fontSize: paginationMobileSizeCalc(18, ratio, 360, 624),
+                  lineHeight: paginationMobileSizeCalc(18, ratio, 360, 624),
                 }}
               >
                 &nbsp;-&nbsp;
@@ -821,10 +821,10 @@ export default function Page() {
                 }}
                 className="m-0 border-none p-0 font-semibold text-[#1F1F1F] outline-none placeholder:text-gray-500 focus:border-transparent focus:ring-0"
                 style={{
-                  fontSize: mobileSizeCalc(18, ratio, 360, 624),
-                  lineHeight: mobileSizeCalc(18, ratio, 360, 624),
-                  width: mobileSizeCalc(46, ratio, 360, 624),
-                  height: mobileSizeCalc(18, ratio, 360, 624),
+                  fontSize: paginationMobileSizeCalc(18, ratio, 360, 624),
+                  lineHeight: paginationMobileSizeCalc(18, ratio, 360, 624),
+                  width: paginationMobileSizeCalc(46, ratio, 360, 624),
+                  height: paginationMobileSizeCalc(18, ratio, 360, 624),
                 }}
               />
             </div>
@@ -835,10 +835,10 @@ export default function Page() {
               type="submit"
               className="w-full rounded-[10px] bg-[#1C4154] font-semibold text-white disabled:bg-gray-400"
               style={{
-                marginTop: mobileSizeCalc(20, ratio, 360, 624),
-                height: mobileSizeCalc(54, ratio, 360, 624),
-                fontSize: mobileSizeCalc(22, ratio, 360, 624),
-                lineHeight: mobileSizeCalc(22, ratio, 360, 624),
+                marginTop: paginationMobileSizeCalc(20, ratio, 360, 624),
+                height: paginationMobileSizeCalc(54, ratio, 360, 624),
+                fontSize: paginationMobileSizeCalc(22, ratio, 360, 624),
+                lineHeight: paginationMobileSizeCalc(22, ratio, 360, 624),
               }}
             >
               사전등록하기
@@ -846,7 +846,7 @@ export default function Page() {
             <div
               className="flex justify-between"
               style={{
-                marginTop: mobileSizeCalc(20, ratio, 360, 624),
+                marginTop: paginationMobileSizeCalc(20, ratio, 360, 624),
               }}
             >
               <Image
@@ -858,8 +858,8 @@ export default function Page() {
                 width={73}
                 height={104}
                 style={{
-                  width: mobileSizeCalc(73, ratio, 360, 624),
-                  height: mobileSizeCalc(104, ratio, 360, 624),
+                  width: paginationMobileSizeCalc(73, ratio, 360, 624),
+                  height: paginationMobileSizeCalc(104, ratio, 360, 624),
                 }}
                 onClick={() => alert("액션 머임?")}
               />
@@ -872,8 +872,8 @@ export default function Page() {
                 width={73}
                 height={104}
                 style={{
-                  width: mobileSizeCalc(73, ratio, 360, 624),
-                  height: mobileSizeCalc(104, ratio, 360, 624),
+                  width: paginationMobileSizeCalc(73, ratio, 360, 624),
+                  height: paginationMobileSizeCalc(104, ratio, 360, 624),
                 }}
                 onClick={() => alert("액션 머임?")}
               />
@@ -886,8 +886,8 @@ export default function Page() {
                 width={73}
                 height={104}
                 style={{
-                  width: mobileSizeCalc(73, ratio, 360, 624),
-                  height: mobileSizeCalc(104, ratio, 360, 624),
+                  width: paginationMobileSizeCalc(73, ratio, 360, 624),
+                  height: paginationMobileSizeCalc(104, ratio, 360, 624),
                 }}
                 onClick={() => alert("액션 머임?")}
               />

@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
 Sitemap: https://www.atozgames.net/atozgames-sitemap.xml

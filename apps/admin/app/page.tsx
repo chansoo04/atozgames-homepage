@@ -237,7 +237,7 @@ export default function Page() {
               height: paginationMobileSizeCalc(100, ratio),
               marginTop: paginationMobileSizeCalc(43, ratio),
             }}
-            onClick={() => alert("영상 재생 필요")}
+            onClick={() => alert("영상 재생 기능 개발중입니다")}
           />
           <div className="flex w-full justify-center">
             <button
@@ -691,7 +691,7 @@ export default function Page() {
                       fontSize: paginationMobileSizeCalc(11, ratio, 360, 624),
                       lineHeight: paginationMobileSizeCalc(12, ratio, 360, 624),
                     }}
-                    onClick={() => alert("개발 예정")}
+                    onClick={() => alert("기능 개발중입니다")}
                   >
                     자세히
                   </span>
@@ -746,7 +746,7 @@ export default function Page() {
                       fontSize: paginationMobileSizeCalc(11, ratio, 360, 624),
                       lineHeight: paginationMobileSizeCalc(12, ratio, 360, 624),
                     }}
-                    onClick={() => alert("개발 예정")}
+                    onClick={() => alert("기능 개발중입니다")}
                   >
                     자세히
                   </span>
@@ -866,7 +866,7 @@ export default function Page() {
                   width: paginationMobileSizeCalc(73, ratio, 360, 624),
                   height: paginationMobileSizeCalc(104, ratio, 360, 624),
                 }}
-                onClick={() => alert("액션 머임?")}
+                onClick={() => alert("기능 개발중입니다")}
               />
               <Image
                 src="/advance_reservation_google_mobile.png"
@@ -880,7 +880,7 @@ export default function Page() {
                   width: paginationMobileSizeCalc(73, ratio, 360, 624),
                   height: paginationMobileSizeCalc(104, ratio, 360, 624),
                 }}
-                onClick={() => alert("액션 머임?")}
+                onClick={() => alert("기능 개발중입니다")}
               />
               <Image
                 src="/advance_reservation_onestore_mobile.png"
@@ -894,7 +894,7 @@ export default function Page() {
                   width: paginationMobileSizeCalc(73, ratio, 360, 624),
                   height: paginationMobileSizeCalc(104, ratio, 360, 624),
                 }}
-                onClick={() => alert("액션 머임?")}
+                onClick={() => alert("기능 개발중입니다")}
               />
             </div>
           </form>
@@ -932,7 +932,7 @@ export default function Page() {
             width={100}
             height={100}
             className="mt-[94px] cursor-pointer"
-            onClick={() => alert("기능 개발 필요")}
+            onClick={() => alert("영상 재생 기능 개발 중입니다")}
           />
           <button
             type="button"
@@ -1159,7 +1159,7 @@ export default function Page() {
                     </label>
                     <span
                       className="ml-2 cursor-pointer rounded-full bg-[#1C4154] px-2.5 py-1 text-xs font-normal leading-none text-white"
-                      onClick={() => alert("개발 예정")}
+                      onClick={() => alert("기능 개발중입니다")}
                     >
                       자세히
                     </span>
@@ -1198,7 +1198,7 @@ export default function Page() {
                     </label>
                     <span
                       className="ml-2 cursor-pointer rounded-full bg-[#1C4154] px-2.5 py-1 text-xs font-normal leading-none text-white"
-                      onClick={() => alert("개발 예정")}
+                      onClick={() => alert("기능 개발중입니다")}
                     >
                       자세히
                     </span>
@@ -1269,7 +1269,7 @@ export default function Page() {
                   unoptimized
                   width={198}
                   height={91}
-                  onClick={() => alert("액션 머임?")}
+                  onClick={() => alert("기능 개발중입니다")}
                 />
                 <Image
                   src="/advance_reservation_google.png"
@@ -1279,7 +1279,7 @@ export default function Page() {
                   unoptimized
                   width={198}
                   height={91}
-                  onClick={() => alert("액션 머임?")}
+                  onClick={() => alert("기능 개발중입니다")}
                 />
                 <Image
                   src="/advance_reservation_onestore.png"
@@ -1289,7 +1289,7 @@ export default function Page() {
                   unoptimized
                   width={198}
                   height={91}
-                  onClick={() => alert("액션 머임?")}
+                  onClick={() => alert("기능 개발중입니다")}
                 />
               </div>
             </form>

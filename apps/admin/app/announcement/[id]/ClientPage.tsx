@@ -127,7 +127,7 @@ export default function ClientPage({ announcement }: { announcement: any }) {
       </section>
 
       {/* 데스크탑(≥1024)에서만 보임 */}
-      <section className="relative mx-auto hidden desktop:block desktop:aspect-[1920/2086] desktop:w-full desktop:min-w-[1920px] desktop:max-w-[1920px] desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
+      <section className="relative mx-auto hidden desktop:block desktop:aspect-[1920/2086] desktop:w-[1920px] desktop:min-w-[1920px] desktop:bg-[url('/bg_desktop1.png')] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y">
         <TopBar />
 
         <div

@@ -19,7 +19,7 @@ export default function Page() {
   const images = {
     mobile: ["/bg_mobile2.png"],
     // mobile: ["/test_1.png", "/test_2.png", "/test_3.png", "/test_4.png"],
-    desktop: ["/bg_desktop2.png"],
+    desktop: ["/bg_desktop1.png"],
     // desktop: ["/test_1.png", "/test_2.png", "/test_3.png", "/test_4.png"],
   } as const;
 
@@ -904,7 +904,7 @@ export default function Page() {
       {/* ───── 데스크탑 전용 ───── */}
       <div
         id="desktop-scroll"
-        className="mx-auto hidden h-screen snap-y snap-mandatory overflow-y-scroll bg-cover bg-fixed bg-top transition-[background-image] duration-1000 ease-in-out desktop:block desktop:min-w-[1920px] desktop:max-w-[1920px]"
+        className="relative hidden h-screen snap-y snap-mandatory overflow-y-scroll transition-[background-image] duration-1000 ease-in-out desktop:mx-auto desktop:block desktop:aspect-[1920/2095] desktop:w-[1920px] desktop:min-w-[1920px] desktop:bg-[length:100%_auto] desktop:bg-top desktop:bg-repeat-y"
         style={{ backgroundImage: `url(${desktopBg})` }}
       >
         {/* 인디케이터 */}

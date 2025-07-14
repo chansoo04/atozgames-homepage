@@ -1260,38 +1260,39 @@ export default function Page() {
               >
                 사전등록하기
               </button>
-              <div className="mt-3.5 flex gap-x-[15px]">
-                <Image
-                  src="/advance_reservation_apple.png"
-                  alt="앱스토어 사전예약"
-                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
-                  quality={100}
-                  unoptimized
-                  width={198}
-                  height={91}
-                  onClick={() => alert("기능 개발중입니다")}
-                />
-                <Image
-                  src="/advance_reservation_google.png"
-                  alt="구글 플레이스토어 사전예약"
-                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
-                  quality={100}
-                  unoptimized
-                  width={198}
-                  height={91}
-                  onClick={() => alert("기능 개발중입니다")}
-                />
-                <Image
-                  src="/advance_reservation_onestore.png"
-                  alt="원스토어 사전예약"
-                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
-                  quality={100}
-                  unoptimized
-                  width={198}
-                  height={91}
-                  onClick={() => alert("기능 개발중입니다")}
-                />
-              </div>
+              {/* TODO: 구글, 애플, 원스토어 검수 통과 시 다시 올리기 */}
+              {/*<div className="mt-3.5 flex gap-x-[15px]">*/}
+              {/*  <Image*/}
+              {/*    src="/advance_reservation_apple.png"*/}
+              {/*    alt="앱스토어 사전예약"*/}
+              {/*    className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
+              {/*    quality={100}*/}
+              {/*    unoptimized*/}
+              {/*    width={198}*/}
+              {/*    height={91}*/}
+              {/*    onClick={() => alert("기능 개발중입니다")}*/}
+              {/*  />*/}
+              {/*  <Image*/}
+              {/*    src="/advance_reservation_google.png"*/}
+              {/*    alt="구글 플레이스토어 사전예약"*/}
+              {/*    className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
+              {/*    quality={100}*/}
+              {/*    unoptimized*/}
+              {/*    width={198}*/}
+              {/*    height={91}*/}
+              {/*    onClick={() => alert("기능 개발중입니다")}*/}
+              {/*  />*/}
+              {/*  <Image*/}
+              {/*    src="/advance_reservation_onestore.png"*/}
+              {/*    alt="원스토어 사전예약"*/}
+              {/*    className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
+              {/*    quality={100}*/}
+              {/*    unoptimized*/}
+              {/*    width={198}*/}
+              {/*    height={91}*/}
+              {/*    onClick={() => alert("기능 개발중입니다")}*/}
+              {/*  />*/}
+              {/*</div>*/}
             </form>
           </div>
         </section>

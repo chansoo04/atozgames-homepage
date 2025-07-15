@@ -854,48 +854,49 @@ export default function Page() {
                 marginTop: paginationMobileSizeCalc(20, ratio, 360, 624),
               }}
             >
-              <Image
-                src="/advance_reservation_apple_mobile.png"
-                alt="앱스토어 사전예약"
-                className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
-                quality={100}
-                unoptimized
-                width={73}
-                height={104}
-                style={{
-                  width: paginationMobileSizeCalc(73, ratio, 360, 624),
-                  height: paginationMobileSizeCalc(104, ratio, 360, 624),
-                }}
-                onClick={() => alert("기능 개발중입니다")}
-              />
-              <Image
-                src="/advance_reservation_google_mobile.png"
-                alt="구글 플레이스토어 사전예약"
-                className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
-                quality={100}
-                unoptimized
-                width={73}
-                height={104}
-                style={{
-                  width: paginationMobileSizeCalc(73, ratio, 360, 624),
-                  height: paginationMobileSizeCalc(104, ratio, 360, 624),
-                }}
-                onClick={() => alert("기능 개발중입니다")}
-              />
-              <Image
-                src="/advance_reservation_onestore_mobile.png"
-                alt="원스토어 사전예약"
-                className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
-                quality={100}
-                unoptimized
-                width={73}
-                height={104}
-                style={{
-                  width: paginationMobileSizeCalc(73, ratio, 360, 624),
-                  height: paginationMobileSizeCalc(104, ratio, 360, 624),
-                }}
-                onClick={() => alert("기능 개발중입니다")}
-              />
+              {/*TODO: 검수 끝나고 풀기*/}
+              {/*<Image*/}
+              {/*  src="/advance_reservation_apple_mobile.png"*/}
+              {/*  alt="앱스토어 사전예약"*/}
+              {/*  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
+              {/*  quality={100}*/}
+              {/*  unoptimized*/}
+              {/*  width={73}*/}
+              {/*  height={104}*/}
+              {/*  style={{*/}
+              {/*    width: paginationMobileSizeCalc(73, ratio, 360, 624),*/}
+              {/*    height: paginationMobileSizeCalc(104, ratio, 360, 624),*/}
+              {/*  }}*/}
+              {/*  onClick={() => alert("기능 개발중입니다")}*/}
+              {/*/>*/}
+              {/*<Image*/}
+              {/*  src="/advance_reservation_google_mobile.png"*/}
+              {/*  alt="구글 플레이스토어 사전예약"*/}
+              {/*  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
+              {/*  quality={100}*/}
+              {/*  unoptimized*/}
+              {/*  width={73}*/}
+              {/*  height={104}*/}
+              {/*  style={{*/}
+              {/*    width: paginationMobileSizeCalc(73, ratio, 360, 624),*/}
+              {/*    height: paginationMobileSizeCalc(104, ratio, 360, 624),*/}
+              {/*  }}*/}
+              {/*  onClick={() => alert("기능 개발중입니다")}*/}
+              {/*/>*/}
+              {/*<Image*/}
+              {/*  src="/advance_reservation_onestore_mobile.png"*/}
+              {/*  alt="원스토어 사전예약"*/}
+              {/*  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
+              {/*  quality={100}*/}
+              {/*  unoptimized*/}
+              {/*  width={73}*/}
+              {/*  height={104}*/}
+              {/*  style={{*/}
+              {/*    width: paginationMobileSizeCalc(73, ratio, 360, 624),*/}
+              {/*    height: paginationMobileSizeCalc(104, ratio, 360, 624),*/}
+              {/*  }}*/}
+              {/*  onClick={() => alert("기능 개발중입니다")}*/}
+              {/*/>*/}
             </div>
           </form>
         </section>

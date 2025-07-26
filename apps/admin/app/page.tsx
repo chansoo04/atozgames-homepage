@@ -907,13 +907,13 @@ export default function Page() {
       {/* ───── 모바일 전용 영상 모달 ───── */}
       <Modal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)}>
         {/* 공용 전용 */}
-        <div className="z-10 h-auto w-full rounded bg-white desktop:w-4/5">
+        <div className="z-10 h-auto w-full rounded bg-white desktop:w-4/5 desktop:max-w-[1530px]">
           <iframe
             src={`https://www.youtube.com/embed/DCu6LNPvMzY?autoplay=1`}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            className="aspect-[1280/720]"
+            className="aspect-[1280/720] w-full desktop:max-w-[1530px]"
           />
         </div>
       </Modal>

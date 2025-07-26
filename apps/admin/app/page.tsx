@@ -12,6 +12,7 @@ import Image from "next/image";
 import csr from "lib/fetcher/csr";
 import useWindowSize from "app/_components/useWindowSize";
 import { paginationMobileSizeCalc } from "app/_components/sizeCalculator";
+import Modal from "app/_components/Modal";
 
 const agreementItems = ["age", "privacy", "alarm"];
 // 원래 버전 + 데스크탑 인디케이터(클릭 스크롤 지원) + 마우스 스크롤 이미지 1페이지만 노출
@@ -34,6 +35,7 @@ export default function Page() {
   const mobileFrontPhoneRef = useRef<HTMLInputElement>(null);
   const desktopBackPhoneRef = useRef<HTMLInputElement>(null);
   const desktopFrontPhoneRef = useRef<HTMLInputElement>(null);
+  const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const { ratio, width, height } = useWindowSize();
 
   const toggleAll = (flag: boolean) => {
@@ -237,7 +239,7 @@ export default function Page() {
               height: paginationMobileSizeCalc(100, ratio),
               marginTop: paginationMobileSizeCalc(43, ratio),
             }}
-            onClick={() => alert("영상 재생 기능 개발중입니다")}
+            onClick={() => setIsVideoOpen(true)}
           />
           <div className="flex w-full justify-center">
             <button
@@ -902,6 +904,20 @@ export default function Page() {
         </section>
       </div>
 
+      {/* ───── 모바일 전용 영상 모달 ───── */}
+      <Modal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)}>
+        {/* 공용 전용 */}
+        <div className="z-10 h-auto w-full rounded bg-white desktop:w-4/5">
+          <iframe
+            src={`https://www.youtube.com/embed/DCu6LNPvMzY?autoplay=1`}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="aspect-[1280/720]"
+          />
+        </div>
+      </Modal>
+
       {/* ───── 데스크탑 전용 ───── */}
       <div
         id="desktop-scroll"
@@ -933,7 +949,7 @@ export default function Page() {
             width={100}
             height={100}
             className="mt-[94px] cursor-pointer"
-            onClick={() => alert("영상 재생 기능 개발 중입니다")}
+            onClick={() => setIsVideoOpen(true)}
           />
           <button
             type="button"

@@ -1,159 +1,29 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-@import url('https://cdn.jsdelivr.net/gh/leetaewook/gmarket-sans-dynamic-subset/GmarketSans.css');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  input[type='number']::-webkit-outer-spin-button,
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number'] {
-    -webkit-appearance: none;
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        text-size-adjust: none;
+        -webkit-text-size-adjust: none;
+        -webkit-tap-highlight-color: transparent;
+        --tw-shadow-color: 0 0 0;
+        text-shadow: 0 0 1px rgb(var(--tw-shadow-color) / 0.30); /* 윈도우 폰트에 적용됨 */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+}
+
+@layer utilities {}
+
+/* safe-area handling */
+html, body, #__next {
+    height: 100%;
     margin: 0;
-    -moz-appearance: textfield !important;
-  }
-}
-
-@layer components {
-  a.button-green,
-  button.button-green {
-    @apply block text-center w-full py-3 text-lg font-bold text-[#2EB62C] transition rounded-lg bg-white border border-[#2EB62C];
-  }
-  form:invalid button.button-green,
-  button.button-green:disabled,
-  button.button-green:invalid {
-    @apply bg-gray-100 border-0 cursor-default text-[#666666];
-  }
-
-  a.button-secondary,
-  button.button-secondary {
-    @apply block text-center w-full py-3 font-medium text-gray-500 align-middle bg-white border border-gray-200 transition rounded-lg;
-  }
-  button.button-secondary:disabled,
-  button.button-secondary:invalid {
-    @apply bg-gray-200 text-gray-400 cursor-default;
-  }
-
-  a.button-secondary-alt,
-  button.button-secondary-alt {
-    @apply block text-center w-full py-3 font-medium text-white align-middle bg-gray-600 transition rounded-lg;
-  }
-  /*button.button-secondary-alt:disabled,*/
-  /*button.button-secondary-alt:invalid {*/
-  /*  @apply bg-gray-100 text-gray-400 cursor-default;*/
-  /*}*/
-
-  hr.divider {
-    @apply w-full h-2 border-none bg-gray-100;
-  }
-
-  .daum-postcode {
-    display: block;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    min-height: 100vh;
-    z-index: 999;
-  }
-}
-
-@layer utilities {
-  @media only screen and (max-width:768px) {
-    .scrollbar-hide {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-    }
-    .scrollbar-hide::-webkit-scrollbar { /* Safari and Chrome */
-      display: none
-    }
-  }
-}
-
-@layer base {
-  html,
-  body {
-    m: 0;
-    p: 0;
-    text-size-adjust: none;
-    -webkit-text-size-adjust: none;
-    -webkit-tap-highlight-color: transparent;
-    --tw-shadow-color: 0 0 0;
-    text-shadow: 0 0 1px rgb(var(--tw-shadow-color) / 0.30); /* 윈도우 폰트에 적용됨 */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-
-  body {
-    padding-top: env(safe-area-inset-top);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  a,
-  button {
-    -webkit-tap-highlight-color: transparent;
-    cursor: pointer;
-  }
-
-  a[role=button], a[role=button]:hover {
-    text-decoration: inherit;
-    color: inherit;
-  }
-
-  button,
-  label {
-    user-select: none;
-  }
-
-  button[disabled],
-  form:invalid button,
-  button:invalid,
-  button:disabled {
-    cursor: default;
-  }
-
-  input,
-  select,
-  textarea {
-    outline-color: #6485F4;
-  }
-
-  /*input[type="number"]::-webkit-inner-spin-button,*/
-  /*input[type="number"]::-webkit-outer-spin-button {*/
-  /*  -webkit-appearance: none;*/
-  /*  margin: 0;*/
-  /*}*/
-  input[type="number"] {
-    appearance: textfield;
-  }
-
-
-  @media only screen and (min-width:769px) {
-    *::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    *::-webkit-scrollbar-track {
-      border-radius: 10px;
-      background: rgba(0,0,0,0.1);
-    }
-    *::-webkit-scrollbar-thumb{
-      border-radius: 10px;
-      background: rgba(0,0,0,0.2);
-    }
-    *::-webkit-scrollbar-thumb:hover{
-      background: rgba(0,0,0,0.4);
-    }
-    *::-webkit-scrollbar-thumb:active{
-      background: rgba(0,0,0,.9);
-    }
-  }
-}
-
-/* Accordion CSS */
-button.szh-accordion__item-btn {
-  width: 100%;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }

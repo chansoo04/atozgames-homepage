@@ -1,6 +1,5 @@
 import "./globals.css";
-import "react-tooltip/dist/react-tooltip.css";
-import type { Viewport } from "next";
+import type { Viewport, Metadata } from "next";
 import type { ReactNode } from "react";
 import ClientProviders from "./ClientProvider";
 
@@ -10,13 +9,28 @@ export const viewport: Viewport = {
   userScalable: false,
 };
 
+export const metadata: Metadata = {
+  // appleWebAppCapable: true,
+  // appleWebAppStatusBarStyle: "black-translucent",
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ko" className="bg-white">
-      <head>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-      </head>
-      <body className="flex w-full justify-center px-0 pt-0 font-sans lining-nums text-gray-900 outline-none desktop:min-h-screen">
+    <html
+      lang="ko"
+      style={{
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <body
+        className=""
+        style={{
+          margin: "0 auto",
+          width: "100%",
+          height: "100%",
+        }}
+      >
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

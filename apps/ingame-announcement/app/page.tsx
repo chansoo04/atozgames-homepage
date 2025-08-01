@@ -9,10 +9,10 @@ export default function Page() {
         bottom: 0,
         width: "100%",
         height: "100%",
-        backgroundImage: `url('/background.png')`,
-        backgroundSize: "100% auto", // 가로 기준 꽉 채움
-        backgroundPosition: "center center", // 세로 중앙 정렬
-        backgroundRepeat: "no-repeat",
+        // backgroundImage: `url('/background.png')`,
+        // backgroundSize: "100% auto", // 가로 기준 꽉 채움
+        // backgroundPosition: "center center", // 세로 중앙 정렬
+        // backgroundRepeat: "no-repeat",
       }}
       className="overflow-hidden bg-black"
     >

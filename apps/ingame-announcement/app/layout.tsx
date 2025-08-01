@@ -1,37 +1,28 @@
 import "./globals.css";
-import type { Viewport, Metadata } from "next";
+import type { Viewport } from "next";
 import type { ReactNode } from "react";
 import ClientProviders from "./ClientProvider";
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  userScalable: false,
-};
-
-export const metadata: Metadata = {
-  // appleWebAppCapable: true,
-  // appleWebAppStatusBarStyle: "black-translucent",
+  maximumScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html
-      lang="ko"
-      style={{
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <html className="bg-amber-400">
       <body
-        className=""
+        className="bg-red-700"
         style={{
           margin: "0 auto",
           width: "100%",
           height: "100%",
         }}
       >
-        <ClientProviders>{children}</ClientProviders>
+        <div className="bg-white text-primary">asdfasdf</div>
+        {/*<ClientProviders>{children}</ClientProviders>*/}
       </body>
     </html>
   );

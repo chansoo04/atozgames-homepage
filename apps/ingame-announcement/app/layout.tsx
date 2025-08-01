@@ -17,8 +17,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         className="bg-red-700"
         style={{
           margin: "0 auto",
-          width: "100%",
-          height: "100%",
+          // width: "100%",
+          // height: "100%",
         }}
       >
         <div className="bg-white text-primary">asdfasdf</div>

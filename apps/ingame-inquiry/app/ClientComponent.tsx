@@ -38,23 +38,13 @@ export default function ClientComponent({ announcements }: { announcements: any 
   };
 
   const { width, height, ratio } = useWindowSize();
-  const [상단마진, set상단마진] = useState(0);
-  const [높이, set높이] = useState(0);
-
-  useEffect(() => {
-    const handleResize = () => {
-      set상단마진(ratio > 1080 / 2340 ? (height - (1080 / 2340) * width) / 2 : 0);
-      set높이((1080 / 2340) * width);
-    };
-
-    handleResize(); // 첫 마운트 시 값 동기화
-  }, [ratio]);
+  const 상단마진 = ratio > 1080 / 2340 ? (height - (1080 / 2340) * width) / 2 : 0;
 
   return (
     <main
       style={{
         marginTop: `${상단마진}px`,
-        height: `${높이}px`,
+        height: `${(1080 / 2340) * width}px`,
       }}
       className="flex flex-col py-5 pl-16 pr-12"
     >

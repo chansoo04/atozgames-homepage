@@ -32,7 +32,7 @@ export default function ClientComponent({ announcements }: { announcements: any 
    * -------------------------------------------------- */
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     // e.preventDefault(); // 폼 안에 있어도 새로고침 방지
-    alert(JSON.stringify(window.uniWebView));
+    // alert(JSON.stringify(window.uniWebView));
     window.uniWebView?.sendMessage("close");
   };
 

@@ -44,8 +44,9 @@ export default function ClientComponent({ announcements }: { announcements: any 
     <main
       style={{
         marginTop: `${상단마진}px`,
+        height: `${(1080 / 2340) * width}px`,
       }}
-      className="flex h-full flex-col py-5 pl-16 pr-12"
+      className="flex flex-col py-5 pl-16 pr-12"
     >
       <div className="flex items-center justify-between">
         <div className="text-white">공지사항</div>

@@ -82,9 +82,9 @@ export default function ClientComponent({ faqs }: { faqs: any }) {
             </div>
           ))}
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col overflow-y-hidden">
           <div>{selectedInquiry?.title}</div>
-          <div>{selectedInquiry?.content}</div>
+          <div className="h-full overflow-y-scroll">{selectedInquiry?.content}</div>
         </div>
       </div>
       <Floating />

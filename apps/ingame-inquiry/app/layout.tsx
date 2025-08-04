@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Viewport } from "next";
 import type { ReactNode } from "react";
 import ClientProviders from "./ClientProvider";
+import { AuthProvider } from "./AuthProvider";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -9,6 +10,8 @@ export const viewport: Viewport = {
   maximumScale: 1,
   viewportFit: "cover",
 };
+
+// TODO: 로그인 처리해야함.. HOW?
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -25,7 +28,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       }}
     >
       <body className="h-full bg-transparent">
-        <ClientProviders>{children}</ClientProviders>
+        <AuthProvider>
+          <ClientProviders>{children}</ClientProviders>
+        </AuthProvider>
       </body>
     </html>
   );

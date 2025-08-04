@@ -81,9 +81,9 @@ export default function ClientComponent({ announcements }: { announcements: any 
             </div>
           ))}
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col overflow-y-hidden">
           <div>{selectedAnnouncement?.title}</div>
-          <div>{selectedAnnouncement?.content}</div>
+          <div className="h-full overflow-y-scroll">{selectedAnnouncement?.content}</div>
         </div>
       </div>
     </main>

@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState, MouseEvent } from "react";
+import { useEffect, useState, MouseEvent, FormEvent, useContext } from "react";
 import useWindowSize from "app/_components/useWindowSize";
 import Floating from "app/_components/Floating";
+import { AuthContext } from "app/AuthProvider";
 
 declare global {
   interface Window {
@@ -50,6 +51,21 @@ export default function Page() {
     handleResize(); // 첫 마운트 시 값 동기화
   }, [ratio]);
 
+  /* -------------------------------------------------- *
+   * 3) 상태값 관리
+   * -------------------------------------------------- */
+  const context = useContext(AuthContext);
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [appendFile, setAppendFile] = useState<string[]>([]);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!title || !content || !context.user) return; // 빈 값 보호, 비로그인 유저 처리
+
+    // TODO: 제출하기 만들기
+  };
+
   return (
     <main
       style={{
@@ -68,9 +84,35 @@ export default function Page() {
           닫기
         </button>
       </div>
-      <div className="grid h-full grid-cols-[220px_1fr] gap-x-5 overflow-y-hidden text-white">
-        질문내역 작성하기
-      </div>
+      <form
+        className="flex h-full flex-col gap-y-2.5 overflow-y-hidden text-white"
+        onSubmit={handleSubmit}
+      >
+        <div>질문내역 작성하기</div>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="text-black"
+          placeholder="제목을 작성해주세요"
+        />
+        <textarea
+          placeholder="문의 내용을 입력하세요"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          className="text-black"
+        />
+        <div>첨부파일(작업 예정)</div>
+        <div>
+          <button
+            type="submit"
+            disabled={!title || !content}
+            className="bg-white px-4 py-2 text-black"
+          >
+            등록하기
+          </button>
+        </div>
+      </form>
       <Floating />
     </main>
   );

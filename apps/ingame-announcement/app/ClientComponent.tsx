@@ -69,9 +69,13 @@ export default function ClientComponent({ announcements }: { announcements: any 
         </button>
       </div>
       <div className="grid h-full grid-cols-[220px_1fr] gap-x-5 overflow-y-hidden text-white">
-        <div className="flex flex-col gap-y-2.5 overflow-y-scroll">
+        <div className="scrollbar-hide flex flex-col gap-y-2.5 overflow-y-scroll">
           {announcements?.map((announcement: any, index: number) => (
-            <div key={index.toString()} onClick={() => setSelectedAnnouncement(announcement)}>
+            <div
+              key={index.toString()}
+              onClick={() => setSelectedAnnouncement(announcement)}
+              className="rounded border border-gray-50 p-1"
+            >
               <div>{announcement?.title}</div>
               <div>공지사항 일자</div>
             </div>

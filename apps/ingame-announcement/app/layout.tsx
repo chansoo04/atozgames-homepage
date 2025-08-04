@@ -20,18 +20,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         backgroundPosition: "center center", // 세로 중앙 정렬
         backgroundRepeat: "no-repeat",
         overflowY: "hidden",
+        backgroundColor: "red",
       }}
     >
-      <body
-        className=""
-        style={{
-          margin: "0 auto",
-          // width: "100%",
-          // height: "100%",
-        }}
-      >
-        <div className=" text-white">asdfasdf</div>
-        {/*<ClientProviders>{children}</ClientProviders>*/}
+      <body className="bg-yellow-300">
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

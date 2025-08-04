@@ -1,29 +1,38 @@
-export default function Page() {
-  return (
-    <main
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: "100%",
-        height: "100%",
-        // backgroundImage: `url('/background.png')`,
-        // backgroundSize: "100% auto", // 가로 기준 꽉 채움
-        // backgroundPosition: "center center", // 세로 중앙 정렬
-        // backgroundRepeat: "no-repeat",
-      }}
-      className="overflow-hidden bg-black"
-    >
-      {/*<div className="size-full px-[6.3vw] pb-[10vh] pt-[5.6vh] text-white">asdfasdf</div>*/}
-      <div className="text-white">테스트</div>
-      <div className="text-white">테스트</div>
-      <div className="text-white">테스트</div>
-      <div className="text-white">테스트</div>
-      <div className="text-white">테스트</div>
-      <div className="text-white">테스트</div>
-      <div className="text-white">테스트</div>
-    </main>
-  );
+import ClientComponent from "./ClientComponent";
+
+export default async function Page() {
+  // TODO: api 연결하기
+  const announcements = [
+    {
+      id: 1,
+      title: "[이벤트] 아토즈 포커 런칭 기념 이벤트",
+      content: "2025.03.22에 진행한 아토즈 포커 런칭 기념 이벤트 당첨자를 안내드립니다",
+      created_at: "2025.04.22",
+    },
+    {
+      id: 2,
+      title: "[이벤트] 아토즈 포커 런칭 기념 이벤트",
+      content: "2025.03.22에 진행한 아토즈 포커 런칭 기념 이벤트 당첨자를 안내드립니다",
+      created_at: "2025.04.22",
+    },
+    {
+      id: 3,
+      title: "[이벤트] 아토즈 포커 런칭 기념 이벤트",
+      content: "2025.03.22에 진행한 아토즈 포커 런칭 기념 이벤트 당첨자를 안내드립니다",
+      created_at: "2025.04.22",
+    },
+    {
+      id: 4,
+      title: "[이벤트] 아토즈 포커 런칭 기념 이벤트",
+      content: "2025.03.22에 진행한 아토즈 포커 런칭 기념 이벤트 당첨자를 안내드립니다",
+      created_at: "2025.04.22",
+    },
+    {
+      id: 5,
+      title: "[이벤트] 아토즈 포커 런칭 기념 이벤트",
+      content: "2025.03.22에 진행한 아토즈 포커 런칭 기념 이벤트 당첨자를 안내드립니다",
+      created_at: "2025.04.22",
+    },
+  ];
+  return <ClientComponent announcements={announcements} />;
 }

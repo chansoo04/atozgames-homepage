@@ -15,15 +15,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       // className="bg-amber-400"
       style={{
-        backgroundImage: `url('/background.png')`,
+        // backgroundImage: `url('/background.png')`,
+        backgroundImage: `url('/background_real.png')`,
         backgroundSize: "100% auto", // 가로 기준 꽉 채움
         backgroundPosition: "center center", // 세로 중앙 정렬
         backgroundRepeat: "no-repeat",
         overflowY: "hidden",
-        backgroundColor: "red",
+        backgroundColor: "black",
       }}
     >
-      <body className="bg-yellow-300">
+      <body className="h-full bg-transparent">
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

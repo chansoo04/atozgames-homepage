@@ -15,15 +15,15 @@ export default function ClientComponent({ announcements }: { announcements: any 
    * 1) 최초 마운트 시 글로벌 uniWebView 객체 생성
    * -------------------------------------------------- */
   useEffect(() => {
-    if (!window.uniWebView) {
-      window.uniWebView = {
-        sendMessage: (msg: string) => {
-          // React strict-mode 중복 호출 대비 : 실제 변화 없으면 무시
-          if (typeof msg === "string" && msg.length > 0) {
-            window.location.href = `uniwebview://${msg}`;
-          }
-        },
-      };
+    const send = (msg: string) => {
+      window.location.href = `uniwebview://${msg}`;
+    };
+
+    // uniWebView 객체가 이미 있더라도 덮어쓰기
+    if (window.uniWebView) {
+      window.uniWebView.sendMessage = send;
+    } else {
+      window.uniWebView = { sendMessage: send };
     }
   }, []);
 
@@ -31,7 +31,8 @@ export default function ClientComponent({ announcements }: { announcements: any 
    * 2) 버튼 클릭 핸들러
    * -------------------------------------------------- */
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault(); // 폼 안에 있어도 새로고침 방지
+    // e.preventDefault(); // 폼 안에 있어도 새로고침 방지
+    alert(JSON.stringify(window.uniWebView));
     window.uniWebView?.sendMessage("close");
   };
 

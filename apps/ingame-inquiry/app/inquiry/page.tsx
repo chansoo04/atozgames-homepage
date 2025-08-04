@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, MouseEvent } from "react";
-import Floating from "./_components/Floating";
-import useWindowSize from "./_components/useWindowSize";
+import useWindowSize from "app/_components/useWindowSize";
+import Floating from "app/_components/Floating";
 
 declare global {
   interface Window {
@@ -11,8 +11,7 @@ declare global {
   }
 }
 
-export default function ClientComponent({ inquiries }: { inquiries: any }) {
-  const [selectedInquiry, setSelectedInquiry] = useState(inquiries[0] ?? {});
+export default function Page() {
   /* -------------------------------------------------- *
    * 1) 최초 마운트 시 글로벌 uniWebView 객체 생성
    * -------------------------------------------------- */
@@ -60,7 +59,7 @@ export default function ClientComponent({ inquiries }: { inquiries: any }) {
       className="relative flex w-full flex-col py-5 pl-16 pr-12"
     >
       <div className="flex items-center justify-between">
-        <div className="text-white">문의 내역</div>
+        <div className="text-white">문의 하기</div>
         <button
           type="button"
           onClick={handleClick}
@@ -70,22 +69,7 @@ export default function ClientComponent({ inquiries }: { inquiries: any }) {
         </button>
       </div>
       <div className="grid h-full grid-cols-[220px_1fr] gap-x-5 overflow-y-hidden text-white">
-        <div className="scrollbar-hide flex flex-col gap-y-2.5 overflow-y-scroll">
-          {inquiries?.map((inquiry: any, index: number) => (
-            <div
-              key={index.toString()}
-              onClick={() => setSelectedInquiry(inquiry)}
-              className="rounded border border-gray-50 p-1"
-            >
-              <div>{inquiry?.title}</div>
-              <div>문의 일자</div>
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col">
-          <div>{selectedInquiry?.title}</div>
-          <div>{selectedInquiry?.content}</div>
-        </div>
+        질문내역 작성하기
       </div>
       <Floating />
     </main>

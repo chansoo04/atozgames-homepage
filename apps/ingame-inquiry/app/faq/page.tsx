@@ -2,7 +2,7 @@ import ClientComponent from "./ClientComponent";
 
 export default async function Page() {
   // TODO: api 연결하기
-  const inquiries = [
+  const faqs = [
     {
       id: 1,
       title: "제목1",
@@ -66,5 +66,6 @@ export default async function Page() {
       created_at: "2025.04.22",
     },
   ];
-  return <ClientComponent inquiries={inquiries} />;
+
+  return <ClientComponent faqs={faqs} />;
 }

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, MouseEvent } from "react";
-import Floating from "./_components/Floating";
-import useWindowSize from "./_components/useWindowSize";
+import useWindowSize from "app/_components/useWindowSize";
+import Floating from "app/_components/Floating";
 
 declare global {
   interface Window {

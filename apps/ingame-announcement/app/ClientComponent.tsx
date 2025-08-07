@@ -1,13 +1,5 @@
 "use client";
 import { useEffect, useState, MouseEvent } from "react";
-
-declare global {
-  interface Window {
-    uniWebView?: {
-      sendMessage: (msg: string) => void;
-    };
-  }
-}
 import useWindowSize from "./_components/useWindowSize";
 
 export default function ClientComponent({ announcements }: { announcements: any }) {

@@ -4,15 +4,6 @@ import useWindowSize from "app/_components/useWindowSize";
 import Floating from "app/_components/Floating";
 import { AuthContext } from "app/AuthProvider";
 
-declare global {
-  interface Window {
-    uniWebView?: {
-      sendMessage: (msg: string) => void;
-      OnFirebaseIdMsg?: any;
-    };
-  }
-}
-
 export default function Page() {
   /* -------------------------------------------------- *
    * 1) 최초 마운트 시 글로벌 uniWebView 객체 생성

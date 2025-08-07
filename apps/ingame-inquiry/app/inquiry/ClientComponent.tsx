@@ -3,15 +3,6 @@ import { useEffect, useState, MouseEvent } from "react";
 import useWindowSize from "app/_components/useWindowSize";
 import Floating from "app/_components/Floating";
 
-declare global {
-  interface Window {
-    uniWebView?: {
-      sendMessage: (msg: string) => void;
-      OnFirebaseIdMsg?: any;
-    };
-  }
-}
-
 export default function ClientComponent({ inquiries }: { inquiries: any }) {
   const [selectedInquiry, setSelectedInquiry] = useState(inquiries[0] ?? {});
   /* -------------------------------------------------- *

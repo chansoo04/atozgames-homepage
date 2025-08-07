@@ -8,6 +8,7 @@ declare global {
     uniWebView?: {
       sendMessage: (msg: string) => void;
     };
+    OnFirebaseIdMsg?: any;
   }
 }
 

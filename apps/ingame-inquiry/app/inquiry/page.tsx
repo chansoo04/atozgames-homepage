@@ -9,6 +9,7 @@ declare global {
     uniWebView?: {
       sendMessage: (msg: string) => void;
     };
+    OnFirebaseIdMsg?: any;
   }
 }
 
@@ -65,6 +66,11 @@ export default function Page() {
 
     // TODO: 제출하기 만들기
   };
+
+  useEffect(() => {
+    // console.log(window?.uniWebView?.OnFirebaseIdMsg);
+    alert(JSON.stringify(window?.uniWebView?.OnFirebaseIdMsg));
+  }, [title]);
 
   return (
     <main

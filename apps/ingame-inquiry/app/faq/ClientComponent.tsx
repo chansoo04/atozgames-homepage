@@ -7,8 +7,8 @@ declare global {
   interface Window {
     uniWebView?: {
       sendMessage: (msg: string) => void;
+      OnFirebaseIdMsg?: any;
     };
-    OnFirebaseIdMsg?: any;
   }
 }
 

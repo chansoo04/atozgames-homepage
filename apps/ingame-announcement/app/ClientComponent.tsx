@@ -69,13 +69,13 @@ export default function ClientComponent({ announcements }: { announcements: any 
               className="rounded border border-gray-50 p-1"
             >
               <div>{announcement?.title}</div>
-              <div>공지사항 일자</div>
+              <div>{announcement?.created_at}</div>
             </div>
           ))}
         </div>
         <div className="flex flex-col overflow-y-hidden">
-          <div>{selectedAnnouncement?.title}</div>
-          <div className="h-full overflow-y-scroll">{selectedAnnouncement?.content}</div>
+          <div>제목: {selectedAnnouncement?.title}</div>
+          <div className="h-full overflow-y-scroll">내용: {selectedAnnouncement?.content}</div>
         </div>
       </div>
     </main>

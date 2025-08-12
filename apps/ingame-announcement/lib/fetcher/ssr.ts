@@ -10,7 +10,7 @@ const getErrorMessage: BeforeErrorHook = async (error: HTTPError) => {
 };
 
 const ssr = ky.create({
-  prefixUrl: process.env.NEXT_PUBLIC_API_URL,
+  prefixUrl: process.env.NEXT_PUBLIC_SELF_URL + "api/",
   credentials: "include",
   timeout: 60000,
   next: { revalidate: 0 },

@@ -43,41 +43,51 @@ export default function ClientComponent({ announcements }: { announcements: any 
   }, [ratio]);
 
   return (
-    <main
+    <div
       style={{
-        marginTop: `${상단마진}px`,
-        height: `${높이}px`,
+        backgroundImage: `url('/background_real.png')`,
+        backgroundSize: "100% auto", // 가로 기준 꽉 채움
+        backgroundPosition: "center center", // 세로 중앙 정렬
+        backgroundRepeat: "no-repeat",
+        overflowY: "hidden",
       }}
-      className="flex flex-col py-5 pl-16 pr-12"
     >
-      <div className="flex items-center justify-between">
-        <div className="text-white">공지사항</div>
-        <button
-          type="button"
-          onClick={handleClick}
-          className="rounded bg-blue-600/80 px-4 py-2 text-white hover:bg-blue-700 active:bg-blue-800"
-        >
-          닫기
-        </button>
-      </div>
-      <div className="grid h-full grid-cols-[220px_1fr] gap-x-5 overflow-y-hidden text-white">
-        <div className="scrollbar-hide flex flex-col gap-y-2.5 overflow-y-scroll">
-          {announcements?.map((announcement: any, index: number) => (
-            <div
-              key={index.toString()}
-              onClick={() => setSelectedAnnouncement(announcement)}
-              className="rounded border border-gray-50 p-1"
-            >
-              <div className="truncate">{announcement?.title}</div>
-              <div>{announcement?.created_at}</div>
-            </div>
-          ))}
+      <main
+        style={{
+          marginTop: `${상단마진}px`,
+          height: `${높이}px`,
+        }}
+        className="flex flex-col py-5 pl-16 pr-12"
+      >
+        <div className="flex items-center justify-between">
+          <div className="text-white">공지사항</div>
+          <button
+            type="button"
+            onClick={handleClick}
+            className="rounded bg-blue-600/80 px-4 py-2 text-white hover:bg-blue-700 active:bg-blue-800"
+          >
+            닫기
+          </button>
         </div>
-        <div className="flex flex-col overflow-y-hidden">
-          <div>제목: {selectedAnnouncement?.title}</div>
-          <div className="h-full overflow-y-scroll">내용: {selectedAnnouncement?.content}</div>
+        <div className="grid h-full grid-cols-[220px_1fr] gap-x-5 overflow-y-hidden text-white">
+          <div className="scrollbar-hide flex flex-col gap-y-2.5 overflow-y-scroll">
+            {announcements?.map((announcement: any, index: number) => (
+              <div
+                key={index.toString()}
+                onClick={() => setSelectedAnnouncement(announcement)}
+                className="rounded border border-gray-50 p-1"
+              >
+                <div className="truncate">{announcement?.title}</div>
+                <div>{announcement?.created_at}</div>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-col overflow-y-hidden">
+            <div>제목: {selectedAnnouncement?.title}</div>
+            <div className="h-full overflow-y-scroll">내용: {selectedAnnouncement?.content}</div>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

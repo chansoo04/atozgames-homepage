@@ -21,10 +21,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         backgroundPosition: "center center", // 세로 중앙 정렬
         backgroundRepeat: "no-repeat",
         overflowY: "hidden",
-        backgroundColor: "black",
+        // backgroundColor: "black",
       }}
     >
-      <body className="h-full bg-yellow-300">
+      <body className="h-full bg-black">
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

@@ -1,9 +1,12 @@
 "use client";
 import { useEffect, useState, MouseEvent } from "react";
 import useWindowSize from "./_components/useWindowSize";
+import type { Announcement } from "./page";
 
 export default function ClientComponent({ announcements }: { announcements: any }) {
-  const [selectedAnnouncement, setSelectedAnnouncement] = useState(announcements[0] ?? {});
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement>(
+    {} as Announcement,
+  );
   /* -------------------------------------------------- *
    * 1) 최초 마운트 시 글로벌 uniWebView 객체 생성
    * -------------------------------------------------- */
@@ -19,6 +22,12 @@ export default function ClientComponent({ announcements }: { announcements: any 
       window.uniWebView = { sendMessage: send };
     }
   }, []);
+
+  useEffect(() => {
+    if (announcements.length > 0) {
+      setSelectedAnnouncement(announcements[0]);
+    }
+  }, [announcements]);
 
   /* -------------------------------------------------- *
    * 2) 버튼 클릭 핸들러
@@ -74,8 +83,10 @@ export default function ClientComponent({ announcements }: { announcements: any 
           ))}
         </div>
         <div className="flex flex-col overflow-y-hidden">
-          <div>제목: {selectedAnnouncement?.title}</div>
-          <div className="h-full overflow-y-scroll">내용: {selectedAnnouncement?.content}</div>
+          <div>제목: {selectedAnnouncement?.title ?? ""}</div>
+          <div className="h-full overflow-y-scroll">
+            내용: {selectedAnnouncement?.content ?? ""}
+          </div>
         </div>
       </div>
     </main>

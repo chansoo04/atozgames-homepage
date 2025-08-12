@@ -1,3 +1,4 @@
+// TODO: CSR or SSR 어떤 것을 선택해야하는가?
 "use client";
 import useSWR from "swr";
 

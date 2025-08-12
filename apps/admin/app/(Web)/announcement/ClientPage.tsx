@@ -55,7 +55,7 @@ export default function ClientPage({ announcements }: { announcements: any }) {
               <Link
                 key={item.id.toString()}
                 className="flex w-full flex-col border-b border-gray-200"
-                href={`/announcement/${item.id}`}
+                href={`/apps/admin/app/(Web)/announcement/${item.id}`}
                 style={{
                   rowGap: mobileSizeCalc(10, ratio),
                   paddingTop: mobileSizeCalc(15, ratio),
@@ -164,7 +164,7 @@ export default function ClientPage({ announcements }: { announcements: any }) {
               {announcements.map((announcement: any) => (
                 <Link
                   key={announcement.id.toString()}
-                  href={`/announcement/${announcement.id}`}
+                  href={`/apps/admin/app/(Web)/announcement/${announcement.id}`}
                   className="flex w-full justify-between border-b border-gray-600"
                   style={{
                     paddingTop: desktopSizeCalc(40, ratio),

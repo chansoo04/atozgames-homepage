@@ -1,6 +1,6 @@
 "use client"; // "use client" 를 작성해줘야 하기 때문에 이 파일이 필요함
 import { arrayIncludes } from "@toss/utils";
-import csr from "../lib/fetcher/csr";
+import csr from "lib/fetcher/csr";
 import { Toaster } from "react-hot-toast";
 import type { PropsWithChildren } from "react";
 import { OverlayProvider } from "@toss/use-overlay";

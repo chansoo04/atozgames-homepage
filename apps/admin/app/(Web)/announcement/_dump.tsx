@@ -33,7 +33,7 @@ export default async function Page() {
             <Link
               key={item.id.toString()}
               className="flex w-full flex-col gap-y-2.5 border-b border-gray-200 py-[15px]"
-              href={`/announcement/${item.id}`}
+              href={`/apps/admin/app/(Web)/announcement/${item.id}`}
             >
               <div className="grid grid-cols-[45px_1fr] items-center gap-x-2.5">
                 <div
@@ -66,7 +66,7 @@ export default async function Page() {
             {announcements.map((announcement: any) => (
               <Link
                 key={announcement.id.toString()}
-                href={`/announcement/${announcement.id}`}
+                href={`/apps/admin/app/(Web)/announcement/${announcement.id}`}
                 className="flex w-full justify-between border-b border-gray-600 py-10"
               >
                 <div className="flex items-center gap-x-4">

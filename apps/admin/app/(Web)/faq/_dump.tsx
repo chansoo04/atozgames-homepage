@@ -122,7 +122,7 @@ export default function Tabs({ faqs }: { faqs: any }) {
               <Link
                 key={item.id.toString()}
                 className="flex w-full flex-col gap-y-2.5 border-b border-gray-200 py-[15px]"
-                href={`/faq/${item.id}`}
+                href={`/apps/admin/app/(Web)/faq/${item.id}`}
               >
                 <div className="grid grid-cols-[45px_1fr] items-center gap-x-2.5">
                   <div
@@ -243,7 +243,7 @@ export default function Tabs({ faqs }: { faqs: any }) {
                 ?.map((item: any) => (
                   <Link
                     key={item.id.toString()}
-                    href={`/faq/${item.id}`}
+                    href={`/apps/admin/app/(Web)/faq/${item.id}`}
                     className="flex w-full justify-between border-b border-gray-600 py-10"
                   >
                     <div className="flex items-center gap-x-4">

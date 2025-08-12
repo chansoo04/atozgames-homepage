@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, MouseEvent } from "react";
-import useWindowSize from "app/_components/useWindowSize";
 import Floating from "app/_components/Floating";
+import useWindowSize from "app/_components/useWindowSize";
 
 export default function ClientComponent({ inquiries }: { inquiries: any }) {
   const [selectedInquiry, setSelectedInquiry] = useState(inquiries[0] ?? {});
@@ -74,9 +74,9 @@ export default function ClientComponent({ inquiries }: { inquiries: any }) {
             </div>
           ))}
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col overflow-y-hidden">
           <div>{selectedInquiry?.title}</div>
-          <div>{selectedInquiry?.content}</div>
+          <div className="h-full overflow-y-scroll">{selectedInquiry?.content}</div>
         </div>
       </div>
       <Floating />

@@ -2,8 +2,8 @@ import "./globals.css";
 import "react-tooltip/dist/react-tooltip.css";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import ClientProviders from "./ClientProvider";
-import { AuthProvider } from "./AuthProvider";
+import ClientProviders from "app/ClientProvider";
+import { AuthProvider } from "app/AuthProvider";
 import ClarityTracker from "./ClarityTracker";
 import { gmarketSans } from "app/fonts/gmarket";
 

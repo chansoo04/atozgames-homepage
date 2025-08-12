@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       // className="bg-amber-400"
       style={{
         // backgroundImage: `url('/background.png')`,
-        backgroundImage: `url('/background_real.png')`,
+        // backgroundImage: `url('/background_real.png')`,
         backgroundSize: "100% auto", // 가로 기준 꽉 채움
         backgroundPosition: "center center", // 세로 중앙 정렬
         backgroundRepeat: "no-repeat",
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         backgroundColor: "black",
       }}
     >
-      <body className="h-full bg-transparent">
+      <body className="h-full bg-yellow-300">
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

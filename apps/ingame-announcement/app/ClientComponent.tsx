@@ -68,7 +68,7 @@ export default function ClientComponent({ announcements }: { announcements: any 
               onClick={() => setSelectedAnnouncement(announcement)}
               className="rounded border border-gray-50 p-1"
             >
-              <div>{announcement?.title}</div>
+              <div className="truncate">{announcement?.title}</div>
               <div>{announcement?.created_at}</div>
             </div>
           ))}

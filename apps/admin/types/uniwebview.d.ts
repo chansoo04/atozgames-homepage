@@ -3,9 +3,9 @@ export {};
 
 declare global {
   interface Window {
-    uniWebView?: {
+    uniWebView: {
       sendMessage: (msg: string) => void;
-      OnFirebaseIdMsg?: any;
+      OnFirebaseIdMsg: (fbId: any) => string;
     };
   }
 }

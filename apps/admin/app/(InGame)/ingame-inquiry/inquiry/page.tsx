@@ -13,12 +13,30 @@ export default function Page() {
       window.location.href = `uniwebview://${msg}`;
     };
 
-    // uniWebView 객체가 이미 있더라도 덮어쓰기
-    if (window.uniWebView) {
-      window.uniWebView.sendMessage = send;
-    } else {
-      window.uniWebView = { sendMessage: send };
+    const firebaseIdMsg = function (fbId: any) {
+      console.log("Unity에서 온 FBID:", fbId);
+      // 여기서 원하는 처리 수행
+      // ex) 서버로 전송, 쿠키/로컬스토리지 저장 등
+      // localStorage.setItem("fbid", fbId);
+      // C# 쪽 payload.data로 돌아갈 문자열을 반환할 수 있음
+      return "received:" + fbId;
+    };
+
+    if (window.uniWebView === undefined) {
+      window.uniWebView = {
+        sendMessage: send,
+        OnFirebaseIdMsg: firebaseIdMsg,
+      };
     }
+
+    // window.uniWebView.sendMessage = send;
+
+    // uniWebView 객체가 이미 있더라도 덮어쓰기
+    // if (window.uniWebView) {
+    //   window.uniWebView.sendMessage = send;
+    // } else {
+    //   window.uniWebView = { sendMessage: send };
+    // }
   }, []);
 
   /* -------------------------------------------------- *
@@ -60,7 +78,7 @@ export default function Page() {
 
   useEffect(() => {
     // console.log(window?.uniWebView?.OnFirebaseIdMsg);
-    alert(JSON.stringify(window?.uniWebView?.OnFirebaseIdMsg()));
+    alert(JSON.stringify(window.uniWebView.OnFirebaseIdMsg(1) ?? "없음"));
   }, [title]);
 
   return (

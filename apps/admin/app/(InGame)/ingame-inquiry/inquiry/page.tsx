@@ -13,6 +13,9 @@ export default function Page() {
       window.location.href = `uniwebview://${msg}`;
     };
 
+    // 최초 uniwebview가 실행될 때 강제로 호출되는 함수임..
+    // return 값은 firebase uid다..
+    // 이거 가지고 안되면, api를 호출하거나.. 등등으 ㅣ액션을 하는게 좋을 것 같다
     const firebaseIdMsg = function (fbId: any) {
       console.log("Unity에서 온 FBID:", fbId);
       // 여기서 원하는 처리 수행

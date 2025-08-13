@@ -2,9 +2,10 @@
 import { MouseEvent, useEffect, useState } from "react";
 import useWindowSize from "app/_components/useWindowSize";
 import Floating from "app/_components/Floating";
+import type { FAQ } from "./page";
 
-export default function ClientComponent({ faqs }: { faqs: any }) {
-  const [selectedInquiry, setSelectedInquiry] = useState(faqs[0] ?? {});
+export default function ClientComponent({ faqs }: { faqs: FAQ[] }) {
+  const [selectedFAQ, setSelectedFAQ] = useState<FAQ>({} as FAQ);
   /* -------------------------------------------------- *
    * 1) 최초 마운트 시 글로벌 uniWebView 객체 생성
    * -------------------------------------------------- */
@@ -34,6 +35,12 @@ export default function ClientComponent({ faqs }: { faqs: any }) {
       window.OnFirebaseIdMsg = firebaseIdMsg;
     }
   }, []);
+
+  useEffect(() => {
+    if (faqs.length > 0) {
+      setSelectedFAQ(faqs[0]);
+    }
+  }, [faqs]);
 
   /* -------------------------------------------------- *
    * 2) 버튼 클릭 핸들러
@@ -80,17 +87,17 @@ export default function ClientComponent({ faqs }: { faqs: any }) {
           {faqs?.map((faq: any, index: number) => (
             <div
               key={index.toString()}
-              onClick={() => setSelectedInquiry(faq)}
+              onClick={() => setSelectedFAQ(faq)}
               className="rounded border border-gray-50 p-1"
             >
-              <div>{faq?.title}</div>
-              <div>문의 일자</div>
+              <div className="truncate">{faq?.title}</div>
+              <div>{faq?.created_at}</div>
             </div>
           ))}
         </div>
         <div className="flex flex-col overflow-y-hidden">
-          <div>{selectedInquiry?.title}</div>
-          <div className="h-full overflow-y-scroll">{selectedInquiry?.content}</div>
+          <div>{selectedFAQ?.question ?? ""}</div>
+          <div className="h-full overflow-y-scroll">{selectedFAQ?.answer ?? ""}</div>
         </div>
       </div>
       <Floating />

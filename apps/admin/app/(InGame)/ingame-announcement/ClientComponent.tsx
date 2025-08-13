@@ -3,7 +3,7 @@ import { useEffect, useState, MouseEvent } from "react";
 import useWindowSize from "app/_components/useWindowSize";
 import type { Announcement } from "./page";
 
-export default function ClientComponent({ announcements }: { announcements: any }) {
+export default function ClientComponent({ announcements }: { announcements: Announcement[] }) {
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement>(
     {} as Announcement,
   );

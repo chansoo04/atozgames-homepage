@@ -23,21 +23,16 @@ export default function Page() {
       return fbId;
     };
 
+    // uniWebView 객체가 이미 있더라도 덮어쓰기
     if (window.uniWebView === undefined) {
       window.uniWebView = {
         sendMessage: send,
       };
       window.OnFirebaseIdMsg = firebaseIdMsg;
+    } else {
+      window.uniWebView = { sendMessage: send };
+      window.OnFirebaseIdMsg = firebaseIdMsg;
     }
-
-    // window.uniWebView.sendMessage = send;
-
-    // uniWebView 객체가 이미 있더라도 덮어쓰기
-    // if (window.uniWebView) {
-    //   window.uniWebView.sendMessage = send;
-    // } else {
-    //   window.uniWebView = { sendMessage: send };
-    // }
   }, []);
 
   /* -------------------------------------------------- *

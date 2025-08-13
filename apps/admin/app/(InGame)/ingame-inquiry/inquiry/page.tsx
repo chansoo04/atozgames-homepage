@@ -60,7 +60,7 @@ export default function Page() {
 
   useEffect(() => {
     // console.log(window?.uniWebView?.OnFirebaseIdMsg);
-    alert(JSON.stringify(window?.uniWebView?.OnFirebaseIdMsg));
+    alert(JSON.stringify(window?.uniWebView?.OnFirebaseIdMsg()));
   }, [title]);
 
   return (

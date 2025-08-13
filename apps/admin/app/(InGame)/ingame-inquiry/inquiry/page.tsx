@@ -19,7 +19,8 @@ export default function Page() {
       // ex) 서버로 전송, 쿠키/로컬스토리지 저장 등
       // localStorage.setItem("fbid", fbId);
       // C# 쪽 payload.data로 돌아갈 문자열을 반환할 수 있음
-      return "received:" + fbId;
+      alert("received:" + fbId);
+      return fbId;
     };
 
     if (window.uniWebView === undefined) {
@@ -78,7 +79,7 @@ export default function Page() {
 
   useEffect(() => {
     // console.log(window?.uniWebView?.OnFirebaseIdMsg);
-    alert(JSON.stringify(window.uniWebView.OnFirebaseIdMsg(1) ?? "없음"));
+    // alert(JSON.stringify(window.uniWebView.OnFirebaseIdMsg(1) ?? "없음"));
   }, [title]);
 
   return (

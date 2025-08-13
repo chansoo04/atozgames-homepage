@@ -14,11 +14,11 @@ export default function ClientComponent({ inquiries }: { inquiries: any }) {
     };
 
     // uniWebView 객체가 이미 있더라도 덮어쓰기
-    if (window.uniWebView) {
-      window.uniWebView.sendMessage = send;
-    } else {
-      window.uniWebView = { sendMessage: send };
-    }
+    // if (window.uniWebView) {
+    //   window.uniWebView.sendMessage = send;
+    // } else {
+    //   window.uniWebView = { sendMessage: send };
+    // }
   }, []);
 
   /* -------------------------------------------------- *

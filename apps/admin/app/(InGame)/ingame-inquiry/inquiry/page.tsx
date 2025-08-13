@@ -26,8 +26,8 @@ export default function Page() {
     if (window.uniWebView === undefined) {
       window.uniWebView = {
         sendMessage: send,
-        OnFirebaseIdMsg: firebaseIdMsg,
       };
+      window.OnFirebaseIdMsg = firebaseIdMsg;
     }
 
     // window.uniWebView.sendMessage = send;

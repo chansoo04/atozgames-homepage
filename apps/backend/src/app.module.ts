@@ -10,10 +10,8 @@ import {
 import { SlonikModule } from "nestjs-slonik";
 
 import { DatabaseModule } from "./database/database.module";
-import { TestModule } from "./http/test/test.module";
 import { AnnouncementModule } from "./http/announcement/announcement.module";
 import { FaqModule } from "./http/faq/faq.module";
-import { AdvanceReservationModule } from "./http/advance-reservation/advance-reservation.module";
 
 @Module({
   imports: [
@@ -27,10 +25,8 @@ import { AdvanceReservationModule } from "./http/advance-reservation/advance-res
       },
     }),
     DatabaseModule,
-    TestModule,
     AnnouncementModule,
     FaqModule,
-    AdvanceReservationModule,
   ],
   providers: [{ provide: APP_PIPE, useClass: ValidationPipe }],
 })

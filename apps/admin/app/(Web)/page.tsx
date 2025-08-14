@@ -170,14 +170,14 @@ export default function Page() {
 
     const data = {
       store: store,
-      phoneNumber: phoneNumber,
-      age: checkedList.includes("age"),
-      privacy: checkedList.includes("privacy"),
-      alarm: checkedList.includes("alarm"),
+      phone_number: phoneNumber,
+      agreeAge: checkedList.includes("age"),
+      agreePrivacy: checkedList.includes("privacy"),
+      agreeAlarm: checkedList.includes("alarm"),
     };
 
     const req = await csr
-      .post("advance-reservation", { json: data })
+      .post("reservation", { json: data })
       .then(async (req) => {
         const resp: any = await req.json();
         if (resp.result === "success") {

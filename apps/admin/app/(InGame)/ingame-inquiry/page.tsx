@@ -4,7 +4,7 @@ import { useEffect, useState, MouseEvent } from "react";
 import Floating from "app/_components/Floating";
 import useWindowSize from "app/_components/useWindowSize";
 import csr from "lib/fetcher/csr";
-import { setCookie } from "cookies-next";
+import { setCookie, getCookie } from "cookies-next";
 
 // testfId: y4YcqsZDrXgl65bUM8JgV3H3O963
 async function firebaseIdMsg(fbId: any) {
@@ -55,7 +55,12 @@ export default function Page() {
    * 2) 버튼 클릭 핸들러
    * -------------------------------------------------- */
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    window.uniWebView?.sendMessage("close");
+    // 쿠키가 들어갔나..?
+    const uid = getCookie("uid");
+    const account_id = getCookie("account_id");
+    alert("uid: " + uid + "|||| account_id=" + account_id);
+
+    // window.uniWebView?.sendMessage("close");
   };
 
   const { width, height, ratio } = useWindowSize();

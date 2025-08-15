@@ -16,7 +16,6 @@ async function getPageData(id: number) {
 export default async function Page({ params }: { params: { id: number } }) {
   const { id } = params;
   const faq: any = await getPageData(id);
-  console.log(faq, "faq");
 
   return (
     <ClientPage faq={faq.faq} />

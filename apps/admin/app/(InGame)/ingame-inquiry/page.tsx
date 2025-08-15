@@ -15,6 +15,7 @@ async function firebaseIdMsg(fbId: any) {
       const res: any = await response.json();
       setCookie("uid", res?.account?.firebase_uid);
       setCookie("account_id", res?.account?.account_id);
+      alert("fbId: " + fbId);
     })
     .catch((err) => {
       alert("오류 발생!!");

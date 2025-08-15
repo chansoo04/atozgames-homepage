@@ -4,6 +4,18 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const uid = searchParams.get("uid");
 
+  if (!uid) {
+    return NextResponse.json(
+      {
+        result: "failure",
+        message: "존재하지 않는 정보입니다",
+      },
+      {
+        status: 400,
+      },
+    );
+  }
+
   const url = process.env.LOGIN_AUTH_URL + "user.AccountService/GetAccount";
 
   const response = await fetch(url, {

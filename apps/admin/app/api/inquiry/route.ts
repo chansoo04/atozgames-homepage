@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   const accountIdCookie = request.cookies.get("account_id");
+
   const account_id = accountIdCookie?.value;
 
   if (!account_id) {
@@ -11,8 +12,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const inquiryGetURL =
-    process.env.LOGIN_AUTH_URL + "cs.CustomerService/GetCustomerQuestions?account_id=" + account_id;
+  const inquiryGetURL = process.env.LOGIN_AUTH_URL + "cs.CustomerService/GetCustomerQuestions";
   const response = await fetch(inquiryGetURL, {
     method: "POST",
     headers: {

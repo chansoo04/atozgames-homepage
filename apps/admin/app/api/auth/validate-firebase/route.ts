@@ -4,7 +4,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const uid = searchParams.get("uid");
 
-  const url = process.env.LOGIN_AUTH_URL + "";
+  const url = process.env.LOGIN_AUTH_URL + "user.AccountService/GetAccount";
 
   const response = await fetch(url, {
     method: "POST",
@@ -28,9 +28,8 @@ export async function GET(request: NextRequest) {
 
   const data = await response.json();
 
-  console.log(data, "data");
-
   return NextResponse.json({
     result: "success",
+    account: data.account,
   });
 }

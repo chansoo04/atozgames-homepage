@@ -92,6 +92,7 @@ const inquiries = [
 ];
 
 async function firebaseIdMsg(fbId: any) {
+  alert(fbId);
   console.log("Unity에서 온 FBID:", fbId);
 
   const req = await csr

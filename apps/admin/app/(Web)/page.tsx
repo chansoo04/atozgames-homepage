@@ -1,11 +1,10 @@
 "use client";
 /* ----------------------------------------------------------------
-  TODO LIST (keep for future tasks)
+  TODO:
   2) 데스크탑 · 모바일 공통 영상 모달 구현 (play 버튼 클릭 시)
   3) 모바일 전용 슬라이드 추가 디자인 및 내용 확정
   4) 배경 이미지 프리로드 & 퍼포먼스 최적화
   5) https://journey-dev.tistory.com/123 안티얼리어싱, text-shadow 관련 문제 해결 필요
-  ※ 위 TODO는 기능 구현 순서 논의를 위해 남겨두는 주석입니다.
 ---------------------------------------------------------------- */
 import { useState, useEffect, FormEvent, useRef } from "react";
 import Image from "next/image";

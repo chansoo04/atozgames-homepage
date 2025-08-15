@@ -13,6 +13,7 @@ async function firebaseIdMsg(fbId: any) {
     .get(`auth/validate-firebase?uid=${fbId}`)
     .then(async (response) => {
       const res: any = await response.json();
+      alert(JSON.stringify(res));
       setCookie("uid", res?.account?.firebase_uid);
       setCookie("account_id", res?.account?.account_id);
       alert("fbId: " + fbId);
@@ -60,6 +61,7 @@ export default function Page() {
     const uid = getCookie("uid");
     const account_id = getCookie("account_id");
     alert("uid: " + uid + "|||| account_id=" + account_id);
+    mutate();
 
     // window.uniWebView?.sendMessage("close");
   };

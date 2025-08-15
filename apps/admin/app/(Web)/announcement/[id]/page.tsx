@@ -15,5 +15,5 @@ export default async function Page({ params }: { params: { id: number } }) {
   const { id } = params;
   const announcement: any = await getPageData(id);
 
-  return <ClientPage announcement={announcement} />;
+  return <ClientPage announcement={announcement.announcement} />;
 }

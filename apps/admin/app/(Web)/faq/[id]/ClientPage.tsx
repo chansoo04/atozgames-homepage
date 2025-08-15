@@ -120,7 +120,7 @@ export default function ClientPage({ faq }: { faq: any }) {
                 lineHeight: mobileSizeCalc(20, ratio),
               }}
             >
-              {faq.content}
+              {faq.answer}
             </div>
           </div>
         </div>
@@ -222,7 +222,7 @@ export default function ClientPage({ faq }: { faq: any }) {
                 lineHeight: desktopSizeCalc(34, ratio),
               }}
             >
-              {faq.content}
+              {faq.answer}
             </div>
           </div>
         </div>

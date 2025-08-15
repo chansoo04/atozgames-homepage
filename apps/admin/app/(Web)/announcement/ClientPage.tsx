@@ -164,7 +164,7 @@ export default function ClientPage({ announcements }: { announcements: any }) {
               {announcements.map((announcement: any) => (
                 <Link
                   key={announcement.id.toString()}
-                  href={`/apps/admin/app/(Web)/announcement/${announcement.id}`}
+                  href={`/announcement/${announcement.id}`}
                   className="flex w-full justify-between border-b border-gray-600"
                   style={{
                     paddingTop: desktopSizeCalc(40, ratio),

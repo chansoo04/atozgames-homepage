@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import ClientPage from "./ClientPage";
 
 // TODO: 페이지넹션 만들기
+// TODO: API 변경하기
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.atozgames.net/announcement"),
@@ -33,6 +34,7 @@ async function getPageData() {
 
 export default async function Page() {
   const announcements: any = await getPageData();
+  console.log(announcements);
 
-  return <ClientPage announcements={announcements} />;
+  return <ClientPage announcements={announcements?.announcement ?? []} />;
 }

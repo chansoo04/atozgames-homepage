@@ -40,13 +40,23 @@ export async function POST(request: Request) {
   const responseData = await response.json();
 
   if (!responseData.success) {
-    return NextResponse.json(
-      {
-        result: "failure",
-        message: "사전예약에 실패했습니다",
-      },
-      { status: 400 },
-    );
+    if (responseData.error_message.includes("Unique")) {
+      return NextResponse.json(
+        {
+          result: "failure",
+          message: "이미 사전예약에 참여한 전화번호입니다",
+        },
+        { status: 400 },
+      );
+    } else {
+      return NextResponse.json(
+        {
+          result: "failure",
+          message: "사전예약에 실패했습니다",
+        },
+        { status: 400 },
+      );
+    }
   }
 
   return NextResponse.json({

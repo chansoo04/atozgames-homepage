@@ -2,6 +2,8 @@ import ssr from "lib/fetcher/ssr";
 import { notFound } from "next/navigation";
 import ClientPage from "./ClientPage";
 
+// TODO: API 변경하기
+
 async function getPageData(id: number) {
   return await ssr
     .get(`faq/${id}`)
@@ -14,9 +16,10 @@ async function getPageData(id: number) {
 export default async function Page({ params }: { params: { id: number } }) {
   const { id } = params;
   const faq: any = await getPageData(id);
+  console.log(faq, "faq");
 
   return (
-    <ClientPage faq={faq} />
+    <ClientPage faq={faq.faq} />
     // <main className="relative w-full">
     //   {/* 모바일(<640)에서만 보임 */}
     //   <section

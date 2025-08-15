@@ -2,6 +2,8 @@ import ssr from "lib/fetcher/ssr";
 import Tabs from "./Tabs";
 import type { Metadata } from "next";
 
+// TODO: API 변경하기
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.atozgames.net/faq"),
   title: "아토즈포커 - 자주 묻는 질문",
@@ -30,7 +32,7 @@ async function getPageData() {
 }
 
 export default async function Page() {
-  const faqs = await getPageData();
+  const faqs: any = await getPageData();
 
-  return <Tabs faqs={faqs} />;
+  return <Tabs faqs={faqs.faq} />;
 }

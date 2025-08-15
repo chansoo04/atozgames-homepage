@@ -2,8 +2,6 @@ import ssr from "lib/fetcher/ssr";
 import { notFound } from "next/navigation";
 import ClientPage from "./ClientPage";
 
-// TODO: API 변경하기
-
 async function getPageData(id: number) {
   return await ssr
     .get(`faq/${id}`)

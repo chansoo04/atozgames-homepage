@@ -9,6 +9,7 @@
 ---------------------------------------------------------------- */
 import { useState, useEffect, FormEvent, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import csr from "lib/fetcher/csr";
 import useWindowSize from "app/_components/useWindowSize";
 import { paginationMobileSizeCalc } from "app/_components/sizeCalculator";
@@ -158,6 +159,7 @@ export default function Page() {
   // 디코딩을 반드시 해야 함
   const tickSvg = `data:image/svg+xml,%3Csvg%20width%3D%2213%22%20height%3D%229%22%20viewBox%3D%220%200%2013%209%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5.08%208.64L0%203.56L1.41%202.15L5.08%205.81L10.89%200L12.3%201.41L5.08%208.64Z%22%20fill%3D%22white%22%20%2F%3E%3C%2Fsvg%3E`;
 
+  // TODO: os 가 Android라면, 구글플레이스토어로 보내자..
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault(); // 새로고침 방지
     if (store === "" || !allChecked || frontPhoneNumber === "" || backPhoneNumber === "") {
@@ -856,6 +858,24 @@ export default function Page() {
                 marginTop: paginationMobileSizeCalc(20, ratio, 360, 624),
               }}
             >
+              <Link
+                href="https://play.google.com/store/apps/details?id=com.atoz.poker"
+                target="_blank"
+              >
+                <Image
+                  src="/advance_reservation_google_mobile.png"
+                  alt="구글 플레이스토어 사전예약"
+                  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                  quality={100}
+                  unoptimized
+                  width={73}
+                  height={104}
+                  style={{
+                    width: paginationMobileSizeCalc(73, ratio, 360, 624),
+                    height: paginationMobileSizeCalc(104, ratio, 360, 624),
+                  }}
+                />
+              </Link>
               {/*TODO: 검수 끝나고 풀기*/}
               {/*<Image*/}
               {/*  src="/advance_reservation_apple_mobile.png"*/}
@@ -871,20 +891,7 @@ export default function Page() {
               {/*  }}*/}
               {/*  onClick={() => alert("기능 개발중입니다")}*/}
               {/*/>*/}
-              {/*<Image*/}
-              {/*  src="/advance_reservation_google_mobile.png"*/}
-              {/*  alt="구글 플레이스토어 사전예약"*/}
-              {/*  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
-              {/*  quality={100}*/}
-              {/*  unoptimized*/}
-              {/*  width={73}*/}
-              {/*  height={104}*/}
-              {/*  style={{*/}
-              {/*    width: paginationMobileSizeCalc(73, ratio, 360, 624),*/}
-              {/*    height: paginationMobileSizeCalc(104, ratio, 360, 624),*/}
-              {/*  }}*/}
-              {/*  onClick={() => alert("기능 개발중입니다")}*/}
-              {/*/>*/}
+
               {/*<Image*/}
               {/*  src="/advance_reservation_onestore_mobile.png"*/}
               {/*  alt="원스토어 사전예약"*/}
@@ -1277,39 +1284,44 @@ export default function Page() {
               >
                 사전등록하기
               </button>
-              {/* TODO: 구글, 애플, 원스토어 검수 통과 시 다시 올리기 */}
-              {/*<div className="mt-3.5 flex gap-x-[15px]">*/}
-              {/*  <Image*/}
-              {/*    src="/advance_reservation_apple.png"*/}
-              {/*    alt="앱스토어 사전예약"*/}
-              {/*    className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
-              {/*    quality={100}*/}
-              {/*    unoptimized*/}
-              {/*    width={198}*/}
-              {/*    height={91}*/}
-              {/*    onClick={() => alert("기능 개발중입니다")}*/}
-              {/*  />*/}
-              {/*  <Image*/}
-              {/*    src="/advance_reservation_google.png"*/}
-              {/*    alt="구글 플레이스토어 사전예약"*/}
-              {/*    className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
-              {/*    quality={100}*/}
-              {/*    unoptimized*/}
-              {/*    width={198}*/}
-              {/*    height={91}*/}
-              {/*    onClick={() => alert("기능 개발중입니다")}*/}
-              {/*  />*/}
-              {/*  <Image*/}
-              {/*    src="/advance_reservation_onestore.png"*/}
-              {/*    alt="원스토어 사전예약"*/}
-              {/*    className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
-              {/*    quality={100}*/}
-              {/*    unoptimized*/}
-              {/*    width={198}*/}
-              {/*    height={91}*/}
-              {/*    onClick={() => alert("기능 개발중입니다")}*/}
-              {/*  />*/}
-              {/*</div>*/}
+
+              <div className="mt-3.5 flex gap-x-[15px]">
+                <Link
+                  href="https://play.google.com/store/apps/details?id=com.atoz.poker"
+                  target="_blank"
+                >
+                  <Image
+                    src="/advance_reservation_google.png"
+                    alt="구글 플레이스토어 사전예약"
+                    className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"
+                    quality={100}
+                    unoptimized
+                    width={198}
+                    height={91}
+                  />
+                </Link>
+                {/* TODO: 애플, 원스토어 검수 통과 시 다시 올리기 */}
+                {/*<Image*/}
+                {/*  src="/advance_reservation_apple.png"*/}
+                {/*  alt="앱스토어 사전예약"*/}
+                {/*  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
+                {/*  quality={100}*/}
+                {/*  unoptimized*/}
+                {/*  width={198}*/}
+                {/*  height={91}*/}
+                {/*  // onClick={() => (window.location.href = "")}*/}
+                {/*/>*/}
+                {/*<Image*/}
+                {/*  src="/advance_reservation_onestore.png"*/}
+                {/*  alt="원스토어 사전예약"*/}
+                {/*  className="rounded-[10px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.10)]"*/}
+                {/*  quality={100}*/}
+                {/*  unoptimized*/}
+                {/*  width={198}*/}
+                {/*  height={91}*/}
+                {/*  onClick={() => alert("기능 개발중입니다")}*/}
+                {/*/>*/}
+              </div>
             </form>
           </div>
         </section>

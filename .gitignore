@@ -8,6 +8,8 @@ node_modules
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.npmrc
+scripts/ca-refresh-local.sh
 
 # testing
 coverage

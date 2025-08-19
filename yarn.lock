@@ -50,6 +50,13 @@
     ora "5.4.1"
     rxjs "7.8.1"
 
+"@atozgames/bo-grpc@^0.0.31":
+  version "0.0.31"
+  resolved "https://atozgames-842675988186.d.codeartifact.ap-northeast-1.amazonaws.com/npm/repo/@atozgames/bo-grpc/-/bo-grpc-0.0.31.tgz#2a7574ca18ad211468dbb2db9b0b5c3c523dac2f"
+  integrity sha512-JB7dgWB5MKuzyJ3MuK3QjA+GD2r9iWbI9tDyo6v9U+L+KDtoFo/dB2+6qyEtgYlpwaiPQdyEcf40iozrVE5rxw==
+  dependencies:
+    "@bufbuild/protobuf" "2.0.0"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.7", "@babel/code-frame@^7.24.7":
   version "7.24.7"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.24.7.tgz#882fd9e09e8ee324e496bd040401c6f046ef4465"
@@ -337,6 +344,11 @@
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
+
+"@bufbuild/protobuf@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@bufbuild/protobuf/-/protobuf-2.0.0.tgz#d4be93c778e0df2c0852cc286b1d04f576294bf9"
+  integrity sha512-sw2JhwJyvyL0zlhG61aDzOVryEfJg2PDZFSV7i7IdC7nAE41WuXCru3QWLGiP87At0BMzKOoKO/FqEGoKygGZQ==
 
 "@colors/colors@1.5.0":
   version "1.5.0"

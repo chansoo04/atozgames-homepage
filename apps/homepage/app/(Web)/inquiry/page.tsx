@@ -447,7 +447,7 @@ export default function Page() {
                     <Link
                       key={inquiry.id.toString()}
                       className="flex w-full flex-col border-b border-gray-200"
-                      href={`/apps/admin/app/(Web)/inquiry/${inquiry.id}`}
+                      href={`/inquiry/${inquiry.id}`}
                       style={{
                         height: mobileSizeCalc(105, ratio),
                         paddingTop: mobileSizeCalc(15, ratio),
@@ -905,7 +905,7 @@ export default function Page() {
                     {myInquiry.map((inquiry: any) => (
                       <Link
                         key={inquiry.id.toString()}
-                        href={`/apps/admin/app/(Web)/inquiry/${inquiry.id}`}
+                        href={`/inquiry/${inquiry.id}`}
                         className="flex w-full justify-between border-b border-gray-600"
                         style={{
                           paddingTop: desktopSizeCalc(40, ratio),

@@ -167,7 +167,7 @@ export default function Tabs({ faqs }: { faqs: any }) {
                 <Link
                   key={item.id.toString()}
                   className="flex w-full flex-col border-b border-gray-200"
-                  href={`/apps/admin/app/(Web)/faq/${item.id}`}
+                  href={`/faq/${item.id}`}
                   style={{
                     rowGap: mobileSizeCalc(10, ratio),
                     paddingTop: mobileSizeCalc(15, ratio),
@@ -372,7 +372,7 @@ export default function Tabs({ faqs }: { faqs: any }) {
                 ?.map((item: any) => (
                   <Link
                     key={item.id.toString()}
-                    href={`/apps/admin/app/(Web)/faq/${item.id}`}
+                    href={`/faq/${item.id}`}
                     className="flex w-full justify-between border-b border-gray-600"
                     style={{
                       paddingBottom: desktopSizeCalc(40, ratio),

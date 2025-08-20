@@ -16,13 +16,13 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const tokenValidationURL = process.env.LOGIN_AUTH_URL + "web.WebAuthService/VerifyIdToken";
+  const tokenValidationURL = process.env.AWS_API_URL + "web.WebAuthService/VerifyIdToken";
   const response = await fetch(tokenValidationURL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.LOGIN_AUTH_X_API_KEY as string,
-      "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
+      "x-api-key": process.env.AWS_API_KEY as string,
+      "x-api-secret": process.env.AWS_API_SECRET as string,
     },
     body: JSON.stringify({
       uid,

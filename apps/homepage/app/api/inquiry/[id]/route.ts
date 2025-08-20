@@ -12,13 +12,13 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
     });
   }
 
-  const inquiryGetURL = process.env.LOGIN_AUTH_URL + "cs.CustomerService/GetCustomerQuestion";
+  const inquiryGetURL = process.env.AWS_API_URL + "cs.CustomerService/GetCustomerQuestion";
   const response = await fetch(inquiryGetURL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.LOGIN_AUTH_X_API_KEY as string,
-      "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
+      "x-api-key": process.env.AWS_API_KEY as string,
+      "x-api-secret": process.env.AWS_API_SECRET as string,
     },
     body: JSON.stringify({
       account_id: account_id,

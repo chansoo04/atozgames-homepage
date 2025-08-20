@@ -11,7 +11,7 @@ const getErrorMessage: BeforeErrorHook = async (error) => {
 };
 
 const csr = ky.create({
-  prefixUrl: process.env.NEXT_PUBLIC_SELF_URL + "api/",
+  prefixUrl: process.env.NEXT_PUBLIC_ATOZ_HOMEPAGE_URL + "api/",
   credentials: "include",
   retry: {
     statusCodes: [401, 403, 408, 413, 429, 500, 502, 503, 504],

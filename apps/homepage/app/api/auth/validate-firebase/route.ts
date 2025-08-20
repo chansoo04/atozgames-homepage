@@ -16,14 +16,14 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const url = process.env.LOGIN_AUTH_URL + "user.AccountService/GetAccount";
+  const url = process.env.AWS_API_URL + "user.AccountService/GetAccount";
 
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.LOGIN_AUTH_X_API_KEY as string,
-      "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
+      "x-api-key": process.env.AWS_API_KEY as string,
+      "x-api-secret": process.env.AWS_API_SECRET as string,
     },
     body: JSON.stringify({ firebase_uid: uid }),
   });

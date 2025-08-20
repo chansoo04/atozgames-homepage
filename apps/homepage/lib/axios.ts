@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SELF_URL, // 환경변수에 정의한 API 기본 URL :contentReference[oaicite:0]{index=0}
+  baseURL: process.env.NEXT_PUBLIC_ATOZ_HOMEPAGE_URL, // 환경변수에 정의한 API 기본 URL :contentReference[oaicite:0]{index=0}
   headers: {
     "Content-Type": "application/json", // JSON 요청을 기본으로 설정 :contentReference[oaicite:1]{index=1}
   },

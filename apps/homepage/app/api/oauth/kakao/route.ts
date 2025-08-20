@@ -19,13 +19,13 @@ export async function GET(request: Request) {
 
   const { access_token, id_token, refresh_token, ...otherResponse } = await tokenRes.json();
 
-  const atozUrl = process.env.LOGIN_AUTH_URL + "web.WebAuthService/CreateCustomToken";
+  const atozUrl = process.env.AWS_API_URL + "web.WebAuthService/CreateCustomToken";
   const atozRes = await fetch(atozUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.LOGIN_AUTH_X_API_KEY as string,
-      "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
+      "x-api-key": process.env.AWS_API_KEY as string,
+      "x-api-secret": process.env.AWS_API_SECRET as string,
     },
     body: JSON.stringify({
       token: access_token,
@@ -53,20 +53,22 @@ export async function GET(request: Request) {
 
   // 예: 세션 설정 후 리디렉션
   const redirect_url =
-    process.env.NEXT_PUBLIC_SELF_URL + "login/kakao?custom_token=" + atozResResult.custom_token;
+    process.env.NEXT_PUBLIC_ATOZ_HOMEPAGE_URL +
+    "login/kakao?custom_token=" +
+    atozResResult.custom_token;
   return NextResponse.redirect(redirect_url);
 }
 
 export async function POST(request: Request) {
   const data = await request.json();
 
-  const url = process.env.LOGIN_AUTH_URL + "web.WebAuthService/AccountSignIn";
+  const url = process.env.AWS_API_URL + "web.WebAuthService/AccountSignIn";
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.LOGIN_AUTH_X_API_KEY as string,
-      "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
+      "x-api-key": process.env.AWS_API_KEY as string,
+      "x-api-secret": process.env.AWS_API_SECRET as string,
     },
     body: JSON.stringify({ credential: JSON.stringify(data) }),
   });

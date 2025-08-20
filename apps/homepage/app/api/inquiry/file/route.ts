@@ -20,8 +20,8 @@ export async function POST(request: NextRequest) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.LOGIN_AUTH_X_API_KEY as string,
-      "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
+      "x-api-key": process.env.AWS_API_KEY as string,
+      "x-api-secret": process.env.AWS_API_SECRET as string,
     },
     body: JSON.stringify({
       ContentType: fileType,

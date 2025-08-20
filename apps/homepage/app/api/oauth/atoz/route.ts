@@ -3,14 +3,14 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   const data = await request.json();
 
-  const url = process.env.LOGIN_AUTH_URL + "web.WebAuthService/AccountSignIn";
+  const url = process.env.AWS_API_URL + "web.WebAuthService/AccountSignIn";
 
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.LOGIN_AUTH_X_API_KEY as string,
-      "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
+      "x-api-key": process.env.AWS_API_KEY as string,
+      "x-api-secret": process.env.AWS_API_SECRET as string,
     },
     body: JSON.stringify({ credential: JSON.stringify(data) }),
   });

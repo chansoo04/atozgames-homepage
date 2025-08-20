@@ -3,14 +3,14 @@ import { NextResponse, NextRequest } from "next/server";
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
 
-  const url = process.env.LOGIN_AUTH_URL + "gm.NoticeService/GetNotice";
+  const url = process.env.AWS_API_URL + "gm.NoticeService/GetNotice";
 
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.LOGIN_AUTH_X_API_KEY as string,
-      "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
+      "x-api-key": process.env.AWS_API_KEY as string,
+      "x-api-secret": process.env.AWS_API_SECRET as string,
     },
     body: JSON.stringify({ id }),
   });

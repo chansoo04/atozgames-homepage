@@ -12,13 +12,13 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const inquiryGetURL = process.env.LOGIN_AUTH_URL + "cs.CustomerService/GetCustomerQuestions";
+  const inquiryGetURL = process.env.AWS_API_URL + "cs.CustomerService/GetCustomerQuestions";
   const response = await fetch(inquiryGetURL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.LOGIN_AUTH_X_API_KEY as string,
-      "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
+      "x-api-key": process.env.AWS_API_KEY as string,
+      "x-api-secret": process.env.AWS_API_SECRET as string,
     },
     body: JSON.stringify({
       account_id: account_id,
@@ -52,13 +52,13 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const inquiryPostURL = process.env.LOGIN_AUTH_URL + "cs.CustomerService/CreateCustomerQuestion";
+  const inquiryPostURL = process.env.AWS_API_URL + "cs.CustomerService/CreateCustomerQuestion";
   const response = await fetch(inquiryPostURL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": process.env.LOGIN_AUTH_X_API_KEY as string,
-      "x-api-secret": process.env.LOGIN_AUTH_X_API_SECRET as string,
+      "x-api-key": process.env.AWS_API_KEY as string,
+      "x-api-secret": process.env.AWS_API_SECRET as string,
     },
     body: JSON.stringify({
       account_id: account_id,

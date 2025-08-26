@@ -18,7 +18,6 @@
     "dev": "turbo run dev --parallel",
     "build": "turbo run build --parallel",
     "start": "turbo run start --parallel",
-    "build:packages": "yarn build --filter=@carepet/models --force && yarn build --filter=@carepet/api-types",
     "prepare": "ts-patch install && typia patch"
   },
   "devDependencies": {

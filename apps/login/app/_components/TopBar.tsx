@@ -43,7 +43,7 @@ export default function TopBar({
           className="size-[40px] bg-transparent"
           onClick={() => {
             if (actionUrl) {
-              router.replace(actionUrl!);
+              router.push(actionUrl!);
             } else {
               router.back();
             }

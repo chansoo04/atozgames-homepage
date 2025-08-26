@@ -4,9 +4,66 @@ import Image from "next/image";
 import TopBar from "login/app/_components/TopBar";
 import IconButton from "login/app/_components/IconButton";
 import Loading from "login/app/_components/Loading";
+import { GpCookie } from "common/cookie";
 
 export default function Page() {
+  const [signInfo, setSignInfo] = useState<GpCookie>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // 화면 크기 조정
+  const setVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  };
+
+  const setScreenSize = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  };
+
+  useEffect(() => {
+    setVh();
+    setScreenSize();
+    window.addEventListener("resize", setVh);
+    return () => window.removeEventListener("resize", setVh);
+  }, []);
+
+  // 쿠키에서 로그인 정보 가져오기
+  const getLoginInfo = async () => {
+    const req = await fetch("/api/cookie", {
+      method: "POST",
+      body: JSON.stringify({ action: "getAll" }),
+    });
+    if (req.ok) {
+      return await req.json();
+    }
+    console.error(await req.json());
+    return null;
+  };
+
+  // TODO: 필요한지 아닌지 확인해보기
+  const updateNickname = async (signs: GpCookie) => {};
+
+  useEffect(() => {
+    setIsLoading(true);
+    getLoginInfo()
+      .then(async (signs: GpCookie) => {
+        console.log(signs, "response");
+        setSignInfo(signs);
+        await updateNickname(signs);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("알 수 없는 이유로 로그인이 실패했습니다\n잠시 후 다시 시도해주세요");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -24,8 +81,8 @@ export default function Page() {
           </div>
           <div className="flex size-full items-baseline justify-center bg-[#b9c2e2]">
             <div className="flex w-full flex-col items-center justify-center bg-[#b9c2e2]">
-              {/* 버튼 영역 */}
               <div className="flex w-full max-w-[580px] flex-col items-center justify-center rounded-lg bg-[#b9c2e2] p-8">
+                {/* 버튼 영역 */}
                 <div className="mt-4 flex w-full flex-col items-center justify-center gap-2 text-sm leading-tight">
                   {/* TODO: count 처리 */}
                   <IconButton

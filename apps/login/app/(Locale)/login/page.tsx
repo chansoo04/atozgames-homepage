@@ -84,7 +84,7 @@ export default function Page() {
               <div className="flex w-full max-w-[580px] flex-col items-center justify-center rounded-lg bg-[#b9c2e2] p-8">
                 {/* 버튼 영역 */}
                 <div className="mt-4 flex w-full flex-col items-center justify-center gap-2 text-sm leading-tight">
-                  {/* TODO: count 처리 */}
+                  {/* TODO: count query 처리 */}
                   <IconButton
                     link="/login/id?count=0"
                     text="아토즈 로그인"

@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
   await redis.set(idToken.uid, JSON.stringify({ accessToken, refreshToken }));
 
-  // STEP 2. 계정 존재 여부 확인, 로그인 일자 업데이트
+  // STEP 2-1. 계정 존재 여부 확인
   try {
     const account = await user_api_pool.maybeOne(
       sql`SELECT * FROM accounts WHERE firebase_uid = ${idToken.uid}`,
@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
           .isSame(toDay),
     );
 
+    // STEP 2-2. 로그인 기록 업데이트
     await user_api_pool.transaction(async (t) => {
       // TODO: 체크 필요.. continous_day는 뭐지..?
       await t.query(sql`
@@ -61,18 +62,33 @@ VALUES
     // TODO [info] refresh my profile - account.signIn
 
     // STEP 3. 내 밸런스 가져오기
-    // { balance, moneyBox }
-    const hi = await economy_api_pool.transaction(async (t) => {
-      const balance = await t.maybeOne(sql`
+    const { balance, moneyBox } = await economy_api_pool.transaction(async (t) => {
+      const balance: null | any = await t.maybeOneFirst(sql`
 SELECT * FROM balances WHERE account_id = ${account.account_id}
 `);
-      assert(balance, "balance not found for account_id:" + account.account_id);
+      if (balance) {
+        const now = dayjs().tz("UTC");
 
-      // 현재 시간이 pauseAt 이후인지 확인
-      // pauseAt이 설정되어 있고, 현재 시간이 pauseAt 이후인 경우
-      // pauseAt 초기화
-      // TODO: pauseAt이 정지 풀리는 시간인지? 정지 시간인지?
+        // 한도 정지 풀림 시간이 현재 시간보다 과거인 경우
+        if (balance.pause_at && now.isAfter(dayjs(balance.pause_at).tz("UTC"))) {
+          // pauseAt 초기화
+          // TODO: 성현 확인..
+          await user_api_pool.query(sql`
+
+`);
+        }
+      }
+
+      const moneyBox = await t.maybeOneFirst(sql`
+SELECT * FROM money_boxes WHERE account_id = ${account.account_id}
+`);
+      return { balance, moneyBox };
     });
+    // 현재 시간이 pauseAt 이후인지 확인
+    // pauseAt이 설정되어 있고, 현재 시간이 pauseAt 이후인 경우
+    // pauseAt 초기화
+    // TODO: pauseAt이 정지 풀리는 시간인지? 정지 시간인지?
+
     // const balance = await
   } catch (err: any) {
     console.error(err.message, "ERROR");

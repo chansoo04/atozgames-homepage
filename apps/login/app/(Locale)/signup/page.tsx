@@ -1,8 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TopBar from "app/_components/TopBar";
 import Image from "next/image";
+import Link from "next/link";
+
+// TODO: 본인인증 처리하기
+// TODO: 본인인증 완료 후 정보 기입 input 처리하기
 
 // 약관urls
 const urls: { [key: string]: string } = {
@@ -29,6 +33,18 @@ export default function Page() {
     } else {
       setAgrees({ terms: false, privacy: false, operating: false });
     }
+  };
+
+  // 본인인증 시작
+  const handleIdentity = async () => {
+    const win = window as any;
+    if (win.MOBILEOK) {
+      const callbackUrl = process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL + "api/mok/mok_std_request";
+      win.MOBILEOK.process(callbackUrl, "MVW", "result");
+    } else {
+      alert("본인인증 호출에 실패하였습니다");
+    }
+    console.log((window as any)?.MOBILEOK, "MOBILE OK");
   };
 
   return (
@@ -79,6 +95,7 @@ export default function Page() {
                           <iframe width="100%" height="100%" src={urls[isTermsOpen.kind]} />
                         </div>
                       )}
+                      {/* 전체 동의 */}
                       <div className="rounded-md bg-[rgba(222,226,243,0.4)] p-[8px] pl-[12px] text-[14px]">
                         <div key="allAgree" className="flex items-center justify-start gap-3">
                           <input
@@ -97,6 +114,7 @@ export default function Page() {
                           </label>
                         </div>
                       </div>
+                      {/* 이용약관 */}
                       <div className="flex w-full flex-row justify-between pl-[12px]">
                         <div key="terms" className="flex items-center justify-start gap-3">
                           <input
@@ -122,6 +140,7 @@ export default function Page() {
                           [보기]
                         </button>
                       </div>
+                      {/* 개인정보 수집/이용 */}
                       <div className="flex w-full flex-row justify-between pl-[12px]">
                         <div key="privacy" className="flex items-center justify-start gap-3">
                           <input
@@ -147,6 +166,7 @@ export default function Page() {
                           [보기]
                         </button>
                       </div>
+                      {/* 운영정책 */}
                       <div className="flex w-full flex-row justify-between pl-[12px]">
                         <div key="operating" className="flex items-center justify-start gap-3">
                           <input
@@ -172,7 +192,36 @@ export default function Page() {
                           [보기]
                         </button>
                       </div>
-                      {/*  TODO: 버튼 넣기!! */}
+
+                      {/* 버튼 래퍼 */}
+                      <div className="mb-5 flex w-full items-center justify-center gap-2 pt-3 ">
+                        <Link
+                          href="/login/id/input"
+                          style={{
+                            background: "linear-gradient(180deg, #F1F3FA 0%, #D4DAF6 100%)",
+                          }}
+                          className="flex h-[32px] w-full items-center  justify-center rounded-lg text-[12px] text-black"
+                        >
+                          취소
+                        </Link>
+                        <div
+                          className="inline-block w-full cursor-pointer"
+                          onClick={() =>
+                            agrees.privacy && agrees.operating && agrees.terms
+                              ? handleIdentity()
+                              : alert("모든 약관에 동의해주세요")
+                          }
+                        >
+                          <div
+                            style={{
+                              background: "linear-gradient(180deg, #F1F3FA 0%, #D4DAF6 100%)",
+                            }}
+                            className={`flex h-[32px] w-full items-center justify-center rounded-lg text-[12px] ${agrees.privacy && agrees.operating && agrees.terms ? "text-black" : "font-medium uppercase text-[#CCC]"}`}
+                          >
+                            확인
+                          </div>
+                        </div>
+                      </div>
                     </>
                   ) : null}
                 </div>

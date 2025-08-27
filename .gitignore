@@ -11,6 +11,10 @@ node_modules
 .npmrc
 scripts/ca-refresh-local.sh
 
+# key
+dev_mok_keyInfo.dat
+mok_keyInfo.dat
+
 # testing
 coverage
 .nyc_output

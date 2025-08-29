@@ -5,7 +5,9 @@ import type { ReactNode } from "react";
 import ClientProviders from "app/ClientProvider";
 import { AuthProvider } from "app/AuthProvider";
 import ClarityTracker from "./ClarityTracker";
+import GA from "./GA";
 import { gmarketSans } from "app/fonts/gmarket";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.atozgames.net"),
@@ -37,6 +39,9 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const AW_ID = process.env.NEXT_PUBLIC_GADS_ID;
+
   return (
     <html lang="ko" className={`bg-white ${gmarketSans.variable}`}>
       <head>
@@ -47,6 +52,29 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="naver-site-verification" content="5dd4b35471d6a5a94c12da502d53a617fd69dd82" />
       </head>
       <body className="flex min-h-dvh w-full justify-center px-0 pt-0 font-sans lining-nums text-gray-900 outline-none desktop:min-h-screen">
+        {/* GA4: gtag.js */}
+        {(GA_ID || AW_ID) && (
+          <>
+            <Script
+              id="gtag-src"
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID || AW_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="gtag-base" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                // SPA 중복 방지: 초기 자동 page_view 끔
+                ${GA_ID ? `gtag('config', '${GA_ID}', { send_page_view: false });` : ""}
+                ${AW_ID ? `gtag('config', '${AW_ID}');` : ""}
+              `}
+            </Script>
+          </>
+        )}
+        {/* 라우트 변경 감지 후 수동 page_view 전송 */}
+        <GA />
+
         <AuthProvider>
           <ClientProviders>{children}</ClientProviders>
           <ClarityTracker />

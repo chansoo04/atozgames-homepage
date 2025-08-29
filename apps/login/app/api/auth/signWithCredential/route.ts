@@ -63,6 +63,7 @@ VALUES
 
     // STEP 3. 내 밸런스 가져오기
     const { balance, moneyBox } = await economy_api_pool.transaction(async (t) => {
+      // TODO: maybeOneFirst 교체해야함
       const balance: null | any = await t.maybeOneFirst(sql`
 SELECT * FROM balances WHERE account_id = ${account.account_id}
 `);
@@ -79,6 +80,7 @@ SELECT * FROM balances WHERE account_id = ${account.account_id}
         }
       }
 
+      // TODO: maybeOneFirst 교체해야함
       const moneyBox = await t.maybeOneFirst(sql`
 SELECT * FROM money_boxes WHERE account_id = ${account.account_id}
 `);

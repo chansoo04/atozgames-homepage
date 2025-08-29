@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 import TopBar from "app/_components/TopBar";
 import Image from "next/image";
 import Link from "next/link";
+import { useModal } from "common/modal";
 
 // TODO: 본인인증 처리하기
 // TODO: 본인인증 완료 후 정보 기입 input 처리하기
+// TODO: validator
+// TODO: 회원가입 완료 처리
 
 // 약관urls
 const urls: { [key: string]: string } = {
@@ -15,9 +18,13 @@ const urls: { [key: string]: string } = {
   operating: "https://www.atozgames.net/operating-policy", //운영정책
 };
 
+// ID, PW 패턴
+const idPattern = /^(?=.*[a-z])(?=.*\d)[a-z\d_]{8,16}$/;
+const pwPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+=-]{6,}$/;
+
 export default function Page() {
   // 본인인증 결과값
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState("123");
   // 약관 동의
   const [agrees, setAgrees] = useState({
     terms: false,
@@ -26,6 +33,20 @@ export default function Page() {
   });
   // kind - atoz 이용약관, 개인정보처리방침 : Terms, Privacy,
   const [isTermsOpen, setIsTermsOpen] = useState({ state: false, kind: "" });
+  // 입력값들
+  const [inputs, setInputs] = useState({
+    id: "",
+    password: "",
+    passwordCheck: "",
+    naem: "",
+    phone: "",
+  });
+  // 이메일 중복체크 여부
+  const [emailCheck, setEmailCheck] = useState<boolean>(false);
+  // 가입 버튼 활성화 여부
+  const [isCheck, setIsCheck] = useState<boolean>(false);
+
+  const { openModal } = useModal();
 
   const handleAllAgree = (e: any) => {
     if (e.target.checked) {
@@ -44,7 +65,51 @@ export default function Page() {
     } else {
       alert("본인인증 호출에 실패하였습니다");
     }
-    console.log((window as any)?.MOBILEOK, "MOBILE OK");
+  };
+
+  useEffect(() => {
+    const win = window as any;
+    win.result = async (d: any) => {
+      console.log(d, "DDD");
+      console.log(JSON.parse(d), "JSON");
+      try {
+        const req = await fetch("api/user", {
+          method: "POST",
+          body: JSON.stringify({ action: "createUser", option: JSON.parse(d) }),
+        });
+
+        if (!req.ok) {
+          throw new Error(req.statusText);
+        }
+
+        const res = await req.json();
+        setUserId(res.userId);
+        console.log(res, "res");
+      } catch (error) {
+        alert(JSON.stringify(error));
+      }
+    };
+  }, []);
+
+  // 이메일 중복 확인
+  const onCheckEmail = async () => {
+    // 패턴 확인
+    if (!idPattern.test(inputs.id)) {
+      return openModal({
+        msg: [
+          "아이디는 영어, 숫자를 혼합하여 8~16자로 작성해주세요.",
+          "특수문자는 _만 사용 가능합니다",
+        ],
+      });
+    }
+    // 아이디 중복 확인
+    const email = `${inputs.id}@atozgames.net`;
+    const req = await fetch("api/user", {
+      method: "POST",
+      body: JSON.stringify({ action: "isExistEmail", email }),
+    });
+
+    // resp.isExist
   };
 
   return (
@@ -223,7 +288,32 @@ export default function Page() {
                         </div>
                       </div>
                     </>
-                  ) : null}
+                  ) : (
+                    <>
+                      <div className="relative">
+                        <div className="pb-1 pt-4 text-sm font-semibold">아이디 *</div>
+                        <div className="relative">
+                          <input
+                            name="id"
+                            type="text"
+                            value={inputs.id}
+                            onChange={(e) => setInputs({ ...inputs, id: e.target.value })}
+                            placeholder="아이디를 입력하세요"
+                            className="inline-block w-full border-0 border-b border-b-black bg-[#b4bbda] pb-[14px] pl-[16px] pr-[38px] pt-[15px] text-base leading-tight outline-none placeholder:text-base placeholder:font-normal placeholder:text-[#17171c] focus:border-0 focus:border-b focus:border-b-black focus:ring-0"
+                          />
+                          {inputs.id && !emailCheck ? (
+                            <button
+                              type="button"
+                              className="absolute right-3 top-[7px] mx-[2px] h-[36px] w-[82px] rounded-[4px] bg-[#2d56ff] text-sm font-semibold text-white"
+                              onClick={() => onCheckEmail()}
+                            >
+                              중복확인
+                            </button>
+                          ) : null}
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

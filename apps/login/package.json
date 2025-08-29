@@ -2,7 +2,7 @@
   "name": "login",
   "version": "0.0.1",
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev -p 3300",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -27,6 +27,7 @@
     "@types/react-dom": "^18.2.19",
     "autoprefixer": "10.4.17",
     "cookies-next": "^5.1.0",
+    "crypto": "^1.0.1",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "dayjs-plugin-utc": "^0.1.2",

@@ -40,7 +40,7 @@ export default function Page() {
     try {
       // STEP 2. 파이어베이스
       const credential: UserCredential = await signInWithEmailAndPassword(auth, id, password);
-      const req = await fetch("/api/auth/signWithCredential", {
+      const req = await fetch("api/auth/signWithCredential", {
         method: "POST",
         body: JSON.stringify({ id, credential, provider: GpSignProvider.PASSWORD }),
       });

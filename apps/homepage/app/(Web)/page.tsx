@@ -14,6 +14,12 @@ import useWindowSize from "app/_components/useWindowSize";
 import { paginationMobileSizeCalc } from "app/_components/sizeCalculator";
 import Modal from "app/_components/Modal";
 
+declare global {
+  interface Window {
+    cauly_send?: (param: { track_code: string; event_name: string; event_param: string }) => void;
+  }
+}
+
 const agreementItems = ["age", "privacy", "alarm"];
 // 원래 버전 + 데스크탑 인디케이터(클릭 스크롤 지원) + 마우스 스크롤 이미지 1페이지만 노출
 export default function Page() {
@@ -182,6 +188,14 @@ export default function Page() {
       .then(async (req) => {
         const resp: any = await req.json();
         if (resp.result === "success") {
+          // cauly 트래커 발송
+          if (typeof window.cauly_send === "function") {
+            window.cauly_send({
+              track_code: process.env.NEXT_PUBLIC_CAULY_TRACK_CODE as string,
+              event_name: process.env.NEXT_PUBLIC_CAULY_EVENT_NAME as string,
+              event_param: phoneNumber,
+            });
+          }
           setStore("");
           setCheckedList([]);
           setFrontPhoneNumber("");

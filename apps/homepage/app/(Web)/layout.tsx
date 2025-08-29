@@ -112,6 +112,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <ClientProviders>{children}</ClientProviders>
           <ClarityTracker />
         </AuthProvider>
+
+        {/* 카울리 트래커: afterInteractive로 클라 부팅 직후 로드 */}
+        <Script
+          id="cauly-tracker"
+          src="https://image.cauly.co.kr/tracker/caulytracker.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

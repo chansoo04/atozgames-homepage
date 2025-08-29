@@ -190,6 +190,7 @@ export default function Page() {
         if (resp.result === "success") {
           // cauly 트래커 발송
           if (typeof window.cauly_send === "function") {
+            console.log("cauly SEND");
             window.cauly_send({
               track_code: process.env.NEXT_PUBLIC_CAULY_TRACK_CODE as string,
               event_name: process.env.NEXT_PUBLIC_CAULY_EVENT_NAME as string,

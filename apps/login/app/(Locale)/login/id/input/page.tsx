@@ -52,6 +52,7 @@ export default function Page() {
       const res = await req.json();
 
       if (res.succcess) {
+        console.log("");
       }
       console.log(res, "res");
     } catch (error) {

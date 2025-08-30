@@ -13,7 +13,7 @@ import csr from "lib/fetcher/csr";
 import useWindowSize from "app/_components/useWindowSize";
 import { paginationMobileSizeCalc } from "app/_components/sizeCalculator";
 import Modal from "app/_components/Modal";
-import { Clarity } from "@microsoft/clarity";
+import Clarity from "@microsoft/clarity";
 
 declare global {
   interface Window {

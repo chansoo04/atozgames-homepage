@@ -42,6 +42,8 @@ export default function Page() {
   const desktopBackPhoneRef = useRef<HTMLInputElement>(null);
   const desktopFrontPhoneRef = useRef<HTMLInputElement>(null);
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState<boolean>(false);
+  const [isAlarmOpen, setIsAlarmOpen] = useState<boolean>(false);
   const { ratio, width, height } = useWindowSize();
 
   const toggleAll = (flag: boolean) => {
@@ -325,7 +327,7 @@ export default function Page() {
                 lineHeight: paginationMobileSizeCalc(10, ratio, 360, 624),
               }}
             >
-              기간: 2025년 7월 12일(토) - 2025년 8월 11일(월) 23:59
+              기간: 2025년 9월 4일(목) - 2025년 9월 29일(월) 23:59
             </h3>
             <h5
               className="font-medium text-white"
@@ -699,7 +701,7 @@ export default function Page() {
                     </span>
                   </label>
                   <span
-                    className="rounded-full bg-[#1C4154] font-normal text-white "
+                    className="cursor-pointer rounded-full bg-[#1C4154] font-normal text-white"
                     style={{
                       marginLeft: paginationMobileSizeCalc(9, ratio, 360, 624),
                       paddingLeft: paginationMobileSizeCalc(8, ratio, 360, 624),
@@ -709,7 +711,7 @@ export default function Page() {
                       fontSize: paginationMobileSizeCalc(11, ratio, 360, 624),
                       lineHeight: paginationMobileSizeCalc(12, ratio, 360, 624),
                     }}
-                    onClick={() => alert("기능 개발중입니다")}
+                    onClick={() => setIsPrivacyOpen(true)}
                   >
                     자세히
                   </span>
@@ -764,7 +766,7 @@ export default function Page() {
                       fontSize: paginationMobileSizeCalc(11, ratio, 360, 624),
                       lineHeight: paginationMobileSizeCalc(12, ratio, 360, 624),
                     }}
-                    onClick={() => alert("기능 개발중입니다")}
+                    onClick={() => setIsAlarmOpen(true)}
                   >
                     자세히
                   </span>
@@ -925,20 +927,6 @@ export default function Page() {
         </section>
       </div>
 
-      {/* ───── 모바일 전용 영상 모달 ───── */}
-      <Modal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)}>
-        {/* 공용 전용 */}
-        <div className="z-10 h-auto w-[95%] rounded bg-white desktop:w-4/5 desktop:max-w-[1530px]">
-          <iframe
-            src={`https://www.youtube.com/embed/DCu6LNPvMzY?autoplay=1`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="aspect-[1280/720] w-full desktop:max-w-[1530px]"
-          />
-        </div>
-      </Modal>
-
       {/* ───── 데스크탑 전용 ───── */}
       <div
         id="desktop-scroll"
@@ -1006,7 +994,7 @@ export default function Page() {
                 height={179}
               />
               <div className="mt-[11px] text-sm font-normal leading-none text-white">
-                기간: 2025년 7월 12일(토) - 2025년 8월 11일(월) 23:59
+                기간: 2025년 9월 4일(목) - 2025년 9월 29일(월) 23:59
               </div>
               <div className="mt-[39px] text-lg font-medium leading-none text-white">
                 사전등록 선물
@@ -1197,7 +1185,7 @@ export default function Page() {
                     </label>
                     <span
                       className="ml-2 cursor-pointer rounded-full bg-[#1C4154] px-2.5 py-1 text-xs font-normal leading-none text-white"
-                      onClick={() => alert("기능 개발중입니다")}
+                      onClick={() => setIsPrivacyOpen(true)}
                     >
                       자세히
                     </span>
@@ -1236,7 +1224,7 @@ export default function Page() {
                     </label>
                     <span
                       className="ml-2 cursor-pointer rounded-full bg-[#1C4154] px-2.5 py-1 text-xs font-normal leading-none text-white"
-                      onClick={() => alert("기능 개발중입니다")}
+                      onClick={() => setIsAlarmOpen(true)}
                     >
                       자세히
                     </span>
@@ -1339,7 +1327,67 @@ export default function Page() {
             </form>
           </div>
         </section>
+
+        {/* ───── 모바일 전용 영상 모달 ───── */}
+        <Modal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)}>
+          {/* 공용 전용 */}
+          <div className="z-10 h-auto w-[95%] rounded bg-white desktop:w-4/5 desktop:max-w-[1530px]">
+            <iframe
+              src={`https://www.youtube.com/embed/DCu6LNPvMzY?autoplay=1`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="aspect-[1280/720] w-full desktop:max-w-[1530px]"
+            />
+          </div>
+        </Modal>
+
+        {/* ───── 개인정보 수집 및 이용 동의 모달 ───── */}
+        <Modal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)}>
+          <div className="z-10 h-auto w-[90%] rounded bg-white p-5 desktop:w-3/5 desktop:max-w-[1200px]">
+            <h2 className="text-lg font-semibold">개인정보 수집 및 이용 동의</h2>
+            <div className="mt-2.5 whitespace-pre-line text-sm desktop:text-base">
+              {privacyModalText}
+            </div>
+          </div>
+        </Modal>
+
+        {/* ───── 게임 서비스 소식 받기 모달 ───── */}
+        <Modal isOpen={isAlarmOpen} onClose={() => setIsAlarmOpen(false)}>
+          <div className="z-10 h-auto w-[90%] rounded bg-white p-5 desktop:w-3/5 desktop:max-w-[1200px]">
+            <h2 className="text-lg font-semibold">게임 서비스 소식 받기</h2>
+            <div className="mt-2.5 whitespace-pre-line text-sm desktop:text-base">
+              {alarmModalText}
+            </div>
+          </div>
+        </Modal>
       </div>
     </main>
   );
 }
+
+const privacyModalText = `
+사전예약 접수 및 혜택 안내를 위해 OS 종류(Android/iOS)와 휴대전화번호를 수집·이용합니다. 
+보관기간: 사전예약 종료 후 1년(또는 동의 철회 시 즉시 파기). 
+미동의 시 사전예약 이용이 제한됩니다.
+
+① 수집 항목: OS 종류(Android 또는 iOS), 휴대전화번호
+② 수집 목적: 사전예약 접수 확인 및 중복 신청 방지, 출시/보상/이벤트 안내 발송, 고객 문의 대응, 부정 이용 방지
+③ 보유·이용 기간: 사전예약 종료 후 1년 보관 후 지체 없이 파기(또는 동의 철회 시 즉시 파기)
+④ 처리 위탁: 원활한 메시지 발송 및 시스템 운영을 위해 발송 대행사 및 클라우드 운영사에 업무를 위탁할 수 있습니다. 위탁받는 자와 업무 내용은 서비스 내 공지(또는 개인정보처리방침)에 수시 업데이트합니다.
+⑤ 동의 거부 권리 및 불이익: 동의를 거부하실 수 있으나, 미동의 시 사전예약 신청 및 관련 안내 제공이 제한될 수 있습니다.
+⑥ 문의처: atozgames.net@gmail.com
+`;
+
+const alarmModalText = `
+출시 일정·업데이트·이벤트/프로모션 등 광고성 정보를 문자·카카오톡 등으로 받겠습니다. 
+수신 동의는 언제든지 철회할 수 있으며, 미동의 시 사전예약 이용이 제한됩니다.
+
+① 발송 목적: 출시 일정, 점검/업데이트, 이벤트·프로모션, 혜택/쿠폰 등 광고성 정보 안내
+② 발송 매체: 문자(SMS/MMS), 카카오톡(알림톡/친구톡), 앱 푸시, 이메일 등
+③ 보유·이용 기간: 동의 철회 또는 회원 탈퇴 시까지 보관·이용하며, 철회 시 지체 없이 발송을 중단합니다.
+④ 수신 거부 방법: 각 메시지 내 표기된 수신거부(무료) 링크/번호 또는 앱/웹 설정, 고객센터를 통해 언제든지 철회 가능합니다.
+⑤ 표시 의무 준수: 전송자 표시, (광고) 표기, 수신거부 안내 등 관련 법령 기준을 준수합니다.
+⑥ 동의 거부 권리 및 불이익: 동의를 거부하실 수 있으나, 미동의 시 사전예약 신청 및 관련 안내 제공이 제한될 수 있습니다.
+⑦ 문의처: atozgames.net@gmail.com
+`;

@@ -268,7 +268,7 @@ export default function Page() {
             <button
               type="button"
               className="rounded-lg bg-[#1C4154] font-semibold text-white"
-              onClick={() => scrollToMobileSection(1)}
+              onClick={() => scrollToMobileSection(2)}
               style={{
                 marginTop: paginationMobileSizeCalc(69, ratio),
                 height: paginationMobileSizeCalc(64, ratio),

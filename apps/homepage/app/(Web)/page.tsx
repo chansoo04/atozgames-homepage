@@ -13,6 +13,7 @@ import csr from "lib/fetcher/csr";
 import useWindowSize from "app/_components/useWindowSize";
 import { paginationMobileSizeCalc } from "app/_components/sizeCalculator";
 import Modal from "app/_components/Modal";
+import { Clarity } from "@microsoft/clarity";
 
 declare global {
   interface Window {
@@ -192,13 +193,14 @@ export default function Page() {
         if (resp.result === "success") {
           // cauly 트래커 발송
           if (typeof window.cauly_send === "function") {
-            console.log("cauly SEND");
+            // cauly -> 마케팅
             window.cauly_send({
               track_code: process.env.NEXT_PUBLIC_CAULY_TRACK_CODE as string,
               event_name: process.env.NEXT_PUBLIC_CAULY_EVENT_NAME as string,
               event_param: phoneNumber,
             });
           }
+          Clarity.event("pre_registration_completed");
           setStore("");
           setCheckedList([]);
           setFrontPhoneNumber("");
@@ -257,7 +259,10 @@ export default function Page() {
               height: paginationMobileSizeCalc(100, ratio),
               marginTop: paginationMobileSizeCalc(43, ratio),
             }}
-            onClick={() => setIsVideoOpen(true)}
+            onClick={() => {
+              setIsVideoOpen(true);
+              Clarity.event("watch_pre_registration_video");
+            }}
           />
           <div className="flex w-full justify-center">
             <button
@@ -958,7 +963,10 @@ export default function Page() {
             width={100}
             height={100}
             className="mt-[94px] cursor-pointer"
-            onClick={() => setIsVideoOpen(true)}
+            onClick={() => {
+              setIsVideoOpen(true);
+              Clarity.event("watch_pre_registration_video");
+            }}
           />
           <button
             type="button"

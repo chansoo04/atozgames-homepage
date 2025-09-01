@@ -14,6 +14,7 @@ import useWindowSize from "app/_components/useWindowSize";
 import { paginationMobileSizeCalc } from "app/_components/sizeCalculator";
 import Modal from "app/_components/Modal";
 import Clarity from "@microsoft/clarity";
+import { gaEvent } from "lib/gtag";
 
 declare global {
   interface Window {
@@ -200,6 +201,9 @@ export default function Page() {
               event_param: phoneNumber,
             });
           }
+          gaEvent("event", "generate_lead", {
+            lead_status: "pre_registration",
+          });
           Clarity.event("pre_registration_completed");
           setStore("");
           setCheckedList([]);

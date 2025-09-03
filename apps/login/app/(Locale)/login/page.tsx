@@ -30,7 +30,7 @@ export default function Page() {
 
   // 쿠키에서 로그인 정보 가져오기
   const getLoginInfo = async () => {
-    const req = await fetch("/api/cookie", {
+    const req = await fetch("/api/cookie/getAll", {
       method: "POST",
       body: JSON.stringify({ action: "getAll" }),
     });
@@ -91,12 +91,12 @@ export default function Page() {
                     icon="/atozImageLogo.png"
                   />
                   <IconButton
-                    link="/login/google?count=0"
+                    link={`/login/google?count=${signInfo.GOOGLE?.list?.length || 0}`}
                     text="구글 로그인"
                     icon="/google-icon.svg"
                   />
                   <IconButton
-                    link="/login/apple?count=0"
+                    link={`/login/apple?count=${signInfo.APPLE?.list?.length || 0}`}
                     text="애플 로그인"
                     icon="/apple-icon.svg"
                   />

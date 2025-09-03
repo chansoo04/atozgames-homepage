@@ -48,3 +48,12 @@ export const PROVIDER_COOKIE_MAP: Record<string, string> = {
   KAKAO: COOKIE_KAKAO,
   NAVER: COOKIE_NAVER,
 };
+
+export class GpSignProviderConverter {
+  public static ID = "ID";
+  public static PASSWORD = "PASSWORD";
+  public static GOOGLE = "GOOGLE";
+  public static APPLE = "APPLE";
+  public static KAKAO = "KAKAO";
+  public static NAVER = "NAVER";
+}

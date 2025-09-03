@@ -9,6 +9,8 @@
     "legacy-lint": "eslint --fix --ext .ts,.tsx ."
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.13.4",
+    "@grpc/proto-loader": "^0.8.0",
     "@microsoft/clarity": "^1.0.0",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/line-clamp": "^0.4.4",
@@ -38,6 +40,7 @@
     "firebase-admin": "^13.4.0",
     "ioredis": "^5.7.0",
     "iron-session": "^8.0.3",
+    "jose": "^6.1.0",
     "json-server": "^0.17.4",
     "ky": "^1.2.1",
     "next": "14.2.21",

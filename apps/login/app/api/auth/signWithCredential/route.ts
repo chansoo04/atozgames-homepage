@@ -1,5 +1,6 @@
+// TODO: 서버 바라보도록 리팩..
 import { NextRequest, NextResponse } from "next/server";
-import * as AUTH from "./auth.service";
+import * as AUTH from "../auth.service";
 import { redis } from "lib/redis";
 import { getPool, sql } from "lib/dbpool";
 import assert from "assert";

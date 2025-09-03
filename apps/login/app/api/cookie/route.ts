@@ -25,10 +25,10 @@ export async function POST(req: NextRequest) {
   // COOKIE.
 
   switch (action) {
-    case "getAll":
-      result = await COOKIE.getAll();
-      console.log(result, "result");
-      return NextResponse.json(result);
+    // case "getAll":
+    //   result = await COOKIE.getAll();
+    //   console.log(result, "result");
+    //   return NextResponse.json(result);
     case "getSign":
     case "getByProvider":
       result = await COOKIE.getAll();

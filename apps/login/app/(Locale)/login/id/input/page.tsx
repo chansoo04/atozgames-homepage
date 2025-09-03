@@ -9,13 +9,18 @@ import { useModal } from "common/modal";
 import { useToast } from "common/toast";
 import { auth } from "lib/firebaseClient";
 import { UserCredential, signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const [signInfo, setSignInfo] = useState<GpSign[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState({ id: "", password: "" });
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false); // 로그인 프로세스 진행 여부 => 로그인 버튼 활성 여부
+  const [userId, setUserId] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [isPw, setIsPw] = useState<boolean>(false);
   const { openModal } = useModal();
   const { openToast } = useToast();
 
@@ -40,7 +45,7 @@ export default function Page() {
     try {
       // STEP 2. 파이어베이스
       const credential: UserCredential = await signInWithEmailAndPassword(auth, id, password);
-      const req = await fetch("api/auth/signWithCredential", {
+      const req = await fetch("/api/auth/signWithCredential", {
         method: "POST",
         body: JSON.stringify({ id, credential, provider: GpSignProvider.PASSWORD }),
       });
@@ -70,6 +75,54 @@ export default function Page() {
 
     setIsLoggingIn(false);
   };
+
+  // ID 찾기
+  const findId = async () => {
+    setIsPw(false);
+    // 본인인증
+    const win = window as any;
+    const url = `${process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL}api/mok/mok_std_request`;
+    if (win.MOBILEOK) {
+      win.MOBILEOK.process(url, "MWV", "result");
+    } else {
+      return alert("본인인증을 진행할 수 없습니다\n고객센터로 문의해주세요");
+    }
+    // 본인인증 콜백
+    win.result = async (mokResult: any) => {
+      try {
+        const req = await fetch("/api/user", {
+          method: "POST",
+          body: JSON.stringify({ action: "createUser", option: JSON.parse(mokResult) }),
+        });
+        console.log(req, "req IN INPUT");
+        if (!req.ok) {
+          throw new Error(req.statusText);
+        }
+
+        const res = await req.json();
+        console.log(res, "res IN INPUT");
+        if (res.success) {
+          setUserId(res?.userId);
+          setToken(res?.customToken);
+        } else {
+          throw new Error("알 수 없는 이유로 실패하였습니다");
+        }
+      } catch (error) {
+        console.log(error, "ERROR????");
+        alert(JSON.stringify(error));
+      }
+    };
+  };
+
+  useEffect(() => {
+    if (token && userId) {
+      if (isPw) {
+        router.push(`/login/id/list?token=${token}&id=${userId}&pw=true`);
+      } else {
+        router.push(`/login/id/list?token=${token}&id=${userId}`);
+      }
+    }
+  }, [token, userId]);
 
   if (isLoading) {
     return <Loading />;
@@ -163,17 +216,18 @@ export default function Page() {
                   <button
                     type="button"
                     className="text-sm font-medium text-[#7C7C9E] hover:text-blue-500"
-                    onClick={() => alert("핸드폰번호 인증으로 이동!! ")}
+                    onClick={() => findId()}
                   >
                     아이디 찾기
                   </button>
                   <span className="mx-1 text-[#B7B7B9]">&nbsp;|&nbsp;</span>
-                  <Link
-                    href="/find-pw"
+                  <button
+                    type="button"
                     className="text-sm font-medium text-[#7C7C9E] hover:text-blue-500"
+                    onClick={() => alert("핸드폰번호 인증으로 이동!!")}
                   >
                     비밀번호찾기
-                  </Link>
+                  </button>
                   <span className="mx-1 text-sm text-[#B7B7B9]">&nbsp;|&nbsp;</span>
                   <Link
                     href="/signup"

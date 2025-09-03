@@ -1,26 +1,65 @@
 import { cookies } from "next/headers";
 import { getIronSession, type IronSession } from "iron-session";
-import { GpCookie, GpSignList, GpSignProvider, PROVIDER_COOKIE_MAP } from "common/cookie";
+import {
+  GpCookie,
+  GpSignList,
+  GpSignProvider,
+  GpSignProviderConverter,
+  PROVIDER_COOKIE_MAP,
+} from "common/cookie";
 
-function providerValidator(provider: string | GpSignProvider): boolean {
+export const providerValidator = (provider: string | GpSignProvider) => {
   if (typeof provider === "string") {
     provider = provider.toUpperCase() as GpSignProvider;
   }
   switch (provider) {
     case GpSignProvider.ID:
+    case GpSignProviderConverter.ID:
     case GpSignProvider.PASSWORD:
+    case GpSignProviderConverter.PASSWORD:
     case GpSignProvider.GOOGLE:
+    case GpSignProviderConverter.GOOGLE:
     case GpSignProvider.KAKAO:
+    case GpSignProviderConverter.KAKAO:
     case GpSignProvider.NAVER:
+    case GpSignProviderConverter.NAVER:
     case GpSignProvider.APPLE:
+    case GpSignProviderConverter.APPLE:
       return true;
     default:
       return false;
   }
-}
+};
+
+export const providerToString = (provider: string | GpSignProvider) => {
+  if (typeof provider === "string") {
+    provider = provider.toUpperCase() as GpSignProvider;
+  }
+  switch (provider) {
+    case GpSignProvider.ID:
+    case GpSignProviderConverter.ID:
+    case GpSignProvider.PASSWORD:
+    case GpSignProviderConverter.PASSWORD:
+      return GpSignProviderConverter.PASSWORD;
+    case GpSignProvider.GOOGLE:
+    case GpSignProviderConverter.GOOGLE:
+      return GpSignProviderConverter.GOOGLE;
+    case GpSignProvider.KAKAO:
+    case GpSignProviderConverter.KAKAO:
+      return GpSignProviderConverter.KAKAO;
+    case GpSignProvider.NAVER:
+    case GpSignProviderConverter.NAVER:
+      return GpSignProviderConverter.NAVER;
+    case GpSignProvider.APPLE:
+    case GpSignProviderConverter.APPLE:
+      return GpSignProviderConverter.APPLE;
+    default:
+      throw new Error(`Invalid provider ${provider}`);
+  }
+};
 
 // provider별 세션을 가져오는 함수
-async function getSessionByProvider(provider: string): Promise<IronSession<GpSignList>> {
+export async function getSessionByProvider(provider: string): Promise<IronSession<GpSignList>> {
   const cookiePassword = process.env.COOKIE_PASSWORD;
   const cookieName = PROVIDER_COOKIE_MAP[provider];
   // logger.warning(`getSessionByProvider ${provider} cookieName: ${cookieName}`);

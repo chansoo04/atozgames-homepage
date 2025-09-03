@@ -130,6 +130,10 @@ RETURNING *
               const customToken = generateRandomN(64);
               console.log(customToken, "customToken");
               await redis.set((user as any).user_id, customToken, "EX", 3600);
+              const test = await redis.get(user.user_id as string);
+              console.log(user.user_id, "REDIS KEY!!!");
+              console.log(customToken, "TOKEN!!!!");
+              console.log(test, "test");
 
               result = {
                 success: true,
@@ -152,6 +156,25 @@ RETURNING *
       case "refreshVerification":
         break;
       case "getAllAccount":
+        // GRPC 통신!!!
+        console.log("왔다 시작한다!!");
+        console.log(data.options.userId, "data.options.userId");
+        console.log(data.options.token, "data.options.token");
+        // eslint-disable-next-line no-case-declarations
+        const req = await fetch(process.env.GRPC_API_URL + "user.UserService/GetAllAccount", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": process.env.AWS_API_KEY as string,
+            "x-api-secret": process.env.AWS_API_SECRET as string,
+          },
+          body: JSON.stringify({ userId: data.options.userId, token: data.options.token }),
+        });
+        console.log(req.ok, "REQ.OK");
+        // eslint-disable-next-line no-case-declarations
+        const res = await req.json();
+        console.log(res, "res");
+        result = { hi: "bye" };
         break;
       default:
         throw new Error("invalidAction");

@@ -68,27 +68,27 @@ export default function Page() {
   };
 
   useEffect(() => {
-    const win = window as any;
-    win.result = async (d: any) => {
-      console.log(d, "DDD");
-      console.log(JSON.parse(d), "JSON");
-      try {
-        const req = await fetch("api/user", {
-          method: "POST",
-          body: JSON.stringify({ action: "createUser", option: JSON.parse(d) }),
-        });
-
-        if (!req.ok) {
-          throw new Error(req.statusText);
-        }
-
-        const res = await req.json();
-        setUserId(res.userId);
-        console.log(res, "res");
-      } catch (error) {
-        alert(JSON.stringify(error));
-      }
-    };
+    // const win = window as any;
+    // win.result = async (d: any) => {
+    //   console.log(d, "DDD");
+    //   console.log(JSON.parse(d), "JSON");
+    //   try {
+    //     const req = await fetch("/api/user", {
+    //       method: "POST",
+    //       body: JSON.stringify({ action: "createUser", option: JSON.parse(d) }),
+    //     });
+    //
+    //     if (!req.ok) {
+    //       throw new Error(req.statusText);
+    //     }
+    //
+    //     const res = await req.json();
+    //     setUserId(res.userId);
+    //     console.log(res, "res");
+    //   } catch (error) {
+    //     alert(JSON.stringify(error));
+    //   }
+    // };
   }, []);
 
   // 이메일 중복 확인
@@ -104,7 +104,7 @@ export default function Page() {
     }
     // 아이디 중복 확인
     const email = `${inputs.id}@atozgames.net`;
-    const req = await fetch("api/user", {
+    const req = await fetch("/api/user", {
       method: "POST",
       body: JSON.stringify({ action: "isExistEmail", email }),
     });

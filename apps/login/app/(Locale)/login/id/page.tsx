@@ -10,7 +10,7 @@ export default function Page() {
 
   const getCOOKIE = async () => {
     setIsLoading(true);
-    const req = await fetch("api/cookie", {
+    const req = await fetch("/api/cookie", {
       method: "POST",
       body: JSON.stringify({ action: "getByProvider", provider: GpSignProvider.PASSWORD }),
     });

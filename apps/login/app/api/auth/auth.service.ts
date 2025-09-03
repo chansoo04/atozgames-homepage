@@ -1,5 +1,6 @@
 import { UserCredential } from "firebase/auth";
 import { adminAuth } from "lib/firebaseAdmin";
+import { GpSign, GpSignProvider } from "common/cookie";
 
 export async function verifyCredential(userCredential: UserCredential) {
   try {
@@ -74,4 +75,45 @@ export function checkProvider(provider: string): string {
 
   result = result.toUpperCase();
   return result;
+}
+
+// provider별로 쿠키에서 sign을 찾는 함수
+export async function getSign(
+  provider: string | GpSignProvider,
+  element: Partial<GpSign>,
+): Promise<GpSign> {
+  logger.debug(`getSign ${provider}`, element);
+  if (GpSignProviderConverter.isValid(provider) === false) {
+    logger.error("getSign", `Invalid provider ${provider}`);
+    throw new Error("Invalid provider");
+  }
+  provider = GpSignProviderConverter.toString(provider);
+  const session = await getSessionByProvider(provider);
+  let key: keyof GpSign | undefined;
+  for (const [k, v] of Object.entries(element)) {
+    if (v) key = k as keyof GpSign;
+  }
+  if (!key) {
+    logger.debug("getSign No key found in element:", element);
+    return {} as GpSign;
+  }
+  let find: GpSign | undefined;
+  switch (key) {
+    case "id":
+      find = session.list.find((s) => s.id === element.id);
+      break;
+    case "token":
+      find = session.list.find((s) => s.token === element.token);
+      break;
+    case "uid":
+      find = session.list.find((s) => s.uid === element.uid);
+      break;
+  }
+  if (!find) {
+    logger.debug("getSign No sign found");
+    return {} as GpSign;
+  }
+  find.provider = provider;
+  logger.debug("getSign", find);
+  return find;
 }

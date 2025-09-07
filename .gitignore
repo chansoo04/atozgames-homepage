@@ -14,6 +14,7 @@ scripts/ca-refresh-local.sh
 # key
 dev_mok_keyInfo.dat
 mok_keyInfo.dat
+mok_Key_Manager_v1.0.3.js
 
 # testing
 coverage

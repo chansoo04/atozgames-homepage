@@ -24,7 +24,7 @@ const pwPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+=-]{6,}$/;
 
 export default function Page() {
   // 본인인증 결과값
-  const [userId, setUserId] = useState("123");
+  const [userId, setUserId] = useState("");
   // 약관 동의
   const [agrees, setAgrees] = useState({
     terms: false,

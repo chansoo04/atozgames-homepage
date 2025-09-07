@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package gm;
+
+service WordCheckService {
+  rpc IsBanNickName(WordRequest) returns (WordResponse) {}
+  rpc GetNickNameBanList(GetWordListRequest) returns (GetWordListResponse) {}
+  rpc AddNickNameBanList(AddWordListRequest) returns (DefaultResponse) {}
+  rpc UpdateNickNameBanList(UpdateWordListRequest) returns (DefaultResponse) {}
+  rpc RemoveNickNameBanList(RemoveWordListRequest) returns (DefaultResponse) {}
+  rpc GetNickNameAllowList(GetWordListRequest) returns (GetWordListResponse) {}
+  rpc AddNickNameAllowList(AddWordListRequest) returns (DefaultResponse) {}
+  rpc UpdateNickNameAllowList(UpdateWordListRequest) returns (DefaultResponse) {}
+  rpc RemoveNickNameAllowList(RemoveWordListRequest) returns (DefaultResponse) {}
+}
+
+enum WordSearchMode {
+  WORD_SEARCH_MODE_NONE = 0;
+  WORD_SEARCH_MODE_QUERY = 1;
+  WORD_SEARCH_MODE_AHO_CORASICK = 2;
+  WORD_SEARCH_MODE_AHO_CORASICK_WITH_ALLOW = 3;
+  WORD_SEARCH_MODE_AHO_CORASICK_STRICT = 4;
+}
+
+message WordRequest {
+  string word = 1;
+  WordSearchMode search_mode = 2;
+}
+
+message WordBanCheckResult {
+  int32 start = 1;
+  int32 end = 2;
+  string word = 3;
+  int32 length = 4;
+}
+
+message WordResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated WordBanCheckResult ban_list = 3;
+}
+
+message GetWordListRequest {
+  int32 page = 1;
+  int32 count_per_page = 2;
+}
+
+message Word {
+  int32 id = 1;
+  string word = 2;
+  string created_at = 3;
+  string updated_at = 4;
+}
+
+message GetWordListResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated Word word_list = 3;
+}
+
+message AddWordListRequest {
+  repeated string word_list = 1;
+}
+
+message UpdateWordListRequest {
+  int32 id = 1;
+  string word = 2;
+}
+
+message RemoveWordListRequest {
+  repeated int32 id_list = 1;
+  bool is_all = 2;
+}
+
+message DefaultResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+

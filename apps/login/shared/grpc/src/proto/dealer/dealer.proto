@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+package dealer;
+
+service DealerService {
+  rpc StartGame(StartGameRequest) returns (StartGameResponse);
+  rpc Draw(DrawRequest) returns (DrawResponse);
+  rpc Burn(BurnRequest) returns (BurnResponse);
+  rpc Deposit(BetRequest) returns (BetResponse);
+  rpc Bet(BetRequest) returns (BetResponse);
+  rpc Die(BetRequest) returns (BetResponse);
+  rpc Showdown(BetRequest) returns (ShowdownResponse);
+  rpc Result(ResultRequest) returns (ResultResponse);
+}
+
+message StartGameRequest {
+  string game_id = 1;
+  string channel = 2;
+  string room_id = 3;
+  repeated string players = 4;
+  int32 ante = 5;
+}
+
+message StartGameResponse {
+  bool success = 1;
+  string error_message = 2;
+  string dealer_id = 3;
+  repeated string players = 4;
+}
+
+message DrawRequest {
+  string dealer_id = 1;
+  string account_id = 2;
+  PhaseType phase = 3;
+  int32 count = 4;
+}
+
+message DrawResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated string hand = 3;
+  repeated string community = 4;
+}
+
+message BurnRequest {
+  string dealer_id = 1;
+  string account_id = 2;
+  PhaseType phase = 3;
+  repeated string card = 4;
+}
+
+message BurnResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated string hand = 3;
+}
+
+message BetRequest {
+  string dealer_id = 1;
+  string account_id = 2;
+  string amount = 3; // bigint
+  PhaseType phase = 4;
+  BetType bet_type = 5;
+}
+
+message BetResponse {
+  bool success = 1;
+  string error_message = 2;
+  string balance = 3;
+  string pot_amount = 4;
+}
+
+message ShowdownResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated string community = 3;
+}
+
+message ResultRequest {
+  string dealer_id = 1;
+  string account_id = 2;
+}
+
+message Distribute {
+  string account_id = 1;
+  string type = 2; // WIN, DRAW, DISTRIBUTE
+  float lake = 3;
+  string lake_amount = 4; // bigint
+  string distribute_amount = 5;
+  string balance_amount = 6;
+  bool is_limit_over = 7; // true: limit over, false: normal distribute
+}
+
+message Jackpot {
+  string account_id = 1;
+  string type = 2;
+  string amount = 3; // bigint
+}
+
+message ResultResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated Distribute result = 3;
+  repeated Jackpot jackpot = 4;
+}
+
+enum PhaseType {
+  PHASE_NONE = 0; // 0 대응
+  PHASE_GAME_START = 1; // 게임시작: 플레이어가 칩을 올리는 단계
+
+  // holdem
+  PHASE_PRE_FLOP = 2; // 게임시작: 플레어에게 2장의 카드가 주어지는 단계
+  PHASE_PRE_FLOP_BET = 3;
+  PHASE_FLOP = 4; // 플랍: 커뮤니티 카드 3장이 공개되는 단계
+  PHASE_FLOP_BET = 5;
+  PHASE_TURN = 6; // 턴: 커뮤니티 카드 1장이 공개되는 단계
+  PHASE_TURN_BET = 7;
+  PHASE_RIVER = 8;// 리버: 커뮤니티 카드 1장이 공개되는 단계
+  PHASE_RIVER_BET = 9;
+
+  // badugi
+  PHASE_NEW_DAY = 10;// 게임시작: 플레어에게 4장의 카드가 주어지는 단계
+  PHASE_NEW_DAY_BET = 11;
+  PHASE_MORNING = 12; // 아침: 첫 교환 단계
+  PHASE_MORNING_BET = 13;
+  PHASE_AFTERNOON = 14; // 점심: 두번째 교환 단계
+  PHASE_AFTERNOON_BET = 15;
+  PHASE_EVENING = 16; // 저녁: 세번째 교환 단계
+  PHASE_EVENING_BET = 17;
+
+  PHASE_SHOWDOWN = 18; // 플레이어가 카드를 공개하는 단계
+  PHASE_GAME_END = 19; // 팟 정산 완료: 게임이 끝나고 팟 정산이 완료된 단계
+}
+
+enum BetType {
+  BET_FOLD = 0; // 0 대응 | 폴드: 게임을 포기합니다
+  BET_MIN = 1; // 삥: ante, 게임방의 최소금액
+  BET_DOUBLE = 2; // 따당: callBet * 2
+  BET_CALL = 3; // 콜: (이번 페이즈에서 상대방의 최고 배팅액 - 이번 페이즈에서 내가 낸 금액)만큼 내고 내 차례를 넘깁니다
+  BET_CHECK = 4; // 체크: 금액없음
+  BET_QUARTER = 5; // 쿼터: {콜값 + (팟 + 콜값)/4}의 배팅액을 내고 내 차례를 넘깁니다
+  BET_HALF = 6; // 하프: {콜값 + (팟 + 콜값)/2}의 배팅액을 내고 내 차례를 넘깁니다
+  BET_ALL_IN = 7; // 올인: 플레이어의 가진 모든칩
+  BET_MAX = 8; // 맥스: 배팅 상한선 - 이번게임에 배팅한 금액
+  BET_DEPOSIT = 9; // 참가비: 게임에 배팅합니다
+}

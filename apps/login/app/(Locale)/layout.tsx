@@ -2,6 +2,7 @@ import Script from "next/script";
 import "./global.css";
 import Provider from "./provider";
 import { AuthProvider } from "./AuthProvider";
+import RouteChangeListener from "./RouteChangeListener";
 
 export default async function layout({ children }: { children: React.ReactNode }) {
   return (
@@ -25,6 +26,7 @@ export default async function layout({ children }: { children: React.ReactNode }
         <meta id="status-bar" name="theme-color" content="b9c2e2" />
       </head>
       <body className="flex w-full bg-[#b9c2e2]">
+        <RouteChangeListener />
         <AuthProvider>
           <Provider>{children}</Provider>
         </AuthProvider>

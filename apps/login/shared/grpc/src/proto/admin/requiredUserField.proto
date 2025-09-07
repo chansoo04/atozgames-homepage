@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package admin;
+
+import "admin-common.proto";
+
+service AdminRequiredUserFieldService {
+    rpc GetRequiredUserFieldList(GetRequiredUserFieldListRequest) returns (GetRequiredUserFieldListResponse);
+    rpc CreateRequiredUserField(CreateRequiredUserFieldRequest) returns (CreateRequiredUserFieldResponse);
+    rpc UpdateRequiredUserField(UpdateRequiredUserFieldRequest) returns (UpdateRequiredUserFieldResponse);
+    rpc DeleteRequiredUserField(DeleteRequiredUserFieldRequest) returns (DeleteRequiredUserFieldResponse);
+}
+
+message GetRequiredUserFieldListRequest {
+}
+
+message GetRequiredUserFieldListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated RequiredUserField required_user_field_list = 3;
+}
+
+message CreateRequiredUserFieldRequest {
+    string field = 1;
+    bool is_require = 2;
+    bool is_active = 3;
+}
+
+message CreateRequiredUserFieldResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateRequiredUserFieldRequest {
+    int32 field_id = 1;
+    string field = 2;
+    bool is_require = 3;
+    bool is_active = 4;
+}
+
+message UpdateRequiredUserFieldResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DeleteRequiredUserFieldRequest {
+    int32 field_id = 1;
+}
+
+message DeleteRequiredUserFieldResponse {
+    bool success = 1;
+    string error_message = 2;
+}

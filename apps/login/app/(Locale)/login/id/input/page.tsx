@@ -1,32 +1,101 @@
 "use client";
-import { useCallback, useEffect, useState, FormEvent } from "react";
+
+import { useEffect, useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+
 import Loading from "login/app/_components/Loading";
-import { GpSign, GpSignProvider } from "common/cookie";
+import { GP_SIGN_AUTH_CODE, GpSign, GpSignProvider } from "common/cookie";
+import { useModal } from "common/modal";
+import { useToast } from "common/toast";
 import TopBar from "app/_components/TopBar";
 import Image from "next/image";
 import Link from "next/link";
-import { useModal } from "common/modal";
-import { useToast } from "common/toast";
-import { auth } from "lib/firebaseClient";
-import { UserCredential, signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { signInWithIDPASSWORD } from "../action";
+import { getAccountState, withdrawalRevoke } from "../../action";
 
 export default function Page() {
+  const PASSWORD_FAIL_COUNT = 10; // 비밀번호 입력 실패 횟수 제한
   const router = useRouter();
+
   const [signInfo, setSignInfo] = useState<GpSign[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState({ id: "", password: "" });
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false); // 로그인 프로세스 진행 여부 => 로그인 버튼 활성 여부
-  const [userId, setUserId] = useState<string | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [isPw, setIsPw] = useState<boolean>(false);
+  const [passwordErrorCount, setPasswordErrorCount] = useState(0); // 로그인 시도 횟수
+
   const { openModal } = useModal();
   const { openToast } = useToast();
 
-  const handleSubmit = async (e: FormEvent) => {
+  const passwordErrorCountModalParam = {
+    msg: [
+      `비밀번호 입력이 ${PASSWORD_FAIL_COUNT}회 초과하였습니다.`,
+      "비밀번호 변경 후 다시 로그인해주세요",
+    ],
+  };
+
+  // 쿠키에서 로그인 정보 가져오기
+  useEffect(() => {
+    getCOOKIE();
+  }, []);
+
+  useEffect(() => {
+    if (passwordErrorCount > 0 && passwordErrorCount <= PASSWORD_FAIL_COUNT) {
+      openToast({
+        msg: `이메일 또는 비밀번호를 확인해주세요 시도가능 횟수 ${passwordErrorCount}/${PASSWORD_FAIL_COUNT}회`,
+        type: "error",
+      });
+    }
+
+    if (passwordErrorCount > 9) {
+      handleLockUser();
+      openModal(passwordErrorCountModalParam);
+    }
+  }, [passwordErrorCount]);
+
+  const getCOOKIE = async () => {
+    setIsLoading(true);
+
+    const req = await fetch("/api/cookie/getByProvider", {
+      method: "POST",
+      body: JSON.stringify({ provider: GpSignProvider.PASSWORD }),
+    });
+
+    if (!req.ok) {
+      return alert("아토즈 로그인 정보를 가져오는데 실패했습니다");
+    }
+
+    const res = await req.json();
+    console.log(res, "res");
+
+    setSignInfo(res);
+
+    const passwordFailCountReq = await fetch("/api/cookie/getPasswordFailCount", {
+      method: "POST",
+    });
+
+    if (!passwordFailCountReq) {
+      console.error("실패");
+    }
+
+    const passwordFailCountRes = await passwordFailCountReq.json();
+    console.log(passwordFailCountRes, "RES!!");
+    setPasswordErrorCount(passwordFailCountRes.PASSWORD_FAIL_COUNT);
+
+    setIsLoading(false);
+  };
+
+  // 로그인
+  const signIn = async (e: FormEvent) => {
     e.preventDefault();
 
+    // TODO: 본인인증하는거로 바꿔..??
+    // 비밀번호 틀린 횟수 체크
+    if (passwordErrorCount >= PASSWORD_FAIL_COUNT) {
+      return openModal(passwordErrorCountModalParam);
+    }
+
+    // ID, 비밀번호 체크
     if (inputValue.id === "" || inputValue.password === "") {
       return openModal({
         msg: ["아이디와 비밀번호를 입력해주세요"],
@@ -34,97 +103,159 @@ export default function Page() {
     }
     setIsLoggingIn(true);
 
-    let { id } = inputValue;
-    const { password } = inputValue;
+    const { id, password } = inputValue;
+    const signRes = await signInWithIDPASSWORD(id, password);
 
-    // STEP 1. id에 @를 포함하지 않으면 추가
-    if (!id.includes("@")) {
-      id = `${id}@atozgames.net`;
-    }
-
-    try {
-      // STEP 2. 파이어베이스
-      const credential: UserCredential = await signInWithEmailAndPassword(auth, id, password);
-      const req = await fetch("/api/auth/signWithCredential", {
-        method: "POST",
-        body: JSON.stringify({ id, credential, provider: GpSignProvider.PASSWORD }),
+    if (signRes.success) {
+      return openToast({
+        msg: "로그인 성공",
+        type: "success",
       });
-
-      if (!req.ok) {
-        throw new Error(req.statusText);
+    } else {
+      switch (signRes.code) {
+        case "ALREADY_SIGND": {
+          const msg = [
+            "이미 로그인 되어있습니다.",
+            "로그아웃 후 다시 시도하거나",
+            "다른 계정으로 로그인 해주세요.",
+          ];
+          openToast({
+            msg: msg[0],
+            type: "error",
+          });
+          break;
+        }
+        case "INVALID_TOKEN": {
+          // * 아이디 비밀번호 재입력
+          const msg = ["재로그인 필요"];
+          openModal({
+            locale,
+            msg,
+            type: "ROUTING",
+            routingUrl: `${urlSignUp}?id=${inputValue.id}`,
+          });
+          break;
+        }
+        // * 계정 상태에 따른 처리
+        case "STATE_NOT_ACTIVE": {
+          const msg = ["삭제된 계정입니다."];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+          });
+        }
+        case "STATE_WITHDRAWAL": {
+          const msg = ["탈퇴한 계정입니다."];
+          // return openToast({
+          //   msg: msg[0],
+          //   type: 'error',
+          // });
+          return openModal({
+            msg,
+            type: "ACTION",
+            btnText: "탈퇴 취소",
+            action: async () => {
+              try {
+                const accountState = await getAccountState(signRes.uid!);
+                if (!accountState) {
+                  openToast({
+                    msg: "계정 상태를 확인할 수 없습니다.",
+                    type: "error",
+                  });
+                  return;
+                }
+                const res = await withdrawalRevoke(accountState.accountId);
+                if (!res || !res.success) {
+                  throw new Error("탈퇴 취소 실패");
+                } else {
+                  openToast({
+                    msg: "탈퇴 취소 성공",
+                    type: "success",
+                  });
+                }
+              } catch (error) {
+                openToast({
+                  msg: "탈퇴 취소 중 오류가 발생했습니다.",
+                  type: "error",
+                });
+              }
+            },
+          });
+        }
+        case "STATE_PAUSE": {
+          const msg = ["일시정지된 계정입니다."];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+          });
+        }
+        case "STATE_DISABLE": {
+          const msg = ["영구정지된 계정입니다."];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+          });
+        }
+        case "STATE_DORMANT": {
+          const msg = ["휴면 계정입니다."];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+          });
+        }
+        case "STATE_NOT_PUBLIC": {
+          const msg = ["계정 이용이 제한된 계정입니다."];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+          });
+        }
+        // * Firebase 에러 코드 처리
+        case "FB_INVALID_EMAIL": {
+          openToast({
+            msg: "유효하지 않은 아이디입니다.",
+            type: "error",
+          });
+          break;
+        }
+        case "FB_WRONG_PASSWORD": {
+          const newCount = passwordErrorCount + 1;
+          setPasswordErrorCount(newCount);
+          const passwordFailCountReq = await fetch("/api/cookie/setPasswordFailCount", {
+            method: "POST",
+            body: JSON.stringify({ count: newCount }),
+          });
+          if (passwordErrorCount >= PASSWORD_FAIL_COUNT) {
+            // * 비밀번호 입력이 PASSWORD_FAIL_COUNT회 초과 시
+            openModal(passwordErrorCountModalParam);
+          } else {
+            // useEffect 내부에서 대신
+            // openToast({
+            //   msg: "비밀번호가 일치하지 않습니다.",
+            //   type: "error",
+            // });
+          }
+          break;
+        }
+        case "FB_TOO_MANY_REQUESTS":
+        case "FB_UNKNOWN_ERROR":
+        default: {
+          openToast({
+            msg: "잠시 뒤에 다시 시도해주세요",
+            type: "error",
+          });
+          break;
+        }
       }
-
-      const res = await req.json();
-
-      if (res.succcess) {
-        console.log("");
-      }
-      console.log(res, "res");
-    } catch (error) {
-      console.log(error, "error");
-      setIsLoggingIn(false);
     }
-
-    console.log(id, "id");
-
-    openToast({
-      msg: "홀리몰리",
-      type: "error",
-      displayTime: 5000,
-    });
 
     setIsLoggingIn(false);
   };
 
-  // ID 찾기
-  const findId = async () => {
-    setIsPw(false);
-    // 본인인증
-    const win = window as any;
-    const url = `${process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL}api/mok/mok_std_request`;
-    if (win.MOBILEOK) {
-      win.MOBILEOK.process(url, "MWV", "result");
-    } else {
-      return alert("본인인증을 진행할 수 없습니다\n고객센터로 문의해주세요");
-    }
-    // 본인인증 콜백
-    win.result = async (mokResult: any) => {
-      try {
-        const req = await fetch("/api/user", {
-          method: "POST",
-          body: JSON.stringify({ action: "createUser", option: JSON.parse(mokResult) }),
-        });
-        console.log(req, "req IN INPUT");
-        if (!req.ok) {
-          throw new Error(req.statusText);
-        }
+  // 로그인 PASSWORD_FAIL_COUNT회 실패 시 잠금
+  const handleLockUser = async () => {};
 
-        const res = await req.json();
-        console.log(res, "res IN INPUT");
-        if (res.success) {
-          setUserId(res?.userId);
-          setToken(res?.customToken);
-        } else {
-          throw new Error("알 수 없는 이유로 실패하였습니다");
-        }
-      } catch (error) {
-        console.log(error, "ERROR????");
-        alert(JSON.stringify(error));
-      }
-    };
-  };
-
-  useEffect(() => {
-    if (token && userId) {
-      if (isPw) {
-        router.push(`/login/id/list?token=${token}&id=${userId}&pw=true`);
-      } else {
-        router.push(`/login/id/list?token=${token}&id=${userId}`);
-      }
-    }
-  }, [token, userId]);
-
-  if (isLoading) {
+  if (isLoading || signInfo === undefined) {
     return <Loading />;
   }
 
@@ -147,7 +278,7 @@ export default function Page() {
               {/* 로그인 영역 */}
               <form
                 className="flex w-full max-w-[580px] flex-col items-center justify-center rounded-lg bg-[#b9c2e2] p-8"
-                onSubmit={handleSubmit}
+                onSubmit={signIn}
               >
                 <div className="mb-3 flex w-full flex-col gap-6">
                   <div className="relative">

@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package prng;
+
+service DeckService {
+  rpc CreateDeck(DeckRequest) returns (DeckResponse) {} // Create a new deck
+  rpc CreateCustomDeck(DeckRequest) returns (DeckResponse) {} // Create a new deck
+  rpc GetDeck(DeckRequest) returns (DeckResponse) {} // Remaining cards in the deck
+  rpc DrawCard(DrawCardRequest) returns (DrawCardResponse) {} // Draw a card from the deck
+  rpc Discard(DiscardRequest) returns (DiscardResponse) {} // Discard cards
+}
+
+message DeckRequest {
+  string deck_id = 1;
+  repeated string cards = 2;
+}
+
+message DeckResponse {
+  bool success = 1;
+  string error_message = 2;
+  string deck_id = 3;
+  repeated string cards = 4; // Cards in the deck
+  repeated string discarded = 5; // Discarded cards
+}
+
+message DrawCardRequest {
+  string deck_id = 1;
+}
+
+message DrawCardResponse {
+  bool success = 1;
+  string error_message = 2;
+  string card = 3;
+  int32 remaining = 4; // Remaining cards in the deck
+  bool refill = 5; // Whether the deck was refilled
+}
+
+message DiscardRequest {
+  string deck_id = 1;
+  repeated string cards = 2;
+}
+
+message DiscardResponse {
+  bool success = 1;
+  string error_message = 2;
+}

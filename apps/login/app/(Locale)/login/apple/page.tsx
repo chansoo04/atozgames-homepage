@@ -3,13 +3,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import Loading from "login/app/_components/Loading";
-import { GpSign, GpSignProvider } from "common/cookie";
+import { GpSign, GpSignProvider, GP_SIGN_AUTH_CODE } from "common/cookie";
 import TopBar from "app/_components/TopBar";
 import { useModal } from "common/modal";
 import Image from "next/image";
 import { useToast } from "common/toast";
 
-import { signIn, getAccountState, withdrawalRevoke, GP_SIGN_AUTH_CODE } from "../action";
+import { signIn, getAccountState, withdrawalRevoke } from "../action";
 import { signInWithApple } from "./action";
 
 export default function Page() {

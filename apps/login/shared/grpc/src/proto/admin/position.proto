@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package admin;
+
+import "admin-common.proto";
+
+service AdminPositionService {
+    rpc GetPositionList(GetPositionListRequest) returns (GetPositionListResponse) {}
+    rpc CreatePosition(CreatePositionRequest) returns (CreatePositionResponse) {}
+    rpc UpdatePosition(UpdatePositionRequest) returns (UpdatePositionResponse) {}
+    rpc DeletePosition(DeletePositionRequest) returns (DeletePositionResponse) {}
+}
+
+message GetPositionListRequest {
+}
+
+message GetPositionListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated Position position_list = 3;
+}
+
+message CreatePositionRequest {
+    string code = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+}
+
+message CreatePositionResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdatePositionRequest {
+    int32 position_id = 1;
+    string code = 2;
+    string name = 3;
+    string description = 4;
+    bool is_active = 5;
+}
+
+message UpdatePositionResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DeletePositionRequest {
+    int32 position_id = 1;
+}
+
+message DeletePositionResponse {
+    bool success = 1;
+    string error_message = 2;
+}

@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
   }
   data.provider = providerToString(data.provider);
   const session = await getSessionByProvider(data.provider);
-  console.log(session, "session");
 
   return NextResponse.json(session.list);
 }

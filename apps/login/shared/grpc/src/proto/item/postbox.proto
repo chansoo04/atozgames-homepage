@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package item;
+
+import "item-common.proto";
+
+service PostBoxService {
+  // get
+  rpc GetPosts(GetPostsRequest) returns (GetPostsResponse) {}
+
+  // send
+  rpc GameOverflow(MoneyRequest) returns (PostResponse) {}
+  rpc MoneyOverflow(MoneyRequest) returns (PostResponse) {}
+  rpc MoneyRefund(MoneyRequest) returns (PostResponse) {}
+  rpc SendPost(SendPostRequest) returns (PostResponse) {}
+  rpc SendMessage(SendMessageRequest) returns (PostResponse) {}
+
+  // update
+  rpc OpenPost(DefaultIntIdRequest) returns (PostResponse) {}
+  rpc ReceivItem(DefaultIntIdRequest) returns (PostResponse) {}
+  rpc BulkReceivItem(BulkRequest) returns (BulkResponse) {}
+
+  // delete
+  rpc DeactivePost(DefaultIntIdRequest) returns (DefaultResponse) {}
+  rpc BulkDeactive(BulkRequest) returns (BulkResponse) {}
+}
+
+message SendPostRequest {
+  string account_id = 1;
+  string sender_id = 2;
+  string message = 3;
+  string item_pack_id = 4;
+  string item_id = 5;
+  string amount = 6;
+  string cash = 7;
+  string game = 8;
+  PostType type = 9;
+  PostBoxState state = 10;
+  bool is_visible = 11; // 노출 여부 | 삭제처리
+  string limited_at = 12; // 삭제 시간
+  string opened_at = 13; // 열람 시간
+  string received_at = 14; // 수령 시간
+
+  string tx_group_id = 15;
+}
+
+message SendMessageRequest {
+  string account_id = 1;
+  string sender_id = 2;
+  string message = 3;
+}
+
+message PostResponse {
+  bool success = 1;
+  string error_message = 2;
+  PostBox post_box = 3;
+}
+
+message GetPostsRequest {
+  string account_id = 1;
+  PostType type = 2;
+  PostBoxState state = 3;
+  bool is_visible = 4; // 노출 여부 | 삭제처리
+}
+
+message GetPostsResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated PostBox post_boxes = 3;
+}
+
+message MoneyRequest {
+  string account_id = 1;
+  string tx_group_id = 2;
+  Amount amount = 3;
+}
+
+message BulkRequest {
+  string account_id = 1;
+  repeated int32 postbox_ids = 2;
+  PostType type = 3;
+  PostBoxState state = 4;
+}
+
+message BulkExcution {
+  int32 postbox_id = 1;
+  bool success = 2;
+  string error_message = 3;
+}
+
+message BulkResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated BulkExcution excution_success = 3;
+  repeated BulkExcution excution_fail = 4;
+}

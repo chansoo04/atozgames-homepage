@@ -4,7 +4,7 @@ import Image from "next/image";
 import TopBar from "login/app/_components/TopBar";
 import IconButton from "login/app/_components/IconButton";
 import Loading from "login/app/_components/Loading";
-import { GpCookie } from "common/cookie";
+import { GpCookie, GpSign } from "common/cookie";
 
 export default function Page() {
   const [signInfo, setSignInfo] = useState<GpCookie>({});
@@ -32,7 +32,6 @@ export default function Page() {
   const getLoginInfo = async () => {
     const req = await fetch("/api/cookie/getAll", {
       method: "POST",
-      body: JSON.stringify({ action: "getAll" }),
     });
     if (req.ok) {
       return await req.json();
@@ -41,8 +40,62 @@ export default function Page() {
     return null;
   };
 
-  // TODO: 필요한지 아닌지 확인해보기
-  const updateNickname = async (signs: GpCookie) => {};
+  const updateNickname = async (signs: GpCookie) => {
+    setIsLoading(true);
+    try {
+      const req = await fetch("/api/cookie/getAll", {
+        method: "POST",
+      });
+
+      if (!req.ok) {
+        // 통신 오류
+        throw new Error(req.statusText);
+      }
+
+      const res = await req.json();
+      setSignInfo(res);
+
+      const uid = Object.values(res)
+        .map((provider: any) => provider.list.map((sign: GpSign) => sign.uid))
+        .flat();
+
+      const getNickReq = await fetch("/api/user/getNickByFirebaseUid", {
+        method: "POST",
+        body: JSON.stringify({ firebaseUid: uid }),
+      });
+
+      if (!getNickReq.ok) {
+        // 통신 오류
+        throw new Error(req.statusText);
+      }
+
+      const getNickRes = await getNickReq.json();
+      console.log(getNickRes, "getNickRes");
+      const getNick = getNickRes.account as {
+        firebaseUid: string;
+        nickname: string;
+      }[];
+
+      if (getNick.length > 0) {
+        for (const provider of Object.values(signs)) {
+          for (const sign of provider.list as GpSign[]) {
+            const nickData = getNick.find((data) => data.firebase_uid === sign.uid);
+            if (nickData) {
+              sign.id = nickData.nickname;
+
+              await fetch("/api/cookie/setSign", {
+                method: "POST",
+                body: JSON.stringify({ sign }),
+              });
+            }
+          }
+        }
+      }
+    } catch (err) {
+      setIsLoading(false);
+      console.error("Unknown error: ", err);
+    }
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -86,7 +139,8 @@ export default function Page() {
                 <div className="mt-4 flex w-full flex-col items-center justify-center gap-2 text-sm leading-tight">
                   {/* TODO: count query 처리 */}
                   <IconButton
-                    link="/login/id?count=0"
+                    link={`/login/id?count=${signInfo.PASSWORD?.list?.length || 0}`}
+                    // link="/login/id?count=0"
                     text="아토즈 로그인"
                     icon="/atozImageLogo.png"
                   />
@@ -101,12 +155,14 @@ export default function Page() {
                     icon="/apple-icon.svg"
                   />
                   <IconButton
-                    link="/login/kakao?count=0"
+                    link={`/login/kakao?count=${signInfo.KAKAO?.list?.length || 0}`}
+                    // link={"/login/kakao?count=0"}
                     text="카카오 로그인"
                     icon="/kakao-icon.svg"
                   />
                   <IconButton
-                    link="/login/naver?count=0"
+                    link={`/login/naver?count=${signInfo.NAVER?.list?.length || 0}`}
+                    // link="/login/naver?count=0"
                     text="네이버 로그인"
                     icon="/naver-icon.svg"
                   />

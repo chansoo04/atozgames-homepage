@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package admin;
+
+import "admin-common.proto";
+
+service AdminMenuService {
+    rpc GetMenuList(GetMenuListRequest) returns (GetMenuListResponse) {}
+    rpc GetLastDepthMenuList(GetLastDepthMenuListRequest) returns (GetLastDepthMenuListResponse) {} // 메뉴 액션을 위해 마지막 뎁스 메뉴 리스트 조회
+    rpc CreateMenu(CreateMenuRequest) returns (CreateMenuResponse) {} // 메뉴 생성
+    rpc UpdateMenu(UpdateMenuRequest) returns (UpdateMenuResponse) {} // 메뉴 수정
+    rpc UpdateMenuOrdering(UpdateMenuOrderingRequest) returns (UpdateMenuOrderingResponse) {} // 메뉴 정렬 수정
+    rpc DeleteMenu(DeleteMenuRequest) returns (DeleteMenuResponse) {} // 메뉴 삭제
+}
+
+message GetMenuListRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+    string system_id = 3; // 시스템 ID
+    string parent_menu_id = 4; // null 이면 1뎁스 메뉴 조회, 값이 있으면 하위 메뉴들 조회
+}
+
+message GetMenuListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated Menu menu_list = 3;
+}
+
+// 메뉴 액션을 위해 마지막 뎁스 메뉴 리스트 조회 요청
+message GetLastDepthMenuListRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+    string system_id = 3; // 시스템 ID
+}
+
+// 메뉴 액션을 위해 마지막 뎁스 메뉴 리스트 조회 응답
+message GetLastDepthMenuListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated Menu menu_list = 3;
+}
+
+message CreateMenuRequest {
+    string system_id = 1; // 시스템 ID
+    string menu_id = 2; // 메뉴 ID (varchar: 5)
+    string parent_menu_id = 3; // 상위 메뉴 ID (varchar: 5)
+    string name = 4; // 메뉴명
+    string url = 5; // URL
+    string description = 6; // 설명
+    int32 ordering = 7; // 정렬 순서
+    bool is_active = 8; // 사용 여부
+}
+
+message CreateMenuResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateMenuRequest {
+    string system_id = 1; // 시스템 ID
+    string parent_menu_id = 2; // 상위 메뉴 ID (varchar: 5)
+    string menu_id = 3; // 메뉴 ID (varchar: 5)
+    string name = 4; // 메뉴명
+    string url = 5; // URL
+    string description = 6; // 설명
+    bool is_active = 7; // 사용 여부
+}
+
+message UpdateMenuResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateMenuOrderingRequest {
+    string system_id = 1; // 시스템 ID, null 이면 1 뎁스 메뉴 정렬
+    string parent_menu_id = 2; // 메뉴 ID (varchar: 5), null 이면 1 뎁스 메뉴 정렬
+    string menu_id_list = 3; // 정렬 순서를 변경할 메뉴 ID 리스트
+}
+
+message UpdateMenuOrderingResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DeleteMenuRequest {
+    string system_id = 1; // 시스템 ID
+    string menu_id = 2; // 메뉴 ID (varchar: 5)
+}
+
+message DeleteMenuResponse {
+    bool success = 1;
+    string error_message = 2;
+}

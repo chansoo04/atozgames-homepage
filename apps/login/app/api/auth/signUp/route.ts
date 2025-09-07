@@ -33,7 +33,11 @@ export async function POST(request: NextRequest) {
       "x-api-key": process.env.AWS_API_KEY as string,
       "x-api-secret": process.env.AWS_API_SECRET as string,
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      provider: data.provider,
+      credential: JSON.stringify(data.credential),
+      userId: data.userId,
+    }),
   });
 
   console.log(req, "req!!!");

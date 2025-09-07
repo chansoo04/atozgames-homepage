@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package item;
+
+import "item-common.proto";
+
+service RewardService {
+  rpc GetRewards( GetRewardsRequest) returns ( GetRewardsResponse) {}
+  rpc GetRewardsStream(stream GetRewardsRequest) returns (stream GetRewardsResponse) {}
+  rpc PayReward(PayRewardRequest) returns (PayRewardResponse) {}
+  rpc GetPaidRewards( GetPaidRewardsRequest) returns ( GetPaidRewardsResponse) {}
+  rpc GetPaidRewardsStream(stream GetPaidRewardsRequest) returns (stream GetPaidRewardsResponse) {}
+}
+
+message GetRewardsRequest {
+  string reward_id = 1;
+  string reward_type = 2;
+}
+
+message GetRewardsResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated Reward reward = 3;
+}
+
+message PayRewardRequest {
+  string reward_id = 1;
+  string account_id = 2;
+}
+
+message PayResult {
+  string type = 1; // ITEM, GAME_MONEY
+  Amount balance = 2;
+  Amount overflow = 3;
+  int32 postbox_id = 4;
+  string item_pack_id = 5;
+  string item_id = 6;
+}
+
+message PayRewardResponse {
+  bool success = 1;
+  string error_message = 2;
+  string json = 3;
+  repeated PayResult pay_result = 4;
+}
+
+message GetPaidRewardsRequest {
+  string account_id = 1;
+  string start_date = 2;
+  string end_date = 3;
+}
+
+message GetPaidRewardsResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated PaidReward paid_reward = 3;
+}

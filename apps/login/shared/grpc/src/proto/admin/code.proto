@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+package admin;
+
+import "admin-common.proto";
+
+service AdminCodeService {
+    rpc GetCodeGroupList(GetCodeGroupListRequest) returns (GetCodeGroupListResponse);
+    rpc CreateCodeGroup(CreateCodeGroupRequest) returns (CreateCodeGroupResponse);
+    rpc UpdateCodeGroup(UpdateCodeGroupRequest) returns (UpdateCodeGroupResponse);
+    rpc DeleteCodeGroup(DeleteCodeGroupRequest) returns (DeleteCodeGroupResponse);
+    rpc GetCodeItemList(GetCodeItemListRequest) returns (GetCodeItemListResponse);
+    rpc CreateCodeItem(CreateCodeItemRequest) returns (CreateCodeItemResponse);
+    rpc UpdateCodeItem(UpdateCodeItemRequest) returns (UpdateCodeItemResponse);
+    rpc UpdateCodeItemOrdering(UpdateCodeItemOrderingRequest) returns (UpdateCodeItemOrderingResponse);
+    rpc DeleteCodeItem(DeleteCodeItemRequest) returns (DeleteCodeItemResponse);
+}
+
+message GetCodeGroupListRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+}
+
+message GetCodeGroupListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated CodeGroup code_group_list = 3;
+}
+
+message CreateCodeGroupRequest {
+    string group_code = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+}
+
+message CreateCodeGroupResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateCodeGroupRequest {
+    string group_code = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+}
+
+message UpdateCodeGroupResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DeleteCodeGroupRequest {
+    string group_code = 1;
+}
+
+message DeleteCodeGroupResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message GetCodeItemListRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+    string group_code = 3;
+}
+
+message GetCodeItemListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated CodeItem code_item_list = 3;
+}
+
+message CreateCodeItemRequest {
+    string group_code = 1;
+    string item_code = 2;
+    string name = 3;
+    string description = 4;
+    bool is_active = 5;
+}
+
+message CreateCodeItemResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateCodeItemRequest {
+    string group_code = 1;
+    string item_code = 2;
+    string name = 3;
+    string description = 4;
+    bool is_active = 5;
+}
+
+message UpdateCodeItemResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateCodeItemOrderingRequest {
+    string group_code = 1;
+    string item_code_list = 2;
+}
+
+message UpdateCodeItemOrderingResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DeleteCodeItemRequest {
+    string group_code = 1;
+    string item_code = 2;
+}
+
+message DeleteCodeItemResponse {
+    bool success = 1;
+    string error_message = 2;
+}

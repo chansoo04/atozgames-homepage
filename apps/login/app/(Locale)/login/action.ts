@@ -1,6 +1,6 @@
 "use client";
 import { UserCredential } from "firebase/auth";
-import { GpSignProvider, GpSign } from "common/cookie";
+import { GpSignProvider, GpSign, GP_SIGN_AUTH_CODE } from "common/cookie";
 import { toUnity } from "lib/unityUtil";
 
 class SignFailError extends Error {
@@ -12,14 +12,6 @@ class SignFailError extends Error {
     this.name = "SignFailError";
     this.code = code;
   }
-}
-
-export enum GP_SIGN_AUTH_CODE {
-  "EXPIRED_AND_RENEWED" = "EXPIRED_AND_RENEWED", // 토큰 만료 및 갱신
-  "ALREADY_SIGND" = "ALREADY_SIGND", // 이미 로그인 되어있음
-  "NEED_CREDENTIAL" = "NEED_CREDENTIAL", // 자격 증명 필요
-  "RELOGIN_REQUIRED" = "RELOGIN_REQUIRED", // 재로그인 필요
-  "INVALID_TOKEN" = "INVALID_TOKEN", // 잘못된 토큰
 }
 
 export const signUpIdentity = async (credential: UserCredential, provider: GpSignProvider) => {
@@ -46,15 +38,12 @@ export const signUpIdentity = async (credential: UserCredential, provider: GpSig
       if (data.error) {
         alert(`MOK 인증에 실패했습니다. ${data.error}`);
         return no(new SignFailError("MOK_FAIL", `MOK 인증에 실패했습니다. ${data.error}`));
-        return;
       }
-
-      console.log("왔다네 왔다네 성공했다네!!!", data);
 
       const url = process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL + "api/user/createUser";
       const req = await fetch(url, {
         method: "POST",
-        body: JSON.stringify({ action: "createUser", options: data }),
+        body: JSON.stringify(data),
       });
 
       if (!req.ok) {
@@ -62,7 +51,6 @@ export const signUpIdentity = async (credential: UserCredential, provider: GpSig
       }
 
       const res = await req.json();
-      console.log(res, "res");
       const signUser = res; // as CreateUserResponse
 
       if (!signUser || !signUser.user_id) {
@@ -121,21 +109,20 @@ const signUp = async (credential: UserCredential, provider: string, userId?: str
   if (!req.ok) {
     return {
       success: false,
-      code: "Axios response is undefined", // as GP_SIGN_AUTH_CODE,
+      code: "FETCH FAILD", // as GP_SIGN_AUTH_CODE,
     };
   }
 
   const res = await req.json();
 
-  // TODO:
-  // signHandler(res);
+  await signHandler(res);
 };
 
 export const getAccountState = async (firebaseUid: string) => {
   try {
     const req = await fetch("/api/user/isExistAccount", {
       method: "POST",
-      body: JSON.stringify({ options: firebaseUid }),
+      body: JSON.stringify({ firebaseUid }),
     });
 
     if (!req.ok) {
@@ -154,10 +141,11 @@ export const getAccountState = async (firebaseUid: string) => {
 
 export const checkPublic = async (firebaseUid: string): Promise<string> => {
   const state = await getAccountState(firebaseUid);
+  console.log("STATE: ", state);
 
   if (!state) {
     return "STATE_UNDEFINED";
-  } else if (!state.isPublic) {
+  } else if (!state.is_public) {
     /**
      *  withdrawal: string(Date) // 탈퇴시간
      *  pause: string(Date) // 일시정지 해제시간
@@ -167,26 +155,26 @@ export const checkPublic = async (firebaseUid: string): Promise<string> => {
      *  is_active: bool // 삭제 여부
      */
     if (state.isWithdrawal) {
-      if (!state.isActive) {
+      if (!state.is_withdrawal) {
         // logger.error('삭제된 계정', state);
         return "STATE_NOT_ACTIVE";
       }
       // logger.error('탈퇴한 계정', state);
       return "STATE_WITHDRAWAL";
     }
-    if (state.isPause) {
+    if (state.is_pause) {
       // logger.error('일시정지된 계정', state);
       return "STATE_PAUSE";
     }
-    if (state.isDisable) {
+    if (state.is_disable) {
       // logger.error('영구정지된 계정', state);
       return "STATE_DISABLE";
     }
-    if (state.isDormant) {
+    if (state.is_dormant) {
       // logger.error('휴면계정', state);
       return "STATE_DORMANT";
     }
-    if (!state.isPublic) {
+    if (!state.is_public) {
       // logger.error('계정 이용 제한된 계정', state);
       return "STATE_NOT_PUBLIC";
     }
@@ -200,15 +188,16 @@ export const signIn = async (
   gpSign: GpSign,
 ): Promise<{ success: boolean; code?: GP_SIGN_AUTH_CODE | string; uid?: string }> => {
   try {
+    console.log("signIn 함수 시작!!");
+    console.log("gpSign: ", gpSign);
     if (gpSign === undefined) {
       return { success: false };
     }
 
-    return { success: false };
     // 계정 상태 확인
     if (gpSign.uid) {
       const isPublic = await checkPublic(gpSign.uid as string);
-      if (!isPublic) {
+      if (isPublic) {
         return {
           success: false,
           code: isPublic,
@@ -219,13 +208,15 @@ export const signIn = async (
 
     const req = await fetch("/api/auth/signIn", {
       method: "POST",
-      body: JSON.stringify({ options: gpSign }),
+      body: JSON.stringify({ gpSign }),
     });
+
     if (!req.ok) {
       return { success: false, code: "FETCH FAILED" as GP_SIGN_AUTH_CODE };
     }
 
     const res = await req.json();
+    console.log(res, "RES!!!!!!!! auth/signIn");
     return await signHandler(res);
   } catch (err) {
     return { success: false };
@@ -241,6 +232,8 @@ export const signWithCredential = async (credential: UserCredential, provider: G
     provider,
     credential,
   };
+  console.log(credential, "CREDENTIAL!!!!!");
+  console.log(params, "PARAMS!!!!");
   const firebaseUid = credential.user?.uid;
 
   // 계정 상태 확인
@@ -257,7 +250,7 @@ export const signWithCredential = async (credential: UserCredential, provider: G
 
   const req = await fetch("/api/auth/signWithCredential", {
     method: "POST",
-    body: JSON.stringify({ options: params }),
+    body: JSON.stringify({ params }),
   });
 
   if (!req.ok) {
@@ -265,7 +258,11 @@ export const signWithCredential = async (credential: UserCredential, provider: G
   }
 
   const res = await req.json();
-  return await signHandler(res);
+  console.log(res, "RES!!!!!!");
+
+  const hi = await signHandler(res);
+  console.log(hi, "HI");
+  return hi;
 };
 
 const signHandler = async (res: any) => {
@@ -278,18 +275,19 @@ const signHandler = async (res: any) => {
       uid: res.firebaseUid,
     };
   }
+  console.log("TO UNITY 전 RES 체크", res);
 
   // 로그인 성공
   if (res.success) {
-    if (res.accountId && res.firebaseUid && res.idToken) {
+    if (res.account_id && res.firebase_uid && res.id_token) {
       // * 유효 계정 - unity로 전송
-      toUnity(res.accountId, res.firebaseUid, res.idToken);
+      toUnity(res.account_id, res.firebase_uid, res.id_token);
     }
     return { success: true };
   }
   // 로그인 실패
   else {
-    const code = res.authCode as GP_SIGN_AUTH_CODE;
+    const code = res.auth_code as GP_SIGN_AUTH_CODE;
     switch (code) {
       case GP_SIGN_AUTH_CODE.ALREADY_SIGND: {
         // * 이미 로그인 되어있음

@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package cs;
+
+service CustomerService {
+  rpc CreateCustomerQuestion(CustomerQuestionRequest) returns (CustomerQuestionResponse) {}
+  rpc UpdateCustomerQuestion(CustomerQuestionRequest) returns (CustomerQuestionResponse) {}
+  rpc DeactivateCustomerQuestion(CustomerQuestionRequest) returns (DefaultResponse) {}
+  rpc GetCustomerQuestion(CustomerQuestionRequest) returns (CustomerQuestionResponse) {}
+  rpc GetCustomerQuestions(CustomerQuestionsRequest) returns (CustomerQuestionsResponse) {}
+
+  rpc CreateCustomerQuestionReply(CustomerQuestionReplyRequest) returns (CustomerQuestionReplyResponse) {}
+  rpc UpdateCustomerQuestionReply(CustomerQuestionReplyRequest) returns (CustomerQuestionReplyResponse) {}
+  rpc DeactivateCustomerQuestionReply(CustomerQuestionReplyRequest) returns (DefaultResponse) {}
+  rpc GetCustomerQuestionReply(CustomerQuestionReplyRequest) returns (CustomerQuestionRepliesResponse) {}
+}
+
+message CustomerQuestion {
+  int32 id = 1;
+  string account_id = 2;
+  string title = 3;
+  string content = 4;
+  string append = 5;
+  QuestionState state = 6;
+  string answer_at = 7;
+  string reply_at = 8;
+  bool is_active = 9;
+  string created_at = 10;
+  string updated_at = 11;
+
+  repeated CustomerQuestionReply customer_question_reply = 12;
+  int32 reply_count = 13;
+}
+
+message CustomerQuestionReply {
+  int32 id = 1;
+  int32 question_id = 2;
+  string account_id = 3;
+  string admin_id = 4;
+  string reply = 5;
+  string append = 6;
+  bool is_active = 7;
+  string created_at = 8;
+  string updated_at = 9;
+}
+
+message CustomerQuestionRequest {
+  int32 cs_id = 1;
+  string account_id = 2;
+  string title = 3;
+  string content = 4;
+  string append = 5;
+}
+
+message CustomerQuestionResponse {
+  bool success = 1;
+  string error_message = 2;
+  CustomerQuestion customer_question = 3;
+}
+
+message CustomerQuestionsRequest {
+  string account_id = 1;
+  int32 page = 2;
+  int32 count_per_page = 3;
+}
+
+message CustomerQuestionsResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated CustomerQuestion customer_questions = 3;
+}
+
+message CustomerQuestionReplyRequest {
+  int32 reply_id = 1;
+  int32 cs_id = 2;
+  string account_id = 3;
+  string admin_id = 4;
+  string reply = 5;
+  string append = 6;
+}
+
+message CustomerQuestionReplyResponse {
+  bool success = 1;
+  string error_message = 2;
+  CustomerQuestionReply customer_question_reply = 3;
+}
+
+message CustomerQuestionRepliesResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated CustomerQuestionReply customer_question_replies = 3;
+}
+
+enum QuestionState {
+  QUESTION_STATE_NONE = 0;
+  QUESTION_STATE_OPEN = 1; // 이슈생성
+  QUESTION_STATE_NEW_REPLY = 2; // 새로운 답변
+  QUESTION_STATE_CLOSED = 3; // 이슈종료
+}
+
+message DefaultResponse {
+  bool success = 1;
+  string error_message = 2;
+}

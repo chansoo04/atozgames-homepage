@@ -1,0 +1,233 @@
+syntax = "proto3";
+
+package admin;
+
+// 테이블명: users
+message User {
+    string user_id = 1;
+    string email = 2;
+    string employee_number = 3; // 사원번호
+    string name = 4; // 이름
+    IdNumberName department = 5; // 부서 ID
+    IdNumberName position = 6; // 직책 ID
+    IdNumberName job = 7; // 직무 ID
+    int64 phone_number = 8; // 전화번호
+    int32 extension_number = 9; // 사내번호
+    int32 state = 10; // 계정 상태
+    string created_at = 11; // 생성일
+}
+
+// 테이블명: group_permissions
+message GroupPermission {
+    string permission_code = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+    string created_at = 5;
+}
+
+// 테이블명: group_permission_menus
+message GroupPermissionMenu {
+    string permission_code = 1;
+    string menu_id = 2;
+    string menu_action_id = 3;
+    string created_at = 4;
+}
+message MenuListOnGroupPermission {
+    string permission_code = 1;
+    MenuOfGroupPermissionMenu menu = 2;
+}
+message MenuOfGroupPermissionMenu {
+    string menu_id = 1;
+    string name = 2;
+    repeated MenuActionList menu_action_list = 3;
+    IdName system = 4;
+    repeated PrivacyOfGroupPermissionMenu privacy_list = 5;
+}
+message MenuActionList {
+    string id = 1;
+    string name = 2;
+    bool is_active = 3;
+}
+message PrivacyOfGroupPermissionMenu {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+// 테이블명: group_permission_users
+message GroupPermissionUser {
+    string permission_code = 1;
+    string user_id = 2;
+    string created_at = 3;
+}
+
+// 테이블명: user_permissions
+message UserPermission {
+    string user_id = 1;
+    repeated UserPermissionMenuList menu_list = 2;
+}
+message UserPermissionMenuList {
+    string menu_id = 1;
+    IdName system = 2;
+    string name = 3;
+    repeated MenuActionList menu_action_list = 4;
+    repeated PrivacyOfGroupPermissionMenu privacy_list = 5;
+}
+
+// 테이블명: code_groups
+message CodeGroup {
+    string group_code = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+    bool is_deleted = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+// 테이블명: code_items
+message CodeItem {
+    string group_code = 1;
+    string item_code = 2;
+    string name = 3;
+    string description = 4;
+    int32 ordering = 5;
+    bool is_active = 6;
+    bool is_deleted = 7;
+    string created_at = 8;
+    string updated_at = 9;
+}
+
+message Department {
+    int32 department_id = 1;
+    string code = 2;
+    string name = 3;
+    string description = 4;
+    bool is_active = 5;
+    string created_at = 6;
+}
+
+message Job {
+    int32 job_id = 1;
+    string code = 2;
+    string name = 3;
+    string description = 4;
+    bool is_active = 5;
+    string created_at = 6;
+}
+
+// 테이블명: menus
+message Menu {
+    IdName system = 1; // 시스템 ID
+    string menu_id = 2; // 메뉴 ID (varchar: 5)
+    repeated MenuActionList menu_action_list = 3;
+    IdName parent_menu = 4; // 상위 메뉴 ID (varchar: 5)
+    string name = 5; // 메뉴명
+    string url = 6; // URL
+    string description = 7; // 설명
+    int32 ordering = 8; // 정렬 순서
+    bool is_active = 9; // 사용 여부
+    bool is_deleted = 10; // 삭제 여부
+    string created_at = 11; // 생성일
+    string updated_at = 12; // 수정일
+    repeated PrivacyOfGroupPermissionMenu privacy_list = 13;
+}
+
+// 테이블명: menu_actions
+message MenuAction {
+    string menu_id = 1;
+    string menu_action_id = 2;
+    string name = 3;
+    string url = 4;
+    int32 ordering = 5;
+    bool is_active = 6;
+    bool is_deleted = 7;
+    string created_at = 8;
+    string updated_at = 9;
+}
+
+message MenuPrivacy {
+    string menu_id = 1;
+    int32 privacy_type_id = 2;
+    string created_at = 3;
+}
+
+message Position {
+    int32 position_id = 1;
+    string code = 2;
+    string name = 3;
+    string description = 4;
+    bool is_active = 5;
+    string created_at = 6;
+}
+
+message PrivacyType {
+    int32 privacy_type_id = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+    bool is_deleted = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+// 테이블명: required_user_fields
+message RequiredUserField {
+    int32 field_id = 1;
+    string field = 2;
+    bool is_require = 3;
+    bool is_active = 4;
+    bool is_deleted = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+message System {
+    string system_id = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+    bool is_deleted = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+message UserInfo {
+    string user_id = 1;
+    string email = 2;
+    string employee_number = 3; // 사원번호
+    string name = 4; // 이름
+    IdNumberName department = 5; // 부서 ID
+    IdNumberName position = 6; // 직책 ID
+    IdNumberName job = 7; // 직무 ID
+    int64 phone_number = 8; // 전화번호
+    int32 extension_number = 9; // 사내번호
+    int32 state = 10; // 계정 상태
+    string created_at = 11; // 생성일
+    repeated UserInfoAuth auth = 12;
+}
+
+message UserInfoAuth {
+    string permission_code = 1;
+    string name = 2;
+}
+
+message IdName {
+    string id = 1;
+    string name = 2;
+}
+
+message IdNumberName {
+    int32 id = 1;
+    string name = 2;
+}
+
+message GlobalNavigationMenus {
+  string system_id = 1;
+  string system_name = 2;
+  string menu_id = 3;
+  string menu_name = 4;
+  string parent_menu_id = 5;
+  string url = 6;
+}

@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package dealer;
+
+message MatchRecord {
+  string game_type = 1;
+  int32 year = 2;
+  int32 month = 3;
+  string account_id = 4;
+  int32 play_count = 5;
+  int32 win = 6;
+  int32 draw = 7;
+  int32 lose = 8;
+}
+
+message MatchRecordToday {
+  string account_id = 1;
+  int32 win = 2;
+  int32 lose = 3;
+}
+
+message Play {
+  string dealer_id = 1;
+  string game_type = 2;
+  int32 order = 3;
+  string result = 4; // enum GameResultType
+  string hand_card = 5; // Json
+  string bet_amount = 6; // bigint
+  string distribute_amount = 7; // bigint
+}
+
+message Dealer {
+string dealer_id = 1;
+string game_type = 2;
+string channel = 3;
+string room_id = 4;
+string dealed_card = 5; // Json
+string community_card = 6; // Json
+string burned_card = 7; // Json
+}
+
+message Hand {
+string account_id = 1;
+string phase_type = 2;
+string in_card = 3; // Json
+string out_card = 4; // Json
+string hand_card = 5; // Json
+}
+
+message Bet {
+string account_id = 1;
+string phase_type = 2;
+string bet_type = 3;
+string bet_amount = 4; // bigint
+string tx_id = 5;
+}
+
+service RecordService {
+  rpc MatchRecord(MatchRecordRequest) returns (MatchRecordResponse); // 월간 전적
+  rpc PlayList(PlayListRequest) returns (PlayListResponse); // 매 게임 승패 기록
+  rpc PlayDetail(PlayDetailRequest) returns (PlayDetailResponse); // 딜러 기준 게임 상세 기록
+  rpc MatchRecordToday(MatchRecordTodayRequest) returns (MatchRecordTodayResponse); // 월간 전적
+}
+
+message MatchRecordTodayRequest {
+  string account_id = 1;
+  string game_type = 2;
+}
+
+message MatchRecordTodayResponse {
+  bool success = 1;
+  string error_message = 2;
+  MatchRecordToday match_record = 3;
+}
+
+message MatchRecordRequest {
+  string account_id = 1;
+  string game_type = 4;
+  int32 year = 2;
+  int32 month = 3;
+}
+
+message MatchRecordResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated MatchRecord match_record = 3;
+}
+
+message PlayListRequest {
+  string account_id = 1;
+  string game_type = 2;
+  string start_time = 3;
+  string end_time = 4;
+  int32 page = 5;
+  int32 count_per_page = 6;
+}
+
+message PlayListResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated Play play_list = 3;
+}
+
+message PlayDetailRequest {
+  string dealer_id = 1;
+}
+
+message PlayDetailResponse {
+  bool success = 1;
+  string error_message = 2;
+  Dealer dealer = 3;
+  repeated Play play = 4;
+  repeated Bet bet = 5;
+  repeated Hand hand = 6;
+}

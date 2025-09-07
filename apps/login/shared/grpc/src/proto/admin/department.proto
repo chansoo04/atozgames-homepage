@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package admin;
+
+import "admin-common.proto";
+
+service AdminDepartmentService {
+    rpc GetDepartmentList(GetDepartmentListRequest) returns (GetDepartmentListResponse) {}
+    rpc CreateDepartment(CreateDepartmentRequest) returns (CreateDepartmentResponse) {}
+    rpc UpdateDepartment(UpdateDepartmentRequest) returns (UpdateDepartmentResponse) {}
+    rpc DeleteDepartment(DeleteDepartmentRequest) returns (DeleteDepartmentResponse) {}
+}
+
+message GetDepartmentListRequest {
+}
+
+message GetDepartmentListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated Department department_list = 3;
+}
+
+message CreateDepartmentRequest {
+    string code = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+}
+
+message CreateDepartmentResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateDepartmentRequest {
+    int32 department_id = 1;
+    string code = 2;
+    string name = 3;
+    string description = 4;
+    bool is_active = 5;
+}
+
+message UpdateDepartmentResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DeleteDepartmentRequest {
+    int32 department_id = 1;
+}
+
+message DeleteDepartmentResponse {
+    bool success = 1;
+    string error_message = 2;
+}

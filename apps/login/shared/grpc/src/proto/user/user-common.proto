@@ -1,0 +1,183 @@
+syntax = "proto3";
+
+package user;
+
+// ======================================== //
+// structure
+message User {
+  string user_id = 1;
+  string re_verify_at = 2;
+  string game_pause_at = 3;
+  string loss_limit = 4; // 손실한도 설정 bigint
+  string withdrawal = 5; // 탈퇴시간
+  string pause = 6; // 일시정지 해제시간
+  bool disable = 7; // 영구정지 여부
+  bool dormant = 8; // 휴면계정 여부
+  bool is_public = 9; // 계정 이용 제한 여부
+  bool is_active = 10; // 삭제 여부
+  string created_at = 11;
+  string updated_at = 12;
+  string verify_at = 13;
+}
+
+message Account {
+  string user_id = 1;
+  string account_id = 2;
+  string firebase_uid = 3;
+  string uniqueCode = 4; // 고유 코드 (계정 생성 시 발급) 대문자+0-9 7자리
+  AccountType account_type = 5;
+  string account_name = 6; // 계정명
+  string nickname = 7; // 닉네임
+  int32 continuousDay = 8; // 연속 로그인 일수
+  string withdrawal = 9; // 탈퇴시간
+  string pause = 10; // 일시정지 해제시간
+  bool disable = 11; // 영구정지 여부
+  bool dormant = 12; // 휴면계정 여부
+  bool is_public = 13; // 계정 이용 제한 여부
+  bool is_active = 14; // 삭제 여부
+  string created_at = 15;
+  string updated_at = 16;
+}
+
+message UserLogs{
+  string user_log_id = 1; // bigint
+  string user_id = 2;
+  ActionType action_type = 3;
+  string json = 4;
+  string created_at = 5;
+}
+
+message AccountLogs{
+  string account_log_id = 1; // bigint
+  string user_id = 2;
+  string account_id = 3;
+  ActionType action_type = 4;
+  string json = 5;
+  string created_at = 6;
+}
+
+
+message FriendRequest {
+  string friend_req_id = 1; // 친구 요청 ID
+  string from_account = 2; // 요청하는 사람
+  string to_account = 3; // 요청받는 사람
+  string message = 4; // 요청 메시지
+  FriendRequestState state = 5;
+  string created_at = 6; // 요청 시간
+
+  Friend from = 7; // 요청하는 사람 정보
+  Friend to = 8; // 요청받는 사람 정보
+}
+
+enum FriendRequestState{
+  FRS_NONE = 0;
+  FRS_PENDING = 1;
+  FRS_ACCEPTED = 2;
+  FRS_REJECTED = 3;
+  FRS_EXPIRED = 4;
+  FRS_CANCELED = 5;
+}
+
+message Friend {
+  string account_id = 1; // 친구 ID
+  string nickname = 2; // 친구 닉네임
+  string class = 3; // 친구 클래스
+  string profile = 4; // 친구 프로필 이미지 URL
+  string amount = 5; // 보유 금액 bigint
+  bool is_online = 6; // 온라인 여부
+  string last_login_at = 7; // 마지막 로그인 시간
+  string updated_at = 8; // 업데이트 시간
+
+  string friend_ship_id = 9; // 친구 관계 ID
+}
+
+message Block {
+  string block_id = 1; // 차단 ID
+  Friend friend = 2; // 차단된 account 정보
+}
+
+message Participant {
+  string participant_id = 1; // 참여자 ID
+  string conversation_id = 2; // 대화 ID
+  string account_id = 3; // 계정 ID
+  string last_read_at = 4; // 마지막 읽은 시간
+  string last_message_id = 5; // 마지막 메시지 ID
+  string exit_at = 6; // 나간 시간
+  int32 ordered = 7; // 정렬 순서
+  bool is_blocked = 8; // 차단 여부
+  bool is_active = 9; // 활성화 여부
+  string created_at = 10; // 생성 시간
+  string updated_at = 11; // 수정 시간
+
+  Friend profile = 12; // 친구 정보
+  Message last_message = 13; // 마지막 메시지
+  repeated Message messages = 14; // 메시지 목록
+}
+
+message Message {
+  string message_id = 1; // 메시지 ID
+  string conversation_id = 2; // 대화 ID
+  string account_id = 3; // 계정 ID
+  string message = 4; // 메시지 내용
+  string emotion = 5; // 이모티콘
+  string created_at = 6; // 메시지 전송 시간
+  string updated_at = 7; // 수정 시간
+}
+
+message Conversation {
+  string conversation_id = 1; // 대화 ID
+  string account1 = 2; // 계정 ID
+  string account2 = 3; // 계정 ID
+  bool is_friend = 4; // 친구 여부
+  bool is_guild = 5; // 길드 여부
+  bool is_active = 6; // 활성화 여부
+  string created_at = 7; // 생성 시간
+  string updated_at = 8; // 수정 시간
+
+  repeated Participant participants = 9; // 참여자 목록
+  repeated Message messages = 10; // 메시지 목록
+}
+// ======================================== //
+
+// ======================================== //
+// enum
+enum AccountType {
+  NONE = 0;
+  ID = 1;
+  GOOGLE = 2;
+  APPLE = 3;
+  NAVER = 4;
+  KAKAO = 5;
+  TEST = 99;
+}
+
+enum ActionType {
+  NONE_STATE = 0;
+  SIGN_UP = 1;
+  SIGN_IN = 2;
+  SIGN_OUT = 3;
+  SIGN_FAIL = 4;
+  UPDATE = 5;
+  WITHDRAWAL = 6;
+  PAUSE = 7;
+  DISABLE = 8;
+  DEACTIVE = 9;
+  DORMANT = 10;
+  RE_VERIFY = 11;
+  LOSS_LIMIT = 12;
+  GAME_PAUSE = 13;
+  MARKETING_AGREE = 14;
+  MARKETING_DISAGREE = 15;
+  TERMS_AGREE = 16;
+  TERMS_UPDATE = 17;
+  TRANSFER_ACCOUNT = 18;
+}
+// ======================================== //
+
+// ======================================== //
+// req & res
+message DefaultResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+// ======================================== //

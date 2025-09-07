@@ -7,6 +7,14 @@ export enum GpSignProvider {
   "NAVER" = "NAVER",
 }
 
+export enum GP_SIGN_AUTH_CODE {
+  "EXPIRED_AND_RENEWED" = "EXPIRED_AND_RENEWED", // 토큰 만료 및 갱신
+  "ALREADY_SIGND" = "ALREADY_SIGND", // 이미 로그인 되어있음
+  "NEED_CREDENTIAL" = "NEED_CREDENTIAL", // 자격 증명 필요
+  "RELOGIN_REQUIRED" = "RELOGIN_REQUIRED", // 재로그인 필요
+  "INVALID_TOKEN" = "INVALID_TOKEN", // 잘못된 토큰
+}
+
 export interface GpSign {
   /** sign 계정명 */
   id?: string;

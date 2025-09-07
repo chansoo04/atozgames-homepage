@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package admin;
+
+import "admin-common.proto";
+
+service AdminMenuActionService {
+    rpc GetMenuActionList(GetMenuActionListRequest) returns (GetMenuActionListResponse);
+    rpc CreateMenuAction(CreateMenuActionRequest) returns (CreateMenuActionResponse);
+    rpc UpdateMenuAction(UpdateMenuActionRequest) returns (UpdateMenuActionResponse);
+    rpc UpdateMenuActionOrdering(UpdateMenuActionOrderingRequest) returns (UpdateMenuActionOrderingResponse) {} // 메뉴 정렬 수정
+    rpc DeleteMenuAction(DeleteMenuActionRequest) returns (DeleteMenuActionResponse);
+}
+
+message GetMenuActionListRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+    string menu_id = 3; // 메뉴 ID (varchar: 5)
+}
+
+message GetMenuActionListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated MenuAction menu_action_list = 3;
+}
+
+message CreateMenuActionRequest {
+    string menu_id = 1; // 메뉴 ID (varchar: 5)
+    string menu_action_id = 2; // 메뉴 액션 ID (varchar: 5)
+    string name = 3; // 메뉴 액션 이름
+    string url = 4; // 메뉴 액션 URL
+    bool is_active = 5; // 메뉴 액션 활성화 여부
+}
+
+message CreateMenuActionResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateMenuActionRequest {
+    string menu_id = 1; // 메뉴 ID (varchar: 5)
+    string menu_action_id = 2; // 메뉴 액션 ID (varchar: 5)
+    string name = 3; // 메뉴 액션 이름
+    string url = 4; // 메뉴 액션 URL
+    bool is_active = 5; // 메뉴 액션 활성화 여부
+}
+
+message UpdateMenuActionResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateMenuActionOrderingRequest {
+    string menu_id = 1; // 메뉴 ID (varchar: 5)
+    string menu_action_id_list = 2; // 메뉴 액션 ID 리스트
+}
+
+message UpdateMenuActionOrderingResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DeleteMenuActionRequest {
+    string menu_id = 1; // 메뉴 ID (varchar: 5)
+    string menu_action_id = 2; // 메뉴 액션 ID (varchar: 5)
+}
+
+message DeleteMenuActionResponse {
+    bool success = 1;
+    string error_message = 2;
+}

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package admin;
+
+import "admin-common.proto";
+
+service AdminSystemService {
+    rpc GetSystemList(GetSystemListRequest) returns (GetSystemListResponse) {}
+    rpc CreateSystem(CreateSystemRequest) returns (CreateSystemResponse) {}
+    rpc UpdateSystem(UpdateSystemRequest) returns (UpdateSystemResponse) {}
+    rpc DeleteSystem(DeleteSystemRequest) returns (DeleteSystemResponse) {}
+}
+
+message GetSystemListRequest {
+}
+
+message GetSystemListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated System system_list = 3;
+}
+
+message CreateSystemRequest {
+    string system_id = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+}
+
+message CreateSystemResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateSystemRequest {
+    string system_id = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+}
+
+message UpdateSystemResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DeleteSystemRequest {
+    string system_id = 1;
+}
+
+message DeleteSystemResponse {
+    bool success = 1;
+    string error_message = 2;
+}

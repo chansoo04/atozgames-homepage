@@ -1,9 +1,9 @@
 "use client";
-import { GP_SIGN_AUTH_CODE, signUpIdentity, signWithCredential } from "../action";
+import { signUpIdentity, signWithCredential } from "../action";
 import { FirebaseError } from "firebase/app";
 import { signInWithCustomToken } from "firebase/auth";
 import { auth } from "lib/firebaseClient";
-import { GpSignProvider } from "../../../../common/cookie";
+import { GpSignProvider, GP_SIGN_AUTH_CODE } from "common/cookie";
 
 class SignFailError extends Error {
   constructor(

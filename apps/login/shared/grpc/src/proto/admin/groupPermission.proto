@@ -1,0 +1,220 @@
+syntax = "proto3";
+
+package admin;
+
+import "admin-common.proto";
+
+service AdminGroupPermissionService {
+    rpc GetGroupPermissionList(GetGroupPermissionListRequest) returns (GetGroupPermissionListResponse);
+    rpc GetGroupPermissionInfo(GetGroupPermissionInfoRequest) returns (GetGroupPermissionInfoResponse);
+    rpc CreateGroupPermission(CreateGroupPermissionRequest) returns (CreateGroupPermissionResponse);
+    rpc UpdateGroupPermission(UpdateGroupPermissionRequest) returns (UpdateGroupPermissionResponse);
+    rpc DeleteGroupPermission(DeleteGroupPermissionRequest) returns (DeleteGroupPermissionResponse);
+    rpc SetMenuListOnGroupPermission(SetMenuListOnGroupPermissionRequest) returns (SetMenuListOnGroupPermissionResponse); // 그룹 권한에 메뉴들 설정
+    rpc GetMenuListOnGroupPermission(GetMenuListOnGroupPermissionRequest) returns (GetMenuListOnGroupPermissionResponse); // 그룹 권한에 설정된 메뉴들 조회
+    rpc SetGroupPermissionsOnUser(SetGroupPermissionsOnUserRequest) returns (SetGroupPermissionsOnUserResponse); // 사용자에게 그룹 권한 설정
+    rpc SetUserListOnGroupPermission(SetUserListOnGroupPermissionRequest) returns (SetUserListOnGroupPermissionResponse); // 그룹 권한에 사용자들 설정
+    rpc InsertGroupPermissionToUserList(InsertGroupPermissionToUserListRequest) returns (InsertGroupPermissionToUserListResponse); // 사용자들에게 그룹 권한 추가
+    rpc DeleteGroupPermissionOfUserList(DeleteGroupPermissionOfUserListRequest) returns (DeleteGroupPermissionOfUserListResponse); // 사용자들에게 설정된 그룹 권한 삭제
+    rpc GetGroupPermissionListOnUser(GetGroupPermissionListOnUserRequest) returns (GetGroupPermissionListOnUserResponse); // 사용자에게 설정된 그룹 권한 조회
+    rpc GetUserListWithGroupPermission(GetUserListWithGroupPermissionRequest) returns (GetUserListWithGroupPermissionResponse); // 그룹 권한을 가진 사용자 조회
+    rpc GetUserListWithUserPermission(GetUserListWithUserPermissionRequest) returns (GetUserListWithUserPermissionResponse); // 사용자 권한을 가진 사용자 조회
+    rpc SetUserPermissionListOnUser(SetUserPermissionListOnUserRequest) returns (SetUserPermissionListOnUserResponse); // 사용자별 권한 설정
+    rpc GetUserListWithoutMenuPermission(GetUserListWithoutMenuPermissionRequest) returns (GetUserListWithoutMenuPermissionResponse); // 메뉴 권한이 없는 사용자 조회
+}
+
+message GetGroupPermissionListRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+}
+
+message GetGroupPermissionListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated GroupPermission group_permission_list = 3;
+}
+
+message GetGroupPermissionInfoRequest {
+    string permission_code = 1;
+}
+
+message GetGroupPermissionInfoResponse {
+    bool success = 1;
+    string error_message = 2;
+    GroupPermission group_permission = 3;
+}
+
+message CreateGroupPermissionRequest {
+    string permission_code = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+}
+
+message CreateGroupPermissionResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message UpdateGroupPermissionRequest {
+    string permission_code = 1;
+    string name = 2;
+    string description = 3;
+    bool is_active = 4;
+}
+
+message UpdateGroupPermissionResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message DeleteGroupPermissionRequest {
+    string permission_code = 1;
+}
+
+message DeleteGroupPermissionResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+// 그룹 권한에 메뉴들 설정 요청
+message SetMenuListOnGroupPermissionRequest {
+    string permission_code = 1;
+    string menu_id_list = 2;
+    string menu_action_id_list = 3;
+}
+
+// 그룹 권한에 메뉴들 설정 응답
+message SetMenuListOnGroupPermissionResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+// 그룹 권한에 설정된 메뉴들 조회 요청
+message GetMenuListOnGroupPermissionRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+    string permission_code = 3;
+}
+
+// 그룹 권한에 설정된 메뉴들 조회 응답
+message GetMenuListOnGroupPermissionResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated MenuListOnGroupPermission group_permission_menu_list = 3;
+}
+
+// 사용자에게 그룹 권한 설정 요청
+message SetGroupPermissionsOnUserRequest {
+    string user_id = 1;
+    string permission_code_list = 2;
+}
+
+// 사용자에게 그룹 권한 설정 응답
+message SetGroupPermissionsOnUserResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+// 그룹 권한에 사용자들 설정 요청
+message SetUserListOnGroupPermissionRequest {
+    string permission_code = 1;
+    string user_id_list = 2;
+}
+
+// 그룹 권한에 사용자들 설정 응답
+message SetUserListOnGroupPermissionResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+// 사용자들에게 그룹 권한 추가 요청
+message InsertGroupPermissionToUserListRequest {
+    string user_id_list = 1;
+    string permission_code = 2;
+}
+
+// 사용자들에게 그룹 권한 추가 응답
+message InsertGroupPermissionToUserListResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+// 사용자들에게 설정된 그룹 권한 삭제 요청
+message DeleteGroupPermissionOfUserListRequest {
+    string user_id_list = 1;
+    string permission_code = 2;
+}
+
+// 사용자들에게 설정된 그룹 권한 삭제 응답
+message DeleteGroupPermissionOfUserListResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+// 사용자에게 설정된 그룹 권한 조회 요청
+message GetGroupPermissionListOnUserRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+    string user_id = 3;
+}
+
+// 사용자에게 설정된 그룹 권한 조회 응답
+message GetGroupPermissionListOnUserResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated GroupPermission group_permission_list = 3;
+}
+
+// 그룹 권한을 가진 사용자 조회 요청
+message GetUserListWithGroupPermissionRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+    string permission_code = 3;
+}
+
+// 그룹 권한을 가진 사용자 조회 응답
+message GetUserListWithGroupPermissionResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated User user_list = 3;
+}
+
+// 사용자 권한을 가진 사용자 조회 요청
+message GetUserListWithUserPermissionRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+}
+
+// 사용자 권한을 가진 사용자 조회 응답
+message GetUserListWithUserPermissionResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated User user_list = 3;
+}
+
+// 사용자에게 메뉴 권한 설정 요청
+message SetUserPermissionListOnUserRequest {
+    string user_id = 1;
+    string menu_id_list = 2;
+    string menu_action_id_list = 3;
+}
+
+// 사용자에게 메뉴 권한 설정 응답
+message SetUserPermissionListOnUserResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+// 메뉴 권한이 없는 사용자 조회 요청
+message GetUserListWithoutMenuPermissionRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+}
+
+// 메뉴 권한이 없는 사용자 조회 응답
+message GetUserListWithoutMenuPermissionResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated User user_list = 3;
+}

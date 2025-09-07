@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package user;
+
+import "user-common.proto";
+
+service ChatService {
+  rpc CreateConversation (CreateConversationRequest) returns (CreateConversationResponse); // 대화 생성
+  rpc GetConversations (GetConversationsRequest) returns (GetConversationsResponse); // 대화 목록 조회
+  rpc OrderingConversation (OrderingConversationRequest) returns (DefaultResponse); // 대화 목록 정렬
+  rpc ExitConversation (ExitConversationRequest) returns (DefaultResponse); // 대화 나가기
+  rpc SendMessage (SendMessageRequest) returns (SendMessageResponse); // 메시지 전송
+  rpc GetMessage (GetMessageRequest) returns (GetMessageResponse); // 채팅 메시지 조회
+  rpc Emotion (EmotionRequest) returns (DefaultResponse); // 감정 표현
+}
+
+message CreateConversationRequest {
+  string account1 = 1; // 계정 ID
+  string account2 = 2; // 계정 ID
+}
+
+message CreateConversationResponse {
+  bool success = 1;
+  string error_message = 2;
+  Conversation conversation = 3; // 생성된 대화 정보
+}
+
+message GetConversationsRequest {
+  string account_id = 1; // 계정 ID
+}
+
+message GetConversationsResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated Conversation conversations = 3; // 대화 목록
+}
+
+message OrderingConversationRequest {
+  string account_id = 1; // 계정 ID
+  repeated string conversation_ids = 2; // 대화 ID 목록
+}
+
+message ExitConversationRequest {
+  string conversation_id = 1; // 대화 ID
+  string account_id = 2; // 계정 ID
+}
+
+message SendMessageRequest {
+  string conversation_id = 1; // 대화 ID
+  string account_id = 2; // 계정 ID
+  string message = 3; // 메시지 내용
+}
+
+message SendMessageResponse {
+  bool success = 1;
+  string error_message = 2;
+  bool use_item = 3; // 아이템 사용 여부
+  int32 remain_count = 4; // 남은 쪽지 수
+  Message message = 5; // 전송된 메시지 정보
+}
+
+message GetMessageRequest {
+  string conversation_id = 1; // 대화 ID
+  string account_id = 2; // 계정 ID
+  string last_read_at = 3; // 마지막 읽은 시간
+  int32 page = 4;
+  int32 count_per_page = 5;
+}
+
+message GetMessageResponse {
+  bool success = 1;
+  string error_message = 2;
+  repeated Message messages = 3; // 메시지 목록
+}
+
+message EmotionRequest {
+  string message_id = 1; // 메시지 ID
+  string account_id = 2; // 계정 ID
+  string emotion = 3; // 감정 표현 (예: "happy", "sad")
+}

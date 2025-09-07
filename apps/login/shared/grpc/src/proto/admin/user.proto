@@ -1,0 +1,149 @@
+syntax = "proto3";
+
+package admin;
+
+import "admin-common.proto";
+
+service AdminUserService {
+    rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
+    rpc SignIn(SignInRequest) returns (SignInResponse) {}
+    rpc SendEmailAuthCode(SendEmailAuthCodeRequest) returns (SendEmailAuthCodeResponse) {} // 이메일 인증 코드 발송
+    rpc IssueTemporaryUserPassword(IssueTemporaryUserPasswordRequest) returns (IssueTemporaryUserPasswordResponse) {} // 임시 비밀번호 발급
+    rpc UpdateUserPassword(UpdateUserPasswordRequest) returns (UpdateUserPasswordResponse) {}
+    rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse) {} // 사용자 정보 조회
+    rpc GetUserMenus(GetUserInfoRequest) returns (GetUserMenusResponse) {} // 사용자 글로벌 내비게이션 메뉴 조회
+    rpc CheckPassword(CheckPasswordRequest) returns (CheckPasswordResponse) {} // 비밀번호 확인
+    rpc GetUserList(GetUserListRequest) returns (GetUserListResponse) {} // 사용자 목록 조회
+    rpc UpdateUserInfo(UpdateUserInfoRequest) returns (UpdateUserInfoResponse) {} // 사용자 정보 수정
+}
+
+message SignUpRequest {
+    string email = 1;
+    string password = 2;
+    string employee_number = 3; // 사원번호
+    string name = 4; // 이름
+    int32 department_id = 5; // 부서 ID
+    int32 position_id = 6; // 직책 ID
+    int32 job_id = 7; // 직무 ID
+    int64 phone_number = 8; // 전화번호
+    int32 extension_number = 9; // 사내번호
+}
+
+message SignUpResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+message SignInRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message SignInResponse {
+    bool success = 1;
+    string error_message = 2;
+    string user_id = 3;
+}
+
+message SendEmailAuthCodeRequest {
+    string email = 1;
+}
+
+message SendEmailAuthCodeResponse {
+    bool success = 1;
+    string error_message = 2;
+    string auth_code = 3;
+}
+
+// 임시 비밀번호 발급 요청
+message IssueTemporaryUserPasswordRequest {
+    string email = 1;
+    string name = 2;
+}
+
+// 임시 비밀번호 발급 응답
+message IssueTemporaryUserPasswordResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+// 비밀번호 변경 요청
+message UpdateUserPasswordRequest {
+    string email = 1;
+    string password = 2;
+    string new_password = 3;
+}
+
+// 비밀번호 변경 응답
+message UpdateUserPasswordResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+// 사용자 정보 조회 요청
+message GetUserInfoRequest {
+    string user_id = 1;
+}
+
+// 사용자 정보 조회 응답
+message GetUserInfoResponse {
+    bool success = 1;
+    string error_message = 2;
+    UserInfo info = 3;
+}
+
+// 사용자 글로벌 내비게이션 메뉴 조회 응답
+message GetUserMenusResponse {
+  bool success = 1;
+  optional string error_message = 2;
+  repeated GlobalNavigationMenus menus = 3;
+}
+
+// 비밀번호 확인 요청
+message CheckPasswordRequest {
+    string user_id = 1;
+    string password = 2;
+}
+
+// 비밀번호 확인 응답
+message CheckPasswordResponse {
+    bool success = 1;
+    string error_message = 2;
+}
+
+// 사용자 목록 조회 요청
+message GetUserListRequest {
+    int32 page = 1;
+    int32 count_per_page = 2;
+    string email = 3;
+    string name = 4;
+    string memo = 5;
+    int32 state = 6; // 계정 상태
+}
+
+// 사용자 목록 조회 응답
+message GetUserListResponse {
+    bool success = 1;
+    string error_message = 2;
+    repeated UserInfo user_info_list = 3;
+}
+
+// 사용자 정보 수정 요청
+message UpdateUserInfoRequest {
+    string user_id = 1;
+    string email = 2;
+    string employee_number = 3; // 사원번호
+    string name = 4; // 이름
+    int32 department_id = 5; // 부서 ID
+    int32 position_id = 6; // 직책 ID
+    int32 job_id = 7; // 직무 ID
+    int64 phone_number = 8; // 전화번호
+    int32 extension_number = 9; // 사내번호
+    int32 state = 10; // 계정 상태
+}
+
+// 사용자 정보 수정 응답
+message UpdateUserInfoResponse {
+    bool success = 1;
+    string error_message = 2;
+}

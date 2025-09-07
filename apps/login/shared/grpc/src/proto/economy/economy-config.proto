@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package economy;
+
+message Config{
+  int32 config_id = 1;
+  string game_id = 2;
+  string name = 3;
+  string key = 4;
+  string value = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+service EconomyConfigService{
+  rpc CreateConfig(ConfigRequest) returns (ConfigResponse) {}
+  rpc GetConfig(Empty) returns (ConfigsResponse) {}
+  rpc UpdateConfig(ConfigRequest) returns (ConfigResponse) {}
+}
+
+message Empty{}
+
+message ConfigRequest{
+  int32 rule_config_id = 1;
+  string game_id = 2;
+  string name = 3;
+  string key = 4;
+  string value = 5;
+}
+
+message ConfigResponse{
+  bool success = 1;
+  string error_message = 2;
+  Config config = 3;
+}
+
+message ConfigsResponse{
+  bool success = 1;
+  string error_message = 2;
+  repeated Config config = 3;
+}

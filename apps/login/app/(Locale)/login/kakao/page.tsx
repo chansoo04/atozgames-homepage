@@ -3,9 +3,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import Loading from "login/app/_components/Loading";
-import { GpSign } from "common/cookie";
+import { GpSign, GpSignProvider, GP_SIGN_AUTH_CODE } from "common/cookie";
 import TopBar from "app/_components/TopBar";
 import Image from "next/image";
+import { useModal } from "common/modal";
+import { useToast } from "common/toast";
+import { getAccountState, withdrawalRevoke, signIn } from "../action";
+import { signInWithKakao } from "./action";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -18,13 +22,39 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSigning, setIsSigning] = useState(false);
 
+  const { openToast } = useToast();
+  const { openModal } = useModal();
+
   useEffect(() => {
+    console.log(count, "COUNT!!!!!!!!!!");
     if (count === "" || count === "0") {
       signPopup();
     } else {
-      console.log("SHIT");
+      getCOOKIE().then(() => {
+        setIsLoading(false);
+      });
     }
-  }, []);
+  }, [count]);
+
+  // kakao callback
+  useEffect(() => {
+    if (token) {
+      console.error("ㅜN회 발동!!!");
+      signInFromCallback(token);
+    }
+  }, [token]);
+
+  // * callback 에러 처리
+  useEffect(() => {
+    if (error) {
+      setIsSigning(false);
+      setIsLoading(false);
+      openToast({
+        msg: "카카오 로그인에 실패했습니다.",
+        type: "error",
+      });
+    }
+  }, [error]);
 
   const signPopup = async () => {
     if (isSigning) {
@@ -43,6 +73,223 @@ export default function Page() {
     ].join("");
 
     router.replace(apiUrl);
+  };
+
+  const getCOOKIE = async () => {
+    const req = await fetch("/api/cookie/getByProvider", {
+      method: "POST",
+      body: JSON.stringify({ provider: GpSignProvider.KAKAO }),
+    });
+
+    if (!req.ok) {
+      return alert("카카오 로그인 정보를 가져오는데 실패했습니다");
+    }
+
+    const res = await req.json();
+    console.log(res, "res");
+    setSignInfo(res);
+  };
+
+  const signHandler = (signRes: any) => {
+    setIsSigning(false);
+    setIsLoading(false);
+    if (signRes.success) {
+      // logger.debug("signIn res.sucess", signRes);
+      return openToast({
+        msg: "로그인 성공",
+        type: "success",
+      });
+    } else {
+      console.error(signRes.code, "CODE!!!!!!!");
+      switch (signRes.code) {
+        // * 로그인 상태 Error
+        case GP_SIGN_AUTH_CODE.ALREADY_SIGND: {
+          // logger.error("signIn res.code", signRes.code);
+          const msg = [
+            "이미 로그인 되어있습니다.",
+            "로그아웃 후 다시 시도하거나",
+            "다른 계정으로 로그인 해주세요.",
+          ];
+          openToast({
+            msg: msg[0],
+            type: "error",
+            displayTime: 10000,
+          });
+          break;
+        }
+        case GP_SIGN_AUTH_CODE.INVALID_TOKEN: {
+          // * 3rd 재인증 필요
+          // logger.error("signIn res.code", signRes.code);
+          const msg = ["재로그인 필요"];
+          openModal({
+            // locale,
+            msg,
+            type: "ACTION",
+            action: () => {
+              signPopup();
+            },
+          });
+          break;
+        }
+        // * 계정 상태 Error
+        case "STATE_WITHDRAWAL": {
+          const msg = ["탈퇴한 계정입니다."];
+          // return openToast({
+          //   msg: msg[0],
+          //   type: 'error',
+          // });
+          return openModal({
+            msg,
+            type: "ACTION",
+            btnText: "탈퇴 취소",
+            action: async () => {
+              try {
+                const accountState = await getAccountState(signRes.uid!);
+                if (!accountState) {
+                  openToast({
+                    msg: "계정 상태를 확인할 수 없습니다.",
+                    type: "error",
+                  });
+                  return;
+                }
+                const res = await withdrawalRevoke(accountState.accountId);
+                if (!res || !res.success) {
+                  throw new Error("탈퇴 취소 실패");
+                } else {
+                  openToast({
+                    msg: "탈퇴 취소 성공",
+                    type: "success",
+                  });
+                }
+              } catch (error) {
+                // logger.error('revokeWithdrawal error', error);
+                openToast({
+                  msg: "탈퇴 취소 중 오류가 발생했습니다.",
+                  type: "error",
+                });
+              }
+            },
+          });
+        }
+        case "STATE_PAUSE": {
+          const msg = ["일시정지된 계정입니다."];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+          });
+        }
+        case "STATE_DISABLE": {
+          const msg = ["영구정지된 계정입니다."];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+          });
+        }
+        case "STATE_DORMANT": {
+          const msg = ["휴면 계정입니다."];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+          });
+        }
+        case "STATE_NOT_ACTIVE": {
+          const msg = ["삭제된 계정입니다."];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+          });
+        }
+        case "STATE_NOT_PUBLIC": {
+          const msg = ["계정 이용이 제한된 계정입니다."];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+            displayTime: 10000,
+          });
+        }
+        // * Firebase Error
+        case "FB_CANCELLED-POPUP-REQUEST":
+        case "FB_POPUP_CLOSED_BY_USER": {
+          // do nothing, user cancelled the popup
+          // logger.warning('signIn res.code', signRes.code);
+          setIsLoading(false);
+          return;
+        }
+        case "FB_POPUP_BLOCKED": {
+          // logger.error('signIn res.code', signRes.code);
+          openToast({
+            msg: "팝업이 차단되었습니다.",
+            type: "error",
+          });
+          break;
+        }
+        case "FB_INVALID_EMAIL": {
+          // logger.error('signIn res.code', signRes.code);
+          openToast({
+            msg: "유효하지 않은 아이디입니다.",
+            type: "error",
+          });
+          break;
+        }
+        case "FB_USER_DISABLED": {
+          // logger.error('signIn res.code', signRes.code);
+          openToast({
+            msg: "유효하지 않은 계정입니다.",
+            type: "error",
+          });
+          break;
+        }
+        case "FB_TOO_MANY_REQUESTS":
+        case "FB_UNKNOWN_ERROR":
+        default: {
+          // logger.error('signIn uncaught code', signRes.code);
+          const msg = ["잠시 뒤에 다시 시도해주세요"];
+          return openToast({
+            msg: msg[0],
+            type: "error",
+          });
+        }
+      }
+    }
+  };
+
+  const signInFromCookie = async (gpSign: GpSign) => {
+    setIsSigning(true);
+    const res = await signIn(gpSign);
+    signHandler(res);
+  };
+
+  const signInFromCallback = async (token: any) => {
+    console.log(token, "token");
+    setIsSigning(true);
+    const res = await signInWithKakao(token);
+    console.log(res, "res");
+    signHandler(res);
+  };
+
+  // 쿠키에서 삭제
+  const removeSign = async (gpSign: GpSign) => {
+    console.log(gpSign, "gpSign");
+    console.log(signInfo, "signInfo");
+    const newSignInfo = signInfo.filter((item) => item.uid !== gpSign.uid);
+    console.log(newSignInfo, "NEWSIGNINFO");
+    setSignInfo(newSignInfo);
+
+    await fetch("/api/cookie/removeSign", {
+      method: "POST",
+      body: JSON.stringify({ gpSign }),
+    });
+  };
+
+  const otherSign = () => {
+    if (signInfo.length >= Number(process.env.NEXT_PUBLIC_STORED_SIGN_LIMIT)) {
+      return openModal({
+        msg: ["계정은 5개까지 저장 가능합니다."],
+        type: "DEFAULT",
+      });
+    }
+
+    signPopup();
   };
 
   if (isLoading || isSigning) {
@@ -73,7 +320,7 @@ export default function Page() {
                     >
                       <button
                         type="button"
-                        // TODO:  onClick={() => signInFromCookie(gpSign)}
+                        onClick={() => signInFromCookie(gpSign)}
                         className="size-full text-left text-sm leading-tight"
                       >
                         {gpSign.id}
@@ -81,7 +328,7 @@ export default function Page() {
                       <button
                         type="button"
                         className="text-sm leading-tight"
-                        // TODO:  onClick={() => removeSign(gpSign)}
+                        onClick={() => removeSign(gpSign)}
                       >
                         X
                       </button>
@@ -100,7 +347,7 @@ export default function Page() {
                   <button
                     type="button"
                     className="relative flex w-full rounded-md border border-gray-300 bg-[#e5e9f9] p-3 text-sm leading-tight"
-                    // TODO:  onClick={() => otherSign()}
+                    onClick={() => otherSign()}
                   >
                     <div className="flex w-full items-center justify-center gap-4">
                       <div className="absolute left-5 top-3 flex items-center justify-center">

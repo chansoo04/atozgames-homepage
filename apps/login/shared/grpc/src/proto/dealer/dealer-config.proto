@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package dealer;
+
+message Game{
+  string game_id = 1;
+  string en = 2;
+  string ko = 3;
+  string created_at = 4;
+  string updated_at = 5;
+}
+
+message MoneyTable{
+  int32 rule_money_table_id = 1;
+  string game_id = 2;
+  int32 level = 3;
+  string ante = 4;
+  string small_blind = 5;
+  string big_blind = 6;
+  string min_buy_in = 7;
+  string max_buy_in = 8;
+  string created_at = 9;
+  string updated_at = 10;
+}
+
+service DealerConfigService{
+  rpc GetGame(Empty) returns (GamesResponse) {}
+  rpc CreateMoneyTable(MoneyTableRequest) returns (MoneyTableResponse) {}
+  rpc GetMoneyTable(Empty) returns (MoneyTablesResponse) {}
+  rpc UpdateMoneyTable(MoneyTableRequest) returns (MoneyTableResponse) {}
+}
+
+message Empty{}
+
+message GamesResponse{
+  bool success = 1;
+  string error_message = 2;
+  repeated Game game = 3;
+}
+
+message MoneyTableRequest{
+  int32 money_table_id = 1;
+  string game_id = 2;
+  int32 level = 3;
+  string ante = 4;
+  string small_blind = 5;
+  string big_blind = 6;
+  string min_buy_in = 7;
+  string max_buy_in = 8;
+}
+
+message MoneyTableResponse{
+  bool success = 1;
+  string error_message = 2;
+  MoneyTable money_table = 3;
+}
+
+message MoneyTablesResponse{
+  bool success = 1;
+  string error_message = 2;
+  repeated MoneyTable money_table = 3;
+}

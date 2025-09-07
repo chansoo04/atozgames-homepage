@@ -74,7 +74,7 @@ export default function Page() {
           // * 아이디 비밀번호 재입력
           const msg = ["재로그인 필요"];
           openModal({
-            locale,
+            // locale,
             msg,
             type: "DEFAULT",
             // type: 'ROUTING',

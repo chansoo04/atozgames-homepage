@@ -1,12 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
+interface FormData {
+  id?: string;
+  token?: string;
+  error?: string;
+}
+
 class NaverOauthError extends Error {
   code: string;
   constructor(code: string, message: string, err?: Error) {
     super(message);
     this.code = code;
     // 필요시 원본 에러를 로그에 남김
-    logger.error(`[${code}] ${message}`, err);
+    // logger.error(`[${code}] ${message}`, err);
   }
 }
 
@@ -47,19 +53,15 @@ export async function GET(request: NextRequest) {
     const naverAuthReq = await fetch(naverAuthUrl, {
       method: "POST",
       headers: {
-        "X-Naver-Client-Id": clientId,
-        "X-Naver-Client-Secret": clientSecret,
+        "X-Naver-Client-Id": clientId as string,
+        "X-Naver-Client-Secret": clientSecret as string,
       },
     });
 
     console.log("REQ: ", naverAuthReq);
 
     if (!naverAuthReq.ok) {
-      throw new NaverOauthError(
-        "NAVER_AUTH_REQUEST_FAILURE",
-        "네이버 인증 요청 실패",
-        naverAuthReq.statusText,
-      );
+      throw new NaverOauthError("NAVER_AUTH_REQUEST_FAILURE", "네이버 인증 요청 실패");
     }
 
     const naverAuthRes = await naverAuthReq.json();
@@ -84,11 +86,7 @@ export async function GET(request: NextRequest) {
     });
 
     if (!naverDataReq.ok) {
-      throw new NaverOauthError(
-        "NAVER_DATA_REQUEST_FAILURE",
-        "네이버 데이터 조회 실패",
-        naverDataReq.statusText,
-      );
+      throw new NaverOauthError("NAVER_DATA_REQUEST_FAILURE", "네이버 데이터 조회 실패");
     }
 
     const naverDataRes = await naverDataReq.json();

@@ -129,10 +129,10 @@ export default function Page() {
           // * 아이디 비밀번호 재입력
           const msg = ["재로그인 필요"];
           openModal({
-            locale,
+            // locale,
             msg,
             type: "ROUTING",
-            routingUrl: `${urlSignUp}?id=${inputValue.id}`,
+            routingUrl: `${process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL}signup?id=${inputValue.id}`,
           });
           break;
         }
@@ -255,6 +255,8 @@ export default function Page() {
   // 로그인 PASSWORD_FAIL_COUNT회 실패 시 잠금
   const handleLockUser = async () => {};
 
+  const findId = async () => {};
+
   if (isLoading || signInfo === undefined) {
     return <Loading />;
   }
@@ -347,7 +349,8 @@ export default function Page() {
                   <button
                     type="button"
                     className="text-sm font-medium text-[#7C7C9E] hover:text-blue-500"
-                    onClick={() => findId()}
+                    // TODO: findId 함수 처리
+                    onClick={() => alert("서비스에 오류가 발생했습니다\n잠시 후 다시 시도해주세요")}
                   >
                     아이디 찾기
                   </button>
@@ -355,7 +358,8 @@ export default function Page() {
                   <button
                     type="button"
                     className="text-sm font-medium text-[#7C7C9E] hover:text-blue-500"
-                    onClick={() => alert("핸드폰번호 인증으로 이동!!")}
+                    // TODO: findPw함수 처리
+                    onClick={() => alert("서비스에 오류가 발생했습니다\n잠시 후 다시 시도해주세요")}
                   >
                     비밀번호찾기
                   </button>

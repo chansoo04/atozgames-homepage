@@ -79,7 +79,7 @@ export default function Page() {
       if (getNick.length > 0) {
         for (const provider of Object.values(signs)) {
           for (const sign of provider.list as GpSign[]) {
-            const nickData = getNick.find((data) => data.firebase_uid === sign.uid);
+            const nickData = getNick.find((data: any) => data.firebase_uid === sign.uid);
             if (nickData) {
               sign.id = nickData.nickname;
 

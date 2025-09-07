@@ -4,6 +4,11 @@ import { cookies } from "next/headers";
 
 const PASSWORD_FAIL_COUNT = "PASSWORD_FAIL_COUNT";
 
+interface CookieKeys {
+  [key: string]: string;
+}
+const UTILITY_COOKIE = "GP_UTILITY_COOKIE";
+
 export async function POST(request: NextRequest) {
   const data = await request.json();
 

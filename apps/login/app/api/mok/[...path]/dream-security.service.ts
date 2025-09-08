@@ -1,70 +1,126 @@
 // app/api/mok/[...path]/dream-security.service.ts
+// ✅ Node 런타임 강제
 export const runtime = "nodejs";
 
-// ✅ Webpack 간섭 회피: 런타임 require
+/**
+ * 드림시큐리티 MobileOK 연동 유틸
+ * - 벤더 JS(mok_Key_Manager_v1.0.3.js) 위치 자동 탐색
+ * - 키 파일(dev_mok_keyInfo.dat 등) 경로 자동 탐색 + ENV 절대경로 우선
+ * - keyInit 실행 및 serviceId 로깅/주입
+ * - 클라이언트 거래 ID 생성(RSAEncrypt) 및 결과 복호화(getResult)
+ *
+ * 필요 ENV:
+ *   DREAM_SECURITY_KEY_FILE=dev_mok_keyInfo.dat          // 키파일명
+ *   DREAM_SECURITY_KEY_PASSWORD=********                 // 키파일 비밀번호
+ *   DREAM_SECURITY_CLIENT_PREFIX=ATOZ                    // 거래ID prefix (선택)
+ *   DREAM_SECURITY_URL=https://...                       // 결과요청 서버 URL (getAuthData에서 사용)
+ *   DREAM_SECURITY_SERVICE_ID=YOUR_SERVICE_ID            // 라이브러리 필요 시 주입(선택)
+ *   DREAM_SECURITY_KEY_ABS_PATH=/abs/path/to/key.dat     // 절대경로로 고정하고 싶으면 (선택)
+ */
+
+// ⚠️ ESM 환경에서 require 사용(Next App Router)
 const nodeRequire: NodeRequire = eval("require");
 const fs = nodeRequire("node:fs");
 const path = nodeRequire("node:path");
 const { fileURLToPath } = nodeRequire("node:url");
 
-// 벤더 로드 + 실제 파일 위치 디렉터리 반환
+// --- 벤더 JS 로드 ------------------------------------------------------------
 function loadMobileOK() {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
-  // ① 빌드 산출물 옆( .next/server/... )
-  const candVendor1 = path.join(__dirname, "mok_Key_Manager_v1.0.3.js");
-  // ② 소스 경로(개발 모드, CWD 기준)
-  const candVendor2 = path.join(process.cwd(), "app/api/mok/[...path]/mok_Key_Manager_v1.0.3.js");
+  // ① 빌드 산출물 옆(.next/server/**/app/api/mok/[...path]/)
+  const cand1 = path.join(__dirname, "mok_Key_Manager_v1.0.3.js");
 
-  for (const p of [candVendor1, candVendor2]) {
+  // ② 모노레포 소스 경로(CWD 기준)
+  const cand2 = path.join(
+    process.cwd(),
+    "apps/login/app/api/mok/[...path]/mok_Key_Manager_v1.0.3.js",
+  );
+
+  for (const p of [cand1, cand2]) {
     if (fs.existsSync(p)) {
+      console.log(`[DREAM] vendor found: ${p}`);
       return { mod: nodeRequire(p), dir: path.dirname(p) };
+    } else {
+      console.warn(`[DREAM] vendor not found try: ${p}`);
     }
   }
 
-  throw new Error(`mok_Key_Manager_v1.0.3.js not found.\n- ${candVendor1}\n- ${candVendor2}`);
+  throw new Error(`mok_Key_Manager_v1.0.3.js not found.\n- ${cand1}\n- ${cand2}`);
 }
 
 const { mod: mobileOK, dir: vendorDir } = loadMobileOK();
 
-// 🔐 키 파일 경로 결정 로직
+// --- 키 파일 경로 결정 --------------------------------------------------------
 function resolveKeyFilePath(fileName: string): string {
-  // A. 절대 경로가 환경변수로 넘어오면 그걸 최우선 사용
+  // A. 절대경로 ENV가 있으면 최우선
   const absFromEnv = process.env.DREAM_SECURITY_KEY_ABS_PATH;
-  if (absFromEnv && fs.existsSync(absFromEnv)) return absFromEnv;
+  if (absFromEnv && fs.existsSync(absFromEnv)) {
+    console.log(`[DREAM] key(abs) used: ${absFromEnv}`);
+    return absFromEnv;
+  }
 
-  // B. 벤더 파일이 있는 디렉터리 옆에 키 파일이 있는 경우
+  // B. 벤더 파일 옆
   const cand1 = path.join(vendorDir, fileName);
 
-  // C. 소스 경로(개발) – CWD 기준
-  const cand2 = path.join(process.cwd(), "app/api/mok/[...path]/", fileName);
+  // C. 모노레포 소스 경로
+  const cand2 = path.join(process.cwd(), "apps/login/app/api/mok/[...path]/", fileName);
 
-  // D. 혹시 CWD 루트에 바로 두었을 수도…
+  // D. CWD 루트
   const cand3 = path.join(process.cwd(), fileName);
 
   for (const p of [cand1, cand2, cand3]) {
-    if (fs.existsSync(p)) return p;
+    if (fs.existsSync(p)) {
+      console.log(`[DREAM] key(found): ${p}`);
+      return p;
+    } else {
+      console.warn(`[DREAM] key(not found try): ${p}`);
+    }
   }
 
   throw new Error(
-    `Key file not found: ${fileName}\nTried:\n- ${cand1}\n- ${cand2}\n- ${cand3}${
-      absFromEnv ? `\n- ${absFromEnv} (from DREAM_SECURITY_KEY_ABS_PATH)` : ""
-    }`,
+    `Key file not found: ${fileName}\nTried:\n- ${cand1}\n- ${cand2}\n- ${cand3}${absFromEnv ? `\n- ${absFromEnv} (from DREAM_SECURITY_KEY_ABS_PATH)` : ""}`,
   );
 }
 
-// ---- 초기화 ----
+// --- 초기화 (keyInit / serviceId) --------------------------------------------
 const fileName = process.env.DREAM_SECURITY_KEY_FILE!;
 const password = process.env.DREAM_SECURITY_KEY_PASSWORD!;
-const keyPath = resolveKeyFilePath(fileName);
 
-// 필요 시 Web Crypto를 기대하는 코드에 대비
+if (!fileName || !password) {
+  throw new Error(`[DREAM] env missing: DREAM_SECURITY_KEY_FILE or DREAM_SECURITY_KEY_PASSWORD`);
+}
+
+const keyPath = resolveKeyFilePath(fileName);
+console.log(`[DREAM] keyPath=${keyPath}`);
+
+// Node 20 글로벌 fetch/crypto 사용 (crypto 없으면 주입)
 (globalThis as any).crypto ??= nodeRequire("node:crypto").webcrypto;
 
-// 실제 초기화
-mobileOK.keyInit(keyPath, password);
+// keyInit 실행
+try {
+  const ret = mobileOK.keyInit(keyPath, password);
+  console.log(`[DREAM] keyInit ret=`, ret);
+} catch (e) {
+  console.error(`[DREAM] keyInit throw:`, e);
+  throw e;
+}
 
+// serviceId 확인/주입(라이브러리가 제공하는 경우에만)
+try {
+  const currentSvc = mobileOK.getServiceId && mobileOK.getServiceId();
+  if (!currentSvc && process.env.DREAM_SECURITY_SERVICE_ID && mobileOK.setServiceId) {
+    mobileOK.setServiceId(process.env.DREAM_SECURITY_SERVICE_ID);
+    console.log(`[DREAM] setServiceId(${process.env.DREAM_SECURITY_SERVICE_ID})`);
+  }
+  const svc = mobileOK.getServiceId && mobileOK.getServiceId();
+  console.log(`[DREAM] serviceId=`, svc);
+} catch (e) {
+  console.warn(`[DREAM] serviceId check error:`, e);
+}
+
+// --- 공개 타입 ---------------------------------------------------------------
 type DreamSecurityMeta = string;
 
 interface PersonalIdentifyAuthRequest {
@@ -72,7 +128,7 @@ interface PersonalIdentifyAuthRequest {
   data: TestMeta | DreamSecurityMeta;
 }
 
-interface PersonalIdentifyAuthResponse {
+export interface PersonalIdentifyAuthResponse {
   ci: string;
   di?: string;
   name?: string;
@@ -90,131 +146,139 @@ interface TestMeta {
 }
 
 interface AuthData {
-  userName: string; // 사용자 이름
-  siteId: string; // 이용기관 ID
-  clientTxId: string; // 이용기관 거래 ID
-  txId: string; // 본인확인 거래 ID
-  providerId: string; // 서비스제공자(인증사업자) ID
-  serviceType: string; // 이용 서비스 유형
-  ci: string; // 사용자 CI
-  di: string; // 사용자 DI
-  userPhone: string; // 사용자 전화번호
-  userBirthday: string; // 사용자 생년월일
-  userGender: string; // 사용자 성별 (1: 남자, 2: 여자)
-  userNation: string; // 사용자 국적 (0: 내국인, 1: 외국인)
-  reqAuthType: string; // 본인확인 인증 종류
-  reqDate: string; // 본인확인 요청 시간
-  issuer: string; // 본인확인 인증 서버
-  issueDate: string; // 본인확인 인증 시간
+  userName: string;
+  siteId: string;
+  clientTxId: string;
+  txId: string;
+  providerId: string;
+  serviceType: string;
+  ci: string;
+  di: string;
+  userPhone: string;
+  userBirthday: string;
+  userGender: string; // "1" 남 / "2" 여
+  userNation: string; // "0" 내국인 / "1" 외국인
+  reqAuthType: string;
+  reqDate: string;
+  issuer: string;
+  issueDate: string;
 }
 
-export function clientTxId(): { serviceId: string; encClientTxId: string } {
-  try {
-    const clientPrefix = process.env.DREAM_SECURITY_CLIENT_PREFIX;
-    const clientTxId = `${clientPrefix + uuid()}|${getCurrentDate()}`;
-    const encClientTxId = mobileOK.RSAEncrypt(clientTxId);
-    return { serviceId: mobileOK.getServiceId(), encClientTxId };
-  } catch (error) {
-    console.error(error);
-    throw new Error("드림시큐리티 생성 실패");
-  }
-}
-
+// --- 유틸 --------------------------------------------------------------------
 function uuid() {
   return "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0,
       v = c === "x" ? r : (r & 0x3) | 0x8;
-
     return v.toString(16);
   });
 }
 
 function getCurrentDate() {
-  const newDate = new Date();
-  newDate.toLocaleString("ko-kr");
-
-  const year = newDate.getFullYear();
-  const mon = newDate.getMonth() + 1;
-  const date = newDate.getDate();
-  const hour = newDate.getHours();
-  const min = newDate.getMinutes();
-  const sec = newDate.getSeconds();
-
-  const _mon = mon < 10 ? `0${mon}` : `${mon}`;
-  const _date = date < 10 ? `0${date}` : `${date}`;
-  const _hour = hour < 10 ? `0${hour}` : `${hour}`;
-  const _min = min < 10 ? `0${min}` : `${min}`;
-  const _sec = sec < 10 ? `0${sec}` : `${sec}`;
-
-  const reqDate = year + _mon + _date + _hour + _min + _sec;
-
-  return reqDate;
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = `${d.getMonth() + 1}`.padStart(2, "0");
+  const day = `${d.getDate()}`.padStart(2, "0");
+  const hh = `${d.getHours()}`.padStart(2, "0");
+  const mm = `${d.getMinutes()}`.padStart(2, "0");
+  const ss = `${d.getSeconds()}`.padStart(2, "0");
+  return `${y}${m}${day}${hh}${mm}${ss}`;
 }
 
-export async function getAuthData(req: any): Promise<PersonalIdentifyAuthResponse> {
-  // STEP 1. 본인확인 결과 타입별 결과 처리
-  // eslint-disable-next-line no-case-declarations
-  let encryptMOKResult;
+// --- 공개 함수 ---------------------------------------------------------------
 
-  if (req === null) {
-    throw new Error("-1|본인확인 MOKToken 인증결과 응답이 없습니다.");
-  } else {
-    /* 2.1 본인확인 결과 타입 : MOKToken */
-    /* 2.1.1 본인확인 결과요청 입력정보 설정 */
-    const authResultRequestObject = {
-      // encryptMOKKeyToken: resultRequestObject.encryptMOKKeyToken,
-      encryptMOKKeyToken: req,
-    };
-    /* 2.1.2 본인확인 결과요청 */
-    const resultResponseObject = await fetch(process.env.DREAM_SECURITY_URL as string, {
+/**
+ * clientTxId 생성 및 암호화
+ * - serviceId: 라이브러리 내부/주입된 값
+ * - encClientTxId: RSAEncrypt 결과
+ */
+export function clientTxId(): { serviceId: string; encClientTxId: string } {
+  try {
+    const clientPrefix = process.env.DREAM_SECURITY_CLIENT_PREFIX || "";
+    const raw = `${clientPrefix}${uuid()}|${getCurrentDate()}`;
+
+    const encClientTxId = mobileOK.RSAEncrypt(raw);
+    const serviceId = mobileOK.getServiceId && mobileOK.getServiceId();
+
+    if (!encClientTxId) throw new Error(`[DREAM] RSAEncrypt returned empty`);
+    if (!serviceId) throw new Error(`[DREAM] getServiceId returned empty`);
+
+    return { serviceId, encClientTxId };
+  } catch (error) {
+    console.error(`[DREAM] clientTxId error:`, error);
+    throw new Error("드림시큐리티 생성 실패");
+  }
+}
+
+/**
+ * DreamSecurity 결과 요청 → 복호화 → 필수 항목만 반환
+ * @param req encryptMOKKeyToken or 전체 결과 객체
+ */
+export async function getAuthData(req: any): Promise<PersonalIdentifyAuthResponse> {
+  let encryptMOKResult: string | null = null;
+
+  try {
+    if (req == null) {
+      throw new Error("-1|본인확인 MOKToken 인증결과 응답이 없습니다.");
+    }
+
+    const url = process.env.DREAM_SECURITY_URL as string;
+    if (!url) {
+      throw new Error("DREAM_SECURITY_URL env is missing");
+    }
+
+    // 서버로 결과 요청
+    const resultResponse = await fetch(url, {
       method: "POST",
-      body: JSON.stringify(authResultRequestObject),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ encryptMOKKeyToken: req }),
     });
 
-    if (!resultResponseObject.ok || typeof resultResponseObject === "undefined") {
+    if (!resultResponse.ok) {
+      const text = await resultResponse.text().catch(() => "");
+      console.error(`[DREAM] resultResponse not ok`, {
+        status: resultResponse.status,
+        statusText: resultResponse.statusText,
+        body: text.slice(0, 400),
+      });
       throw new Error("-0|본인확인 서버통신(결과요청)에 실패했습니다.");
     }
 
-    const res = await resultResponseObject.json();
-    console.log(res, "res");
-    encryptMOKResult = res.encryptMOKResult;
+    const res = await resultResponse.json();
+    console.log(`[DREAM] resultResponse.json()`, res);
 
-    /* 2.1.3 본인확인 결과요청 실패시 */
     if (res.resultCode !== "2000") {
       throw new Error("본인확인 결과요청에 실패했습니다.");
     }
+
+    encryptMOKResult = res.encryptMOKResult ?? null;
+
+    if (!encryptMOKResult) {
+      throw new Error("-1|본인확인 MOKToken 가 없습니다.");
+    }
+  } catch (e) {
+    console.error(`[DREAM] getAuthData request error:`, e);
+    throw e;
   }
 
-  if (
-    encryptMOKResult === null ||
-    encryptMOKResult === "" ||
-    typeof encryptMOKResult === "undefined"
-  ) {
-    throw new Error("-1|본인확인 MOKToken 가 없습니다.");
-  }
-
-  // encryptMOKResult 복호화가 실패하는 경우
-  let decryptMOKResultJson = null;
+  // 복호화
   try {
-    decryptMOKResultJson = mobileOK.getResult(encryptMOKResult);
-  } catch (error) {
+    const decryptMOKResultJson = mobileOK.getResult(encryptMOKResult);
+    const metadata: Partial<AuthData> = JSON.parse(decryptMOKResultJson);
+    console.log(`[DREAM] metadata`, metadata);
+
+    const result: PersonalIdentifyAuthResponse = {
+      ci: metadata.ci as string,
+      di: metadata.di,
+      name: metadata.userName,
+      telCode: 82,
+      tel: Number(metadata?.userPhone) || 0,
+      birth: metadata?.userBirthday?.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3") || "",
+      foreign: metadata.userNation === "1",
+      gender: metadata.userGender === "1" ? "M" : "F",
+    };
+    return result;
+  } catch (e) {
+    console.error(`[DREAM] decrypt/getResult error:`, e);
     throw new Error("-3|본인확인 결과 복호화 오류");
   }
-
-  const metadata: Partial<AuthData> = JSON.parse(decryptMOKResultJson);
-  console.log(metadata, "metadata");
-
-  // * 필수값만 추출
-  const result: PersonalIdentifyAuthResponse = {
-    ci: metadata.ci as string,
-    di: metadata.di,
-    name: metadata.userName,
-    telCode: 82,
-    tel: Number(metadata?.userPhone) ?? 0, // 1012341234n
-    birth: metadata?.userBirthday?.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3") ?? "",
-    foreign: metadata.userNation === "1",
-    gender: metadata.userGender === "1" ? "M" : "F",
-  };
-
-  return result;
 }

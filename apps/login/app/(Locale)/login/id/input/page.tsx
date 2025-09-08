@@ -120,13 +120,9 @@ export default function Page() {
 
     if (signRes.success) {
       openModal({
-        msg: [
-          "본인인증 재확인이 필요합니다",
-          "재확인하지 않을 경우 게임 이용이 불가능합니다",
-          "재인증하시겠습니까?",
-        ],
+        msg: ["본인 확인이 만료되었습니다", "안전한 이용을 위해 다시 본인 확인을 진행해주세요"],
         type: "ACTION",
-        btnText: "본인인증하기",
+        btnText: "본인 확인하기",
         action: async () => {
           const win = window as any;
           const url = `${process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL}api/mok/mok_std_request`;

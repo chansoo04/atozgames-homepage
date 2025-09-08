@@ -15,7 +15,8 @@ export const toUnity = async (accountId: string, firebaseUid: string, idToken: s
       // console.log(accountId);
 
       // TODO : unity ------- //
-      const base = "https://login.dev.atozgames.net";
+      // const base = "https://login.dev.atozgames.net";
+      const base = "https://demo.login.dev.atozgames.net";
       const url = `${base}/atoz-signin://${sendData}`;
       console.debug("URL: ", url);
       // FIXME: 이거 풀어야함

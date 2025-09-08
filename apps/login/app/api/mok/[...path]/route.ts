@@ -41,6 +41,7 @@ export async function POST(request: NextRequest, { params }: { params: { path?: 
           /* 본인확인 결과 수신 URL */
           returnUrl,
         };
+        console.log(result, "result");
         return NextResponse.json(result);
       case "mok_std_result":
         // TODO: 본인확인 서비스 결과 처리 - 본인인증 결과로 받은 토큰 처리

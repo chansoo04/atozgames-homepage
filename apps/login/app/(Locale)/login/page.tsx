@@ -142,7 +142,7 @@ export default function Page() {
                     link={`/login/id?count=${signInfo.PASSWORD?.list?.length || 0}`}
                     // link="/login/id?count=0"
                     text="아토즈 로그인"
-                    icon="/atozImageLogo.png"
+                    // icon="/atozImageLogo.png"
                   />
                   <IconButton
                     link={`/login/google?count=${signInfo.GOOGLE?.list?.length || 0}`}

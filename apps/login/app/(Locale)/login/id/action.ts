@@ -13,6 +13,7 @@ export const signInWithIDPASSWORD = async (
   success: boolean;
   code?: GP_SIGN_AUTH_CODE | string;
   uid?: string;
+  res?: any; // TODO: 지우기!!
 }> => {
   let id;
   if (!rawId.includes("@")) {
@@ -56,8 +57,9 @@ export const signInWithIDPASSWORD = async (
         };
       }
 
-      toUnity(res.accountId, res.firebaseUid, res.idToken);
-      return { success: true };
+      // FIXME!!! res 없애고, toUnity 살리기
+      // toUnity(res.account_id, res.firebase_uid, res.id_token);
+      return { success: true, res: res };
     }
     // 로그인 실패
     else {

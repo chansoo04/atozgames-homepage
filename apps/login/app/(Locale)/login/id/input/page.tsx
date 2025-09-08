@@ -12,6 +12,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { signInWithIDPASSWORD } from "../action";
 import { getAccountState, withdrawalRevoke } from "../../action";
+import { toUnity } from "lib/unityUtil";
+
+class SignFailError extends Error {
+  constructor(
+    public code: string,
+    message?: string,
+  ) {
+    super(message);
+    this.name = "SignFailError";
+    this.code = code;
+  }
+}
 
 export default function Page() {
   const PASSWORD_FAIL_COUNT = 10; // 비밀번호 입력 실패 횟수 제한
@@ -107,10 +119,59 @@ export default function Page() {
     const signRes = await signInWithIDPASSWORD(id, password);
 
     if (signRes.success) {
-      return openToast({
-        msg: "로그인 성공",
-        type: "success",
+      openModal({
+        msg: [
+          "본인인증 재확인이 필요합니다",
+          "재확인하지 않을 경우 게임 이용이 불가능합니다",
+          "재인증하시겠습니까?",
+        ],
+        type: "ACTION",
+        btnText: "본인인증하기",
+        action: async () => {
+          const win = window as any;
+          const url = `${process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL}api/mok/mok_std_request`;
+
+          if (win.MOBILEOK) {
+            try {
+              win.MOBILEOK.process(url, "MWV", "result");
+            } catch (error) {
+              alert("MOK 인증을 시작하는데 실패했습니다. 팝업이 허용되어 있는지 확인해주세요.");
+              return Promise.reject(new Error("MOK 인증을 시작하는데 실패했습니다."));
+            }
+          } else {
+            alert("본인인증 호출에 실패하였습니다");
+          }
+
+          return new Promise<void>((ok, no) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (window as any).result = async (mokResult: any) => {
+              // TODO: from '/api/mok/[...nextPath]/route.ts mok_std_result'
+              const data = JSON.parse(mokResult);
+
+              if (data.error) {
+                alert(`MOK 인증에 실패했습니다. ${data.error}`);
+                return no(new SignFailError("MOK_FAIL", `MOK 인증에 실패했습니다. ${data.error}`));
+              }
+
+              openToast({
+                msg: "로그인 성공",
+                type: "success",
+              });
+              // console.log(signRes, "signRes");
+
+              return toUnity(
+                signRes.res.account_id,
+                signRes.res.firebase_uid,
+                signRes.res.id_token,
+              );
+            };
+          });
+        },
       });
+      // return openToast({
+      //   msg: "로그인 성공",
+      //   type: "success",
+      // });
     } else {
       switch (signRes.code) {
         case "ALREADY_SIGND": {
@@ -249,7 +310,8 @@ export default function Page() {
       }
     }
 
-    setIsLoggingIn(false);
+    // FIXME: 풀기!!
+    // setIsLoggingIn(false);
   };
 
   // 로그인 PASSWORD_FAIL_COUNT회 실패 시 잠금

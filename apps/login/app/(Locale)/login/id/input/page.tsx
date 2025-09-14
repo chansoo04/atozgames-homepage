@@ -12,7 +12,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { signInWithIDPASSWORD } from "../action";
 import { getAccountState, withdrawalRevoke } from "../../action";
-import { toUnity } from "lib/unityUtil";
 
 class SignFailError extends Error {
   constructor(
@@ -119,55 +118,10 @@ export default function Page() {
     const signRes = await signInWithIDPASSWORD(id, password);
 
     if (signRes.success) {
-      openModal({
-        msg: ["본인 확인이 만료되었습니다", "안전한 이용을 위해 다시 본인 확인을 진행해주세요"],
-        type: "ACTION",
-        btnText: "본인 확인하기",
-        action: async () => {
-          const win = window as any;
-          const url = `${process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL}api/mok/mok_std_request`;
-
-          if (win.MOBILEOK) {
-            try {
-              win.MOBILEOK.process(url, "MWV", "result");
-            } catch (error) {
-              alert("MOK 인증을 시작하는데 실패했습니다. 팝업이 허용되어 있는지 확인해주세요.");
-              return Promise.reject(new Error("MOK 인증을 시작하는데 실패했습니다."));
-            }
-          } else {
-            alert("본인인증 호출에 실패하였습니다");
-          }
-
-          return new Promise<void>((ok, no) => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (window as any).result = async (mokResult: any) => {
-              // TODO: from '/api/mok/[...nextPath]/route.ts mok_std_result'
-              const data = JSON.parse(mokResult);
-
-              if (data.error) {
-                alert(`MOK 인증에 실패했습니다. ${data.error}`);
-                return no(new SignFailError("MOK_FAIL", `MOK 인증에 실패했습니다. ${data.error}`));
-              }
-
-              openToast({
-                msg: "로그인 성공",
-                type: "success",
-              });
-              // console.log(signRes, "signRes");
-
-              return toUnity(
-                signRes.res.account_id,
-                signRes.res.firebase_uid,
-                signRes.res.id_token,
-              );
-            };
-          });
-        },
+      return openToast({
+        msg: "로그인 성공",
+        type: "success",
       });
-      // return openToast({
-      //   msg: "로그인 성공",
-      //   type: "success",
-      // });
     } else {
       switch (signRes.code) {
         case "ALREADY_SIGND": {
@@ -313,7 +267,54 @@ export default function Page() {
   // 로그인 PASSWORD_FAIL_COUNT회 실패 시 잠금
   const handleLockUser = async () => {};
 
-  const findId = async () => {};
+  // 아이디 찾기
+  const findIDorPASSWORD = async (type: "ID" | "PASSWORD") => {
+    const win = window as any;
+    const url = `${process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL}api/mok/mok_std_request`;
+
+    if (win.MOBILEOK) {
+      try {
+        win.MOBILEOK.process(url, "MWV", "result");
+      } catch (error) {
+        alert("MOK 인증을 시작하는데 실패했습니다. 팝업이 허용되어 있는지 확인해주세요.");
+        return Promise.reject(new Error("MOK 인증을 시작하는데 실패했습니다."));
+      }
+    } else {
+      alert("MOK 인증을 시작하는데 실패했습니다");
+    }
+
+    return new Promise<void>((ok, no) => {
+      (window as any).result = async (mokResult: any) => {
+        const data = JSON.parse(mokResult);
+
+        if (data.error) {
+          alert(`MOK 인증에 실패했습니다. ${data.error}`);
+          return no(new SignFailError("MOK_FAIL", `MOK 인증에 실패했습니다. ${data.error}`));
+        }
+
+        const url = process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL + "api/user/createUser";
+        const req = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+
+        if (!req.ok) {
+          throw new Error(req.statusText);
+        }
+
+        const res = await req.json();
+        console.log(res, "res");
+
+        if (type === "ID") {
+          return router.push(`/login/id/list?token=${res.token}&id=${res.user_id}`);
+        } else if (type === "PASSWORD") {
+          return router.push(`/login/id/list?token=${res.token}&id=${res.user_id}&pw=true`);
+        } else {
+          return alert("잘못된 값입니다");
+        }
+      };
+    });
+  };
 
   if (isLoading || signInfo === undefined) {
     return <Loading />;
@@ -407,8 +408,7 @@ export default function Page() {
                   <button
                     type="button"
                     className="text-sm font-medium text-[#7C7C9E] hover:text-blue-500"
-                    // TODO: findId 함수 처리
-                    onClick={() => alert("서비스에 오류가 발생했습니다\n잠시 후 다시 시도해주세요")}
+                    onClick={() => findIDorPASSWORD("ID")}
                   >
                     아이디 찾기
                   </button>
@@ -416,8 +416,7 @@ export default function Page() {
                   <button
                     type="button"
                     className="text-sm font-medium text-[#7C7C9E] hover:text-blue-500"
-                    // TODO: findPw함수 처리
-                    onClick={() => alert("서비스에 오류가 발생했습니다\n잠시 후 다시 시도해주세요")}
+                    onClick={() => findIDorPASSWORD("PASSWORD")}
                   >
                     비밀번호찾기
                   </button>

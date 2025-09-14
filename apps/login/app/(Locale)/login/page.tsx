@@ -5,7 +5,6 @@ import TopBar from "login/app/_components/TopBar";
 import IconButton from "login/app/_components/IconButton";
 import Loading from "login/app/_components/Loading";
 import { GpCookie, GpSign } from "common/cookie";
-
 export default function Page() {
   const [signInfo, setSignInfo] = useState<GpCookie>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -122,7 +121,6 @@ export default function Page() {
     <>
       {/* 상단 x버튼 영역 */}
       <TopBar visible={true} type="CLOSE" actionUrl="" />
-      {/* TODO: SignToast, SignModal?? */}
       <div
         className="flex w-full items-center justify-center bg-[#b9c2e2] pb-4"
         style={{ height: "calc(var(--vh, 1vh) * 100)" }}
@@ -137,12 +135,10 @@ export default function Page() {
               <div className="flex w-full max-w-[580px] flex-col items-center justify-center rounded-lg bg-[#b9c2e2] p-8">
                 {/* 버튼 영역 */}
                 <div className="mt-4 flex w-full flex-col items-center justify-center gap-2 text-sm leading-tight">
-                  {/* TODO: count query 처리 */}
                   <IconButton
                     link={`/login/id?count=${signInfo.PASSWORD?.list?.length || 0}`}
-                    // link="/login/id?count=0"
                     text="아토즈 로그인"
-                    // icon="/atozImageLogo.png"
+                    icon="/atozImageLogo.png"
                   />
                   <IconButton
                     link={`/login/google?count=${signInfo.GOOGLE?.list?.length || 0}`}
@@ -156,13 +152,11 @@ export default function Page() {
                   />
                   <IconButton
                     link={`/login/kakao?count=${signInfo.KAKAO?.list?.length || 0}`}
-                    // link={"/login/kakao?count=0"}
                     text="카카오 로그인"
                     icon="/kakao-icon.svg"
                   />
                   <IconButton
                     link={`/login/naver?count=${signInfo.NAVER?.list?.length || 0}`}
-                    // link="/login/naver?count=0"
                     text="네이버 로그인"
                     icon="/naver-icon.svg"
                   />

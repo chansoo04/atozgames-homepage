@@ -61,7 +61,7 @@ export const signUpIdentity = async (credential: UserCredential, provider: GpSig
       const url_getUser = process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL + "api/user/getUser";
       const req_getUser = await fetch(url_getUser, {
         method: "POST",
-        body: JSON.stringify({ action: "getUser", options: { userId: signUser.user_id } }),
+        body: JSON.stringify({ userId: signUser.user_id }),
       });
 
       if (!req_getUser.ok) {

@@ -6,10 +6,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { useModal } from "common/modal";
 
-// TODO: 본인인증 처리하기
+// TODO: 이메일 중복확인 API
+// TODO: handleSignup처리하기
+
 // TODO: 본인인증 완료 후 정보 기입 input 처리하기
 // TODO: validator
 // TODO: 회원가입 완료 처리
+
+class SignFailError extends Error {
+  constructor(
+    public code: string,
+    message?: string,
+  ) {
+    super(message);
+    this.name = "SignFailError";
+    this.code = code;
+  }
+}
 
 // 약관urls
 const urls: { [key: string]: string } = {
@@ -38,8 +51,6 @@ export default function Page() {
     id: "",
     password: "",
     passwordCheck: "",
-    naem: "",
-    phone: "",
   });
   // 이메일 중복체크 여부
   const [emailCheck, setEmailCheck] = useState<boolean>(false);
@@ -59,37 +70,67 @@ export default function Page() {
   // 본인인증 시작
   const handleIdentity = async () => {
     const win = window as any;
-    if (win.MOBILEOK) {
-      const callbackUrl = process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL + "api/mok/mok_std_request";
-      win.MOBILEOK.process(callbackUrl, "MVW", "result");
-    } else {
-      alert("본인인증 호출에 실패하였습니다");
-    }
-  };
+    const url = process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL + "api/mok/mok_std_request";
 
-  useEffect(() => {
-    // const win = window as any;
-    // win.result = async (d: any) => {
-    //   console.log(d, "DDD");
-    //   console.log(JSON.parse(d), "JSON");
-    //   try {
-    //     const req = await fetch("/api/user", {
-    //       method: "POST",
-    //       body: JSON.stringify({ action: "createUser", option: JSON.parse(d) }),
-    //     });
-    //
-    //     if (!req.ok) {
-    //       throw new Error(req.statusText);
-    //     }
-    //
-    //     const res = await req.json();
-    //     setUserId(res.userId);
-    //     console.log(res, "res");
-    //   } catch (error) {
-    //     alert(JSON.stringify(error));
-    //   }
-    // };
-  }, []);
+    if (win.MOBILEOK) {
+      try {
+        win.MOBILEOK.process(url, "MWV", "result");
+      } catch (error) {
+        alert("MOK 인증을 시작하는데 실패했습니다. 팝업이 허용되어 있는지 확인해주세요.");
+        return Promise.reject(new Error("MOK 인증을 시작하는데 실패했습니다."));
+      }
+    } else {
+      alert("MOK 인증을 시작하는데 실패했습니다");
+    }
+
+    return new Promise<void>((ok, no) => {
+      (window as any).result = async (mokResult: any) => {
+        const data = JSON.parse(mokResult);
+
+        console.log(data, "DATA");
+
+        if (data.error) {
+          alert(`MOK 인증에 실패했습니다. ${data.error}`);
+          return no(new SignFailError("MOK_FAIL", `MOK 인증에 실패했습니다. ${data.error}`));
+        }
+
+        // 유저 생성
+        const url = process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL + "api/user/createUser";
+        const req = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+
+        if (!req.ok) {
+          throw new Error(req.statusText);
+        }
+
+        const res = await req.json();
+        console.log(res, "RESSS");
+
+        // 계정 개수 조회
+        const getUserUrl = process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL + "api/user/getUser";
+        const getUserReq = await fetch(getUserUrl, {
+          method: "POST",
+          body: JSON.stringify({ userId: res.user_id }),
+        });
+
+        if (!getUserReq.ok) {
+          throw new Error(getUserReq.statusText);
+        }
+
+        const getUserRes = await getUserReq.json();
+
+        console.log(getUserRes, "getUserRes");
+        if (getUserRes.account_count >= 5) {
+          alert("이미 5개의 계정을 가지고 있습니다");
+          return (window.location.href = "/login");
+        }
+
+        setUserId(res.user_id);
+      };
+    });
+  };
 
   // 이메일 중복 확인
   const onCheckEmail = async () => {
@@ -112,6 +153,9 @@ export default function Page() {
     // resp.isExist
   };
 
+  // 회원가입 처리
+  const handleSignup = async () => {};
+
   return (
     <>
       {/* 상단 x버튼 영역 */}
@@ -128,6 +172,7 @@ export default function Page() {
           <div className="flex size-full items-baseline justify-center bg-[#b9c2e2]">
             <div className="flex w-full flex-col items-center justify-center bg-[#b9c2e2]">
               <div className="flex w-full max-w-[580px] flex-col items-center justify-center rounded-lg bg-[#b9c2e2] p-8">
+                {/* 콘텐츠 영역 */}
                 <div className="mb-8 flex w-full flex-col gap-6">
                   {userId === "" ? (
                     <>
@@ -310,6 +355,58 @@ export default function Page() {
                               중복확인
                             </button>
                           ) : null}
+                        </div>
+                      </div>
+                      <div className="relative">
+                        <div className="pb-1 pt-4 text-sm font-semibold">비밀번호 *</div>
+                        <div className="relative">
+                          <input
+                            name="password"
+                            type="password"
+                            value={inputs.password}
+                            onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+                            placeholder="비밀번호를 입력하세요"
+                            className="inline-block w-full border-0 border-b border-b-black bg-[#b4bbda] pb-[14px] pl-[16px] pr-[38px] pt-[15px] text-base leading-tight outline-none placeholder:text-base placeholder:font-normal placeholder:text-[#17171c] focus:border-0 focus:border-b focus:border-b-black focus:ring-0"
+                          />
+                        </div>
+                      </div>
+                      <div className="relative">
+                        <div className="pb-1 pt-4 text-sm font-semibold">비밀번호 확인 *</div>
+                        <div className="relative">
+                          <input
+                            name="passwordCheck"
+                            type="password"
+                            value={inputs.passwordCheck}
+                            onChange={(e) =>
+                              setInputs({ ...inputs, passwordCheck: e.target.value })
+                            }
+                            placeholder="비밀번호를 입력하세요"
+                            className="inline-block w-full border-0 border-b border-b-black bg-[#b4bbda] pb-[14px] pl-[16px] pr-[38px] pt-[15px] text-base leading-tight outline-none placeholder:text-base placeholder:font-normal placeholder:text-[#17171c] focus:border-0 focus:border-b focus:border-b-black focus:ring-0"
+                          />
+                        </div>
+                      </div>
+                      <div className="mb-5 flex w-full items-center justify-center gap-2 pt-3 ">
+                        <Link
+                          href="/login/id/input"
+                          style={{
+                            background: "linear-gradient(180deg, #F1F3FA 0%, #D4DAF6 100%)",
+                          }}
+                          className="flex h-[32px] w-full items-center  justify-center rounded-lg text-[12px] text-black"
+                        >
+                          취소
+                        </Link>
+                        <div
+                          className="inline-block w-full cursor-pointer"
+                          onClick={() => handleSignup()}
+                        >
+                          <div
+                            style={{
+                              background: "linear-gradient(180deg, #F1F3FA 0%, #D4DAF6 100%)",
+                            }}
+                            className={`flex h-[32px] w-full items-center justify-center rounded-lg text-[12px] ${inputs.id && inputs.password && inputs.passwordCheck ? "text-black" : "font-medium uppercase text-[#CCC]"}`}
+                          >
+                            확인
+                          </div>
                         </div>
                       </div>
                     </>

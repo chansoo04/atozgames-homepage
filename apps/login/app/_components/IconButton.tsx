@@ -7,7 +7,7 @@ export default function IconButton({
   text,
 }: {
   link: string;
-  icon?: string;
+  icon: string;
   text: string;
 }) {
   return (
@@ -17,7 +17,7 @@ export default function IconButton({
     >
       <div className="flex w-full items-center justify-center gap-4">
         <div className="absolute left-5 top-3 flex items-center justify-center">
-          {icon && <Image width={20} height={20} src={icon} alt={text} />}
+          <Image width={20} height={20} src={icon} alt={text} />
         </div>
         <div className="mt-[3px] flex items-center text-left">{text}</div>
       </div>

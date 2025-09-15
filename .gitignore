@@ -15,6 +15,8 @@ scripts/ca-refresh-local.sh
 dev_mok_keyInfo.dat
 mok_keyInfo.dat
 mok_Key_Manager_v1.0.3.js
+ingame_jwt_private.pem
+ingame_jwt_public.pem
 
 # testing
 coverage

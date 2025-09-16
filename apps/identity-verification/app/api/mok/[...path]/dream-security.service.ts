@@ -35,7 +35,7 @@ function loadMobileOK() {
   // ② 모노레포 소스 경로(CWD 기준)
   const cand2 = path.join(
     process.cwd(),
-    "apps/login/app/api/mok/[...path]/mok_Key_Manager_v1.0.3.js",
+    "apps/identity-verification/app/api/mok/[...path]/mok_Key_Manager_v1.0.3.js",
   );
 
   for (const p of [cand1, cand2]) {
@@ -65,7 +65,11 @@ function resolveKeyFilePath(fileName: string): string {
   const cand1 = path.join(vendorDir, fileName);
 
   // C. 모노레포 소스 경로
-  const cand2 = path.join(process.cwd(), "apps/login/app/api/mok/[...path]/", fileName);
+  const cand2 = path.join(
+    process.cwd(),
+    "apps/identity-verification/app/api/mok/[...path]/",
+    fileName,
+  );
 
   // D. CWD 루트
   const cand3 = path.join(process.cwd(), fileName);

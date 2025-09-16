@@ -11,9 +11,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
           type="text/javascript"
           // TODO [work] : dev, ops 환경에 따라 변경
           src={
-            process.env.NODE_ENV === "development"
-              ? "https://scert.mobile-ok.com/resources/js/index.js"
-              : "https://cert.mobile-ok.com/resources/js/index.js"
+            "https://scert.mobile-ok.com/resources/js/index.js"
+            // process.env.NODE_ENV === "development"
+            //   ? "https://scert.mobile-ok.com/resources/js/index.js"
+            //   : "https://cert.mobile-ok.com/resources/js/index.js"
           }
           strategy="beforeInteractive"
         ></Script>

@@ -21,6 +21,19 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
+    const send = (msg: string) => {
+      window.location.href = `uniwebview://${msg}`;
+    };
+
+    // uniWebView 객체가 이미 있더라도 덮어쓰기
+    if ((window as any).uniWebView) {
+      (window as any).uniWebView.sendMessage = send;
+    } else {
+      (window as any).uniWebView = { sendMessage: send };
+    }
+  }, []);
+
+  useEffect(() => {
     if (ready) {
       identityVerify();
     }
@@ -45,7 +58,9 @@ export default function Page() {
       (window as any).result = async (mokResult: any) => {
         const data = JSON.parse(mokResult);
         data.auth = JSON.parse(data.auth);
+        (window as any).uniWebView.sendMessage(JSON.stringify(data));
         console.log(data, "DATA!!");
+        alert(`보낸 데이터: ${JSON.stringify(data)}`);
       };
     });
   };

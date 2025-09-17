@@ -1,8 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
+  const searchParams = useSearchParams();
   const [ready, setReady] = useState<boolean>(false);
+  const wv = searchParams.get("wv");
 
   useEffect(() => {
     const win = window as any;
@@ -58,9 +61,9 @@ export default function Page() {
       (window as any).result = async (mokResult: any) => {
         const data = JSON.parse(mokResult);
         data.auth = JSON.parse(data.auth);
-        (window as any).uniWebView.sendMessage(JSON.stringify(data));
+        (window as any).uniWebView.sendMessage(JSON.stringify({ ...data, wv }));
         console.log(data, "DATA!!");
-        alert(`보낸 데이터: ${JSON.stringify(data)}`);
+        alert(`보낸 데이터: ${JSON.stringify({ ...data, wv })}`);
       };
     });
   };

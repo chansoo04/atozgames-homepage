@@ -1,11 +1,12 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const wv = searchParams.get("wv");
   const code = searchParams.get("code");
+  const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
     const send = (msg: string) => {
@@ -21,11 +22,18 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    if (code) {
-      (window as any).uniWebView.sendMessage(JSON.stringify({ code, wv }));
+    console.log("CODE: ", code);
+    console.log("WV: ", wv);
+    if (code && wv) {
+      (window as any).uniWebView.sendMessage("identity", JSON.stringify({ code, wv }));
     } else {
-      signPopup();
+      alert("올바르지 않은 접근입니다");
+      // 웹 닫기
+      (window as any).uniWebView?.sendMessage("close");
     }
+    setTimeout(() => {
+      setShow(true);
+    }, 3000);
   }, [code, wv]);
 
   const signPopup = () => {
@@ -44,5 +52,18 @@ export default function Page() {
     window.location.href = apiUrl;
   };
 
-  return <></>;
+  const closeWeb = () => {
+    (window as any).uniWebView?.sendMessage("close");
+  };
+
+  // TODO: 디자인 필요
+  return (
+    <div className="flex w-full items-center justify-center">
+      {show ? (
+        <button type="button" onClick={() => closeWeb()}>
+          게임으로 돌아가기
+        </button>
+      ) : null}
+    </div>
+  );
 }

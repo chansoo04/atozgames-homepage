@@ -3,7 +3,13 @@ import { jwtVerify, importSPKI } from "jose";
 
 // ✅ 미들웨어는 Edge 런타임(기본)
 export const config = {
-  matcher: ["/identity-verification/:path*", "/kakao/:path*", "/naver/:path*", "/blocked"],
+  matcher: [
+    "/identity-verification/:path*",
+    "/kakao/:path*",
+    "/naver/:path*",
+    "/blocked",
+    "/api/oauth/:path*",
+  ],
 };
 
 const PUB_PEM_RAW = process.env.INGAME_JWT_PUBLIC_PEM || "";
@@ -41,30 +47,30 @@ async function getPublicKey(): Promise<CryptoKey> {
 
 export async function middleware(req: NextRequest) {
   const url = new URL(req.url);
-  return;
+  // return;
 
-  // // 🔓 /blocked 자체는 무조건 통과(리다이렉트 루프 방지)
-  // if (url.pathname.startsWith("/blocked")) {
-  //   return NextResponse.next();
-  // }
-  //
-  // const token = url.searchParams.get("wv");
-  // if (!token) {
-  //   if (DEBUG) console.error("[mw] no token, redirect → /blocked?reason=missing_token");
-  //   return NextResponse.redirect(new URL("/blocked?reason=missing_token", req.url));
-  // }
-  //
-  // try {
-  //   const key = await getPublicKey();
-  //   await jwtVerify(token, key, {
-  //     algorithms: ["RS256"],
-  //     issuer: ISS,
-  //     audience: AUD,
-  //     clockTolerance: 10, // 시계 오차 10초 허용
-  //   });
-  //   return NextResponse.next();
-  // } catch (e: any) {
-  //   if (DEBUG) console.error("[mw] verify fail:", e?.message || e, "initErr=", INIT_ERR);
-  //   return NextResponse.redirect(new URL("/blocked?reason=bad_token", req.url));
-  // }
+  // 🔓 /blocked 자체는 무조건 통과(리다이렉트 루프 방지)
+  if (url.pathname.startsWith("/blocked")) {
+    return NextResponse.next();
+  }
+
+  const token = url.searchParams.get("wv") || url.searchParams.get("state");
+  if (!token) {
+    if (DEBUG) console.error("[mw] no token, redirect → /blocked?reason=missing_token");
+    return NextResponse.redirect(new URL("/blocked?reason=missing_token", req.url));
+  }
+
+  try {
+    const key = await getPublicKey();
+    await jwtVerify(token, key, {
+      algorithms: ["RS256"],
+      issuer: ISS,
+      audience: AUD,
+      clockTolerance: 10, // 시계 오차 10초 허용
+    });
+    return NextResponse.next();
+  } catch (e: any) {
+    if (DEBUG) console.error("[mw] verify fail:", e?.message || e, "initErr=", INIT_ERR);
+    return NextResponse.redirect(new URL("/blocked?reason=bad_token", req.url));
+  }
 }

@@ -9,8 +9,9 @@ export default function Page() {
   const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
-    const send = (msg: string) => {
-      window.location.href = `uniwebview://${msg}`;
+    const send = (path: string, params: Record<string, string> = {}) => {
+      const usp = new URLSearchParams(params);
+      window.location.href = `uniwebview://${path}?${usp.toString()}`;
     };
 
     // uniWebView 객체가 이미 있더라도 덮어쓰기
@@ -25,7 +26,10 @@ export default function Page() {
     console.log("CODE: ", code);
     console.log("WV: ", wv);
     if (code && wv) {
-      (window as any).uniWebView.sendMessage("identity", JSON.stringify({ code, wv }));
+      const payload = JSON.stringify({ code, wv });
+      (window as any).uniWebView.sendMessage("auth", {
+        payload,
+      });
     } else {
       alert("올바르지 않은 접근입니다");
       // 웹 닫기

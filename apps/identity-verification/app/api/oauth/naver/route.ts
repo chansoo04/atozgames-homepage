@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   const wv = url.searchParams.get("state") as string;
 
   const hostUrl = process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL;
-  const redirectUri = `${hostUrl}/naver?code=${authCode}&wv=${wv}`;
+  const redirectUri = `${hostUrl}naver?code=${authCode}&wv=${wv}`;
 
   return NextResponse.redirect(redirectUri);
 }

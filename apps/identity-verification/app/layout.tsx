@@ -1,8 +1,9 @@
+"use client";
 import "./global.css";
 import Script from "next/script";
 import RouteChangeListener from "./RouteChangeListener";
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <head>

@@ -7,20 +7,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <head>
-        <Script
+        <script
           async
           type="text/javascript"
           // TODO [work] : dev, ops 환경에 따라 변경
-          src={
-            "https://scert.mobile-ok.com/resources/js/index.js"
-            // process.env.NODE_ENV === "development"
-            //   ? "https://scert.mobile-ok.com/resources/js/index.js"
-            //   : "https://cert.mobile-ok.com/resources/js/index.js"
-          }
-          strategy="beforeInteractive"
-          onLoad={() => console.log("[mobileok] loaded")}
-          onError={(e) => console.error("[mobileok] failed", e)}
-        ></Script>
+          src="https://scert.mobile-ok.com/resources/js/index.js"
+          // process.env.NODE_ENV === "development"
+          //   ? "https://scert.mobile-ok.com/resources/js/index.js"
+          //   : "https://cert.mobile-ok.com/resources/js/index.js"
+
+          // onLoad={() => console.log("[mobileok] loaded")}
+          // onError={(e) => console.error("[mobileok] failed", e)}
+        ></script>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"

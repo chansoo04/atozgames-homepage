@@ -17,6 +17,8 @@ export default async function Layout({ children }: { children: React.ReactNode }
             //   : "https://cert.mobile-ok.com/resources/js/index.js"
           }
           strategy="beforeInteractive"
+          onLoad={() => console.log("[mobileok] loaded")}
+          onError={(e) => console.error("[mobileok] failed", e)}
         ></Script>
         <meta
           name="viewport"

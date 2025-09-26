@@ -55,7 +55,7 @@ export default function Page() {
       } catch (error) {
         alert(
           "MOK 인증을 시작하는데 실패했습니다. 팝업이 허용되어 있는지 확인해주세요." +
-            JSON.stringify(error),
+            JSON.stringify((error as any)?.message ?? "오류 메시지 없음"),
         );
         console.log(error, "error");
         setShow(true);

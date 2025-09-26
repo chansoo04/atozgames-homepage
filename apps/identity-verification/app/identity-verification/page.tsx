@@ -53,7 +53,10 @@ export default function Page() {
       try {
         win.MOBILEOK.process(url, "MWV", "result");
       } catch (error) {
-        alert("MOK 인증을 시작하는데 실패했습니다. 팝업이 허용되어 있는지 확인해주세요.");
+        alert(
+          "MOK 인증을 시작하는데 실패했습니다. 팝업이 허용되어 있는지 확인해주세요." +
+            JSON.stringify(error),
+        );
         setShow(true);
         return Promise.reject(new Error("MOK 인증을 시작하는데 실패했습니다."));
       }

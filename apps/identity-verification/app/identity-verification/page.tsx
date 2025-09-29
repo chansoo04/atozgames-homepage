@@ -26,20 +26,6 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    const send = (path: string, params: Record<string, string> = {}) => {
-      const usp = new URLSearchParams(params);
-      window.location.href = `uniwebview://${path}?${usp.toString()}`;
-    };
-
-    // uniWebView 객체가 이미 있더라도 덮어쓰기
-    if ((window as any).uniWebView) {
-      (window as any).uniWebView.sendMessage = send;
-    } else {
-      (window as any).uniWebView = { sendMessage: send };
-    }
-  }, []);
-
-  useEffect(() => {
     if (ready) {
       identityVerify();
     }
@@ -47,11 +33,12 @@ export default function Page() {
 
   const identityVerify = async () => {
     const win = window as any;
-    const url = `${process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL}api/mok/mok_std_request`;
+    const url = `${process.env.NEXT_PUBLIC_ATOZ_LOGIN_URL}api/mok/mok_std_request?wv=${wv}`;
 
     if (win.MOBILEOK) {
       try {
-        win.MOBILEOK.process(url, "MWV", "result");
+        // win.MOBILEOK.process(url, "MWV", "result");
+        win.MOBILEOK.process(url, "WB", "");
       } catch (error) {
         alert(
           "MOK 인증을 시작하는데 실패했습니다. 팝업이 허용되어 있는지 확인해주세요." +
@@ -66,15 +53,15 @@ export default function Page() {
       alert("MOK 인증을 시작하는데 실패했습니다");
     }
 
-    return new Promise<void>((ok, no) => {
-      (window as any).result = async (mokResult: any) => {
-        const data = JSON.parse(mokResult);
-        data.auth = JSON.parse(data.auth);
-        const payload = JSON.stringify({ ...data, wv });
-        (window as any).uniWebView.sendMessage("identify", { payload });
-        alert(`보낸 데이터: ${payload}`);
-      };
-    });
+    // return new Promise<void>((ok, no) => {
+    //   (window as any).result = async (mokResult: any) => {
+    // const data = JSON.parse(mokResult);
+    // data.auth = JSON.parse(data.auth);
+    // const payload = JSON.stringify({ ...data, wv });
+    // (window as any).uniWebView.sendMessage("identify", { payload });
+    // alert(`보낸 데이터: ${payload}`);
+    //   };
+    // });
   };
 
   const closeWeb = () => {

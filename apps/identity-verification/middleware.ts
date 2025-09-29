@@ -46,7 +46,7 @@ async function getPublicKey(): Promise<CryptoKey> {
 }
 
 export async function middleware(req: NextRequest) {
-  const url = new URL(req.url);
+  const url = new URL(req.nextUrl);
   // return;
 
   // 🔓 /blocked 자체는 무조건 통과(리다이렉트 루프 방지)
@@ -57,7 +57,7 @@ export async function middleware(req: NextRequest) {
   const token = url.searchParams.get("wv") || url.searchParams.get("state");
   if (!token) {
     if (DEBUG) console.error("[mw] no token, redirect → /blocked?reason=missing_token");
-    return NextResponse.redirect(new URL("/blocked?reason=missing_token", req.url));
+    return NextResponse.redirect(new URL("/blocked?reason=missing_token", req.nextUrl));
   }
 
   try {
@@ -71,6 +71,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   } catch (e: any) {
     if (DEBUG) console.error("[mw] verify fail:", e?.message || e, "initErr=", INIT_ERR);
-    return NextResponse.redirect(new URL("/blocked?reason=bad_token", req.url));
+    return NextResponse.redirect(new URL("/blocked?reason=bad_token", req.nextUrl));
   }
 }

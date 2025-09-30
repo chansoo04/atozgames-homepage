@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 export default function Page() {
@@ -8,6 +8,8 @@ export default function Page() {
   const wv = searchParams.get("wv");
   const comType = searchParams.get("comType");
   const data = searchParams.get("data");
+
+  const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
     const send = (path: string, params: Record<string, string> = {}) => {
@@ -27,13 +29,24 @@ export default function Page() {
     if (wv && comType && data) {
       const payload = JSON.stringify({ auth: { data, comType }, wv });
       (window as any).uniWebView.sendMessage("identify", { payload });
-      alert(`보낸 데이터: ${payload}`);
+
+      setTimeout(() => {
+        setShow(true);
+      }, 3000);
     }
   }, [wv, comType, data]);
 
+  const closeWeb = () => {
+    (window as any).uniWebView?.sendMessage("close");
+  };
+
   return (
     <>
-      <div>하위요~~</div>
+      {show ? (
+        <button type="button" onClick={() => closeWeb()}>
+          게임으로 돌아가기
+        </button>
+      ) : null}
     </>
   );
 }

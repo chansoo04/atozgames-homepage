@@ -8,7 +8,6 @@ export async function POST(request: NextRequest, { params }: { params: { path?: 
   const { searchParams } = new URL(request.url);
   const wv = searchParams.get("wv");
   const { path = [] } = params;
-  console.log(wv, "wv");
 
   if (path.length === 0) {
     return NextResponse.json({ message: "[POST] Base /api/mok endpoint" });
@@ -44,24 +43,18 @@ export async function POST(request: NextRequest, { params }: { params: { path?: 
           /* 본인확인 결과 수신 URL */
           returnUrl,
         };
-        console.log(result, "result");
         return NextResponse.json(result);
       case "mok_std_result":
         // TODO: 본인확인 서비스 결과 처리 - 본인인증 결과로 받은 토큰 처리
         // * 여기서 받은 값을 서버로 전송 - 회원가입, 본인확인갱신 등
         // eslint-disable-next-line no-case-declarations
         const text = await request.text();
-        console.log(text, "text");
         // eslint-disable-next-line no-case-declarations
         const params = new URLSearchParams(text);
-        console.log(params, "params");
         // eslint-disable-next-line no-case-declarations
         const data = params.get("data");
-        console.log(data, "data");
 
-        console.log(wv, "wv");
         result = JSON.parse(decodeURIComponent(data ?? "{}"));
-        console.log(result, "result");
 
         try {
           const reqData = {
@@ -69,10 +62,9 @@ export async function POST(request: NextRequest, { params }: { params: { path?: 
             data: result.encryptMOKKeyToken,
             wv,
           };
-          console.log(reqData, "reqData");
-          return await redirect(reqData);
+          return redirect(reqData);
         } catch (e) {
-          console.log(e, "E");
+          console.error("Error: ", e);
           return NextResponse.json({
             error: `Validation error\n${JSON.stringify(e)}`,
           });
@@ -81,8 +73,7 @@ export async function POST(request: NextRequest, { params }: { params: { path?: 
         throw new Error("invalidAction");
     }
   } catch (error: any) {
-    console.log(error, "error");
-    console.error(error);
+    console.error("Error: ", error);
     return NextResponse.json(error);
   }
 }

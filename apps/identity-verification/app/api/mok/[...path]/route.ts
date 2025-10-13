@@ -74,8 +74,7 @@ export async function POST(request: NextRequest, { params }: { params: { path?: 
           console.log(
             JSON.stringify(
               verifyRes,
-              (k, v) =>
-                v instanceof BigInt || typeof v === 'bigint' ? v.toString() : v,
+              (k, v) => (v instanceof BigInt || typeof v === "bigint" ? v.toString() : v),
               2,
             ),
           );
@@ -85,20 +84,23 @@ export async function POST(request: NextRequest, { params }: { params: { path?: 
           await qr.connect();
 
           try {
-            const [result_query] = await qr.query(
-              `CALL sp_create_member_user(?, ?, ?, ?, ?)`,
-              [verifyRes.name, verifyRes.ci, verifyRes.di, verifyRes.tel, result.encryptMOKKeyToken],
-            );
-            const resultRow = result_query[0];            
+            const [result_query] = await qr.query(`CALL sp_create_member_user(?, ?, ?, ?, ?)`, [
+              verifyRes.name,
+              verifyRes.ci,
+              verifyRes.di,
+              verifyRes.tel,
+              result.encryptMOKKeyToken,
+            ]);
+            const resultRow = result_query[0];
             console.log(result_query);
             console.log(resultRow);
             const mid = resultRow.mid;
-            reqData.mid = mid;  // mid 추가
+            reqData.mid = mid; // mid 추가
           } finally {
             await qr.release();
           }
           /**********************************************/
-          
+
           return redirect(reqData);
         } catch (e) {
           console.error("Error: ", e);

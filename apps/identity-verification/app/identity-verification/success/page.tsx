@@ -8,6 +8,7 @@ export default function Page() {
   const wv = searchParams.get("wv");
   const comType = searchParams.get("comType");
   const data = searchParams.get("data");
+  const mid = searchParams.get("mid");
 
   const [show, setShow] = useState<boolean>(false);
 
@@ -27,14 +28,14 @@ export default function Page() {
 
   useEffect(() => {
     if (wv && comType && data) {
-      const payload = JSON.stringify({ auth: { data, comType }, wv });
+      const payload = JSON.stringify({ auth: { data, comType }, wv, mid });
       (window as any).uniWebView.sendMessage("identify", { payload });
 
       setTimeout(() => {
         setShow(true);
       }, 3000);
     }
-  }, [wv, comType, data]);
+  }, [wv, comType, data, mid]);
 
   const closeWeb = () => {
     (window as any).uniWebView?.sendMessage("close");

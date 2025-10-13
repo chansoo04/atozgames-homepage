@@ -3,13 +3,7 @@ import { jwtVerify, importSPKI } from "jose";
 
 // ✅ 미들웨어는 Edge 런타임(기본)
 export const config = {
-  matcher: [
-    "/identity-verification/:path*",
-    "/kakao/:path*",
-    "/naver/:path*",
-    "/blocked",
-    "/api/oauth/:path*",
-  ],
+  matcher: ["/identity-verification/:path*", "/kakao/:path*", "/naver/:path*", "/api/oauth/:path*"],
 };
 
 const PUB_PEM_RAW = process.env.INGAME_JWT_PUBLIC_PEM || "";

@@ -3,11 +3,14 @@ export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
 import * as DREAM_SECURITY from "./dream-security.service";
-
+import { getAuthData } from "./dream-security.service";
+import { initializeDataSource } from "../../data-source";
 export async function POST(request: NextRequest, { params }: { params: { path?: string[] } }) {
   const { searchParams } = new URL(request.url);
   const wv = searchParams.get("wv");
   const { path = [] } = params;
+
+  const dataSource = await initializeDataSource();
 
   if (path.length === 0) {
     return NextResponse.json({ message: "[POST] Base /api/mok endpoint" });
@@ -61,7 +64,41 @@ export async function POST(request: NextRequest, { params }: { params: { path?: 
             comType: "dreamsecurity",
             data: result.encryptMOKKeyToken,
             wv,
+            mid: "",
           };
+
+          /*****************************************************
+              본인인증 토큰 값 검증후 디비에 데이터 넣기.
+          */
+          const verifyRes = await getAuthData(result.encryptMOKKeyToken);
+          console.log(
+            JSON.stringify(
+              verifyRes,
+              (k, v) =>
+                v instanceof BigInt || typeof v === 'bigint' ? v.toString() : v,
+              2,
+            ),
+          );
+
+          // 디비 넣기.(프로시져 호출)
+          const qr = dataSource.createQueryRunner();
+          await qr.connect();
+
+          try {
+            const [result_query] = await qr.query(
+              `CALL sp_create_member_user(?, ?, ?, ?, ?)`,
+              [verifyRes.name, verifyRes.ci, verifyRes.di, verifyRes.tel, result.encryptMOKKeyToken],
+            );
+            const resultRow = result_query[0];            
+            console.log(result_query);
+            console.log(resultRow);
+            const mid = resultRow.mid;
+            reqData.mid = mid;  // mid 추가
+          } finally {
+            await qr.release();
+          }
+          /**********************************************/
+          
           return redirect(reqData);
         } catch (e) {
           console.error("Error: ", e);

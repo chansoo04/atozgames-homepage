@@ -32,15 +32,16 @@
   },
   "$schema": "https://json.schemastore.org/package",
   "dependencies": {
-    "@atozgames/bo-grpc": "^0.0.31",
-    "@headlessui/react": "0.0.0-insiders.f5ac361",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "@nestia/core": "^2.5.15",
     "@nestia/e2e": "^0.4.1",
     "@nestia/fetcher": "^2.5.15",
     "@next/mdx": "^14.2.0",
+    "mysql2": "^3.15.2",
+    "reflect-metadata": "^0.2.2",
     "ts-patch": "^3.2.1",
+    "typeorm": "^0.3.27",
     "typia": "^5.5.3"
   },
   "packageManager": "yarn@1.22.22"
